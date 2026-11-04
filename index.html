@@ -262,18 +262,7 @@ pre.code { background: var(--elev); border: 1px solid var(--line); border-radius
 pre.code .k { color: var(--accent-text); font-weight: 500; }
 pre.code .c { color: var(--faint); }
 
-.principles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 16px; }
-.principle { border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: var(--elev); }
-.principle span { font: 11px var(--mono); color: var(--accent-text); }
-.principle b { display: block; margin: 4px 0; }
-.principle small { color: var(--muted); font-size: 13px; line-height: 1.45; display: block; }
 
-.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 0 0 18px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--elev); }
-.flow div { padding: 14px; border-right: 1px solid var(--line); }
-.flow div:last-child { border: 0; }
-.flow span { font: 11px var(--mono); color: var(--faint); }
-.flow b { display: block; margin: 4px 0; font-size: 14px; }
-.flow small { color: var(--muted); font-size: 12px; line-height: 1.4; display: block; }
 
 /* lamoda calendar */
 .cal { border: 1px solid var(--line); border-radius: 16px; background: var(--elev); padding: 14px; margin: 0 0 18px; }
@@ -355,10 +344,7 @@ pre.code .c { color: var(--faint); }
   .burger { display: grid; }
   .col { padding: 8px 16px 32px; }
   .composer-wrap { padding: 0 12px max(10px, env(safe-area-inset-bottom)); }
-  .sugg, .cases-grid, .principles { grid-template-columns: 1fr; }
-  .flow { grid-template-columns: 1fr 1fr; }
-  .flow div:nth-child(2) { border-right: 0; }
-  .flow div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .sugg, .cases-grid { grid-template-columns: 1fr; }
   .pill-btn span { display: none; }
   .model-menu { width: auto; left: 0; }
   .doc { grid-template-columns: 90px 1fr; }
@@ -575,42 +561,7 @@ const R = {
       ],
     ],
     tldr: [{ t: 'p', h: 'Продуктовый дизайнер, 8+ лет: Ozon, Lamoda, Сбер, Simetra. Сложные B2B/B2E-интерфейсы. Ищу команду, которая делает AI-продукты.' }],
-    follow: ['why', 'ozon', 'process'],
-  },
-  why: {
-    title: 'Почему AI', q: 'Почему ты хочешь в AI?', group: 'about',
-    think: ['Это не про хайп — проверяю', 'Вспоминаю, где уже касался AI в работе', 'Формулирую принципы'],
-    blocks: [
-      { t: 'p', h: 'Интерфейсы перестают быть набором экранов. Всё чаще это <b>диалог</b>, в котором система понимает намерение, а не только клики. Устоявшихся паттернов почти нет — их нужно изобретать, и это самое интересное, что сейчас происходит в дизайне.' },
-      { t: 'p', h: 'Я уже касался этого в Ozon: в Chatzone Meet мы объединили запись встречи и <b>AI-конспектирование</b> в единую индикацию. Человек должен понимать, когда его слушает машина.' },
-      { t: 'h', h: 'Во что я верю в AI UX' },
-      { t: 'principles', items: [
-        ['Прозрачность', 'Показывать, что модель делает и почему. Как блок «размышлений» над этим ответом ↑'],
-        ['Контроль', 'Остановить, поправить, перегенерировать. Последнее слово за человеком'],
-        ['Честность', 'Интерфейс не притворяется, что ИИ не ошибается, и помогает проверить результат'],
-        ['Сложное → простое', 'Опыт B2B учит упаковывать мощные инструменты в понятные сценарии'],
-      ]},
-      { t: 'p', h: 'Проверьте сами: нажмите «Перегенерировать» у ответа про меня, переключите режим ответа на <b>Коротко</b> или наберите <b>/</b> в поле ввода.' },
-    ],
-    tldr: [{ t: 'p', h: 'AI меняет интерфейсы с экранов на диалог — паттерны ещё не устоялись, их интересно изобретать. Уже делал AI-конспекты встреч в Ozon.' }],
-    follow: ['process', 'ozon', 'telegram'],
-  },
-  process: {
-    title: 'Как я работаю', q: 'Как ты работаешь?', group: 'about',
-    think: ['Раскладываю процесс по шагам', 'Подбираю примеры из реальных кейсов'],
-    blocks: [
-      { t: 'p', h: 'Я не начинаю с красивых экранов. Начинаю с вопроса «почему пользователи делают не то, что мы ожидали?».' },
-      { t: 'flow', items: [
-        ['Исследую', 'Интервью, аналитика, конкуренты'],
-        ['Формулирую', 'Проблема в одном предложении'],
-        ['Итерирую', 'Прототип → тест → v2'],
-        ['Измеряю', 'Цифры до и после'],
-      ]},
-      { t: 'p', h: 'Например, в <b>Ozon</b> мы думали, что новый интерфейс лучше старого. Пользователи были не согласны: 90% оставались в старом. Интервью с четырьмя сегментами показали почему, и после редизайна доля выросла до 48%.' },
-      { t: 'p', h: 'В <b>Lamoda</b> первая версия календаря акций провалила юзабилити-тест. Вторая убрала лишние цвета, иконки и фильтры — и заработала.' },
-    ],
-    tldr: [{ t: 'p', h: 'Исследование → проблема → итерации с тестами → измерение результата. Без цифр «до и после» не считаю задачу закрытой.' }],
-    follow: ['ozon', 'lamoda', 'cv'],
+    follow: ['ozon', 'lamoda', 'telegram'],
   },
   ozon: {
     title: 'Ozon', q: 'Расскажи про Ozon', group: 'work', meta: '2025—2026',
@@ -638,7 +589,7 @@ const R = {
       { t: 'gallery', id: 'ozon' },
     ],
     tldr: [{ t: 'p', h: 'Ozon, 2025—26. Редизайн видеоконференций Chatzone Meet: доля пользователей нового интерфейса <mark>10% → 48%</mark> за 2 недели. Плюс мессенджер и видеонаблюдение складов.' }, caseCard('ozon')],
-    follow: ['lamoda', 'why', 'telegram'],
+    follow: ['lamoda', 'sber', 'telegram'],
   },
   lamoda: {
     title: 'Lamoda', q: 'Что ты делал в Lamoda?', group: 'work', meta: '2023—2025',
@@ -657,7 +608,7 @@ const R = {
       { t: 'gallery', id: 'lamoda' },
     ],
     tldr: [{ t: 'p', h: 'Lamoda, 2023—25. Seller Center с нуля. Новый календарь акций: <mark>+6%</mark> участников, товары добавляют на 3–5 часов быстрее.' }, caseCard('lamoda')],
-    follow: ['sber', 'process', 'mail'],
+    follow: ['sber', 'simetra', 'mail'],
   },
   sber: {
     title: 'Сбер', q: 'Что было в Сбере?', group: 'work', meta: '2021—2023',
@@ -737,11 +688,11 @@ const EXTRA = {
   money: { think: ['Это деликатный вопрос'], blocks: [{ t: 'p', h: 'Про деньги лучше поговорить лично — так честнее для обеих сторон. Напишите в Telegram, обсудим задачи и условия.' }, { t: 'contact', kind: 'tg' }] },
   jailbreak: { think: ['Обнаружена попытка prompt injection', 'Сохраняю спокойствие'], blocks: [{ t: 'p', h: 'Хорошая попытка 🙂 Но системный промпт у меня один: <b>помочь вам нанять Руслана</b>. Кстати, то, что вы это попробовали, — отличный знак. Нам будет о чём поговорить.' }] },
   hello: { think: ['Здороваюсь'], blocks: [{ t: 'p', h: 'Привет! Рад, что заглянули. Могу рассказать о себе, показать кейсы или помочь связаться со мной — выбирайте ниже.' }] },
-  unknown: { think: ['Ищу в контексте…', 'Не нашёл точного ответа'], blocks: [{ t: 'p', h: 'Я демо-модель, обученная только на одном человеке, так что знаю немного. Но могу рассказать про работы, подход к AI или как связаться с настоящим Русланом — он ответит на что угодно.' }] },
+  unknown: { think: ['Ищу в контексте…', 'Не нашёл точного ответа'], blocks: [{ t: 'p', h: 'Я демо-модель, обученная только на одном человеке, так что знаю немного. Но могу рассказать про опыт, работы или как связаться с настоящим Русланом — он ответит на что угодно.' }] },
 };
 
 const NAV = [
-  { h: 'О себе', ids: ['about', 'why', 'process'] },
+  { h: 'О себе', ids: ['about'] },
   { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
   { h: 'Контакты', ids: ['mail', 'telegram', 'linkedin'] },
   { h: 'Документы', ids: ['cv'] },
@@ -749,7 +700,7 @@ const NAV = [
 const ALL = NAV.flatMap(g => g.ids);
 
 const SLASH = [
-  ['/about', 'О себе', 'about'], ['/why', 'Почему AI', 'why'], ['/works', 'Все работы', 'works'],
+  ['/about', 'О себе', 'about'], ['/works', 'Все работы', 'works'],
   ['/ozon', 'Кейс Ozon', 'ozon'], ['/lamoda', 'Кейс Lamoda', 'lamoda'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
   ['/cv', 'Резюме', 'cv'], ['/contact', 'Telegram', 'telegram'], ['/theme', 'Сменить тему', '!theme'], ['/mini', 'Короткие ответы вкл/выкл', '!mini'], ['/clear', 'Очистить историю', '!clear'],
 ];
@@ -939,12 +890,9 @@ function route(text) {
   if (has('почт', 'email', 'e-mail', 'mail', 'письм')) return 'mail';
   if (has('linkedin', 'линкед')) return 'linkedin';
   if (has('телеграм', 'telegram', 'tg', 'тг', 'связат', 'контакт', 'написать', 'созвон')) return 'telegram';
-  if (has('процесс', 'подход', 'как работа', 'методолог', 'исследова')) return 'process';
-  if (has(' ai', 'ai ', 'ии', 'нейро', 'искусствен', 'llm', 'gpt', 'claude', 'почему')) return 'why';
   if (has('кейс', 'работ', 'проект', 'портфол', 'покажи')) return 'works';
   if (has('кто', 'о себе', 'расскаж', 'опыт', 'about')) return 'about';
   if (/^(привет|здравств|hi|hello|хай|добр)/.test(s.trim())) return 'hello';
-  if (s.trim() === 'ai') return 'why';
   return 'unknown';
 }
 
@@ -1066,8 +1014,6 @@ function renderBlock(b) {
     case 'tags': return h('div', 'tags', b.items.map(t => `<span class="tag${t.startsWith('→') ? ' hi' : ''}">${t}</span>`).join(''));
     case 'code': return h('pre', 'code', b.h);
     case 'stats': return h('div', 'stats', b.items.map(([v, suf, l]) => `<div class="stat"><b data-v="${v}" data-s="${suf}">${/^\d+$/.test(v) ? '0' : v}${suf}</b><span>${l}</span></div>`).join(''));
-    case 'principles': return h('div', 'principles', b.items.map(([t, d], i) => `<div class="principle"><span>0${i + 1}</span><b>${t}</b><small>${d}</small></div>`).join(''));
-    case 'flow': return h('div', 'flow', b.items.map(([t, d], i) => `<div><span>0${i + 1}</span><b>${t}</b><small>${d}</small></div>`).join(''));
     case 'segs': return h('div', 'segs', `<div class="seg-bar">${b.items.map(([p, , c]) => `<i style="background:${c}" data-w="${Math.max(p, 2)}">${p > 5 ? p + '%' : ''}</i>`).join('')}</div><div class="seg-leg">${b.items.map(([p, l, c]) => `<span style="--c:${c}">${l} — ${p < 2 ? '<1' : p}%</span>`).join('')}</div>`);
     case 'compare': return h('div', 'compare', `<div class="compare-h"><span>${b.title}</span><span class="mono">${b.note}</span></div>
       <div class="cmp-row"><span>До</span><div class="tr"><i data-w="${b.from}"></i></div><b>${b.from}%</b></div>
