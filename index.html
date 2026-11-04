@@ -1204,7 +1204,7 @@ document.addEventListener('keydown', e => {
 // ===== home =====
 function greet() {
   const s = $('#sugg');
-  [['about', 'Кто ты такой?', 'Коротко о 8 годах в дизайне'], ['ozon', 'Покажи лучший кейс', 'Как 10% стали 48% в Ozon']]
+  [['about', 'Обо мне', 'Коротко о 8 годах в дизайне'], ['works', 'Посмотреть все кейсы', 'Продукты, исследования и цифры']]
     .forEach(([id, t, d], i) => { const b = h('button', '', `<b>${t}</b><small>${d}</small>`); b.style.animation = `rise .5s ${i * 70}ms ease both`; b.onclick = () => open(id); s.append(b); });
 }
 $('#logo').onclick = () => open('home');
