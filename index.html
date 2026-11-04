@@ -12,11 +12,11 @@
 @property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 
 :root {
-  --bg: #F3F1EA; --side: #EAE7DE; --elev: #FFFFFF; --soft: #E3DFD3; --line: #D9D4C6;
-  --text: #161614; --muted: #6E6B62; --faint: #9C988C;
-  --accent: #D4FF3A; --on-accent: #10110C; --accent-text: #4E6E00;
+  --bg: #FFFFFF; --side: #F7F7F8; --elev: #FFFFFF; --soft: #EFEFF1; --line: #E4E4E7;
+  --text: #0D0D0F; --muted: #5E5E66; --faint: #8E8E96;
+  --accent: #D4FF3A; --on-accent: #10110C; --accent-text: #4A6800;
   --violet: #7B61FF; --orange: #FF6B3D;
-  --shadow: 0 1px 2px rgba(20,20,10,.06), 0 8px 30px rgba(20,20,10,.06);
+  --shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 28px rgba(0,0,0,.07);
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'Onest', system-ui, -apple-system, sans-serif;
   color-scheme: light;
@@ -338,7 +338,7 @@ pre.code .c { color: var(--faint); }
 .lightbox.open { display: grid; }
 .lightbox img { max-width: 100%; max-height: 100%; border-radius: 10px; }
 
-.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 13px; opacity: 0; pointer-events: none; transition: .25s; z-index: 200; max-width: calc(100vw - 32px); }
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: var(--elev); color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow); padding: 10px 16px; border-radius: 12px; font-size: 13px; opacity: 0; pointer-events: none; transition: .25s; z-index: 200; max-width: calc(100vw - 32px); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 .scrim { display: none; }
