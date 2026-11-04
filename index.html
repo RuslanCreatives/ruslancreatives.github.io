@@ -103,10 +103,9 @@ svg { flex-shrink: 0; }
 .main { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 .topbar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; position: relative; z-index: 5; }
 .burger { display: none; }
-.model-btn { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 10px; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
-.model-btn:hover { background: var(--soft); }
-.model-btn .sub { font-weight: 400; color: var(--muted); font-size: 14px; }
-.model-menu { position: absolute; top: 52px; left: 16px; width: 340px; background: var(--elev); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 6px; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: .18s; }
+.model-btn { margin-left: auto; display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 10px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--muted); }
+.model-btn:hover { background: var(--soft); color: var(--text); }
+.model-menu { position: absolute; bottom: calc(100% + 8px); right: 0; width: 340px; z-index: 10; background: var(--elev); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 6px; opacity: 0; transform: translateY(6px); pointer-events: none; transition: .18s; }
 .model-menu.open { opacity: 1; transform: none; pointer-events: auto; }
 .model-opt { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; width: 100%; text-align: left; padding: 10px 12px; border-radius: 10px; }
 .model-opt:hover:not(:disabled) { background: var(--soft); }
@@ -127,28 +126,22 @@ svg { flex-shrink: 0; }
 
 /* home */
 .home { min-height: calc(100% - 40px); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; }
-.home h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; letter-spacing: -.035em; font-weight: 600; margin: 28px 0 12px; max-width: 640px; }
-.home h1 em { font-style: normal; background: linear-gradient(100deg, var(--violet), var(--orange) 60%, var(--accent-text)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.home h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; letter-spacing: -.035em; font-weight: 600; margin: 0 0 12px; max-width: 640px; }
 .home p { text-wrap: balance; color: var(--muted); max-width: 500px; margin: 0 0 32px; font-size: 16px; }
 .sugg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 620px; }
 .sugg button { text-align: left; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--elev); transition: .18s; display: flex; flex-direction: column; gap: 2px; }
 .sugg button:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--faint); }
 .sugg b { font-weight: 500; font-size: 14px; }
 .sugg small { color: var(--muted); font-size: 12px; }
-.marquee { margin-top: 36px; font: 11px var(--mono); color: var(--faint); letter-spacing: .06em; text-transform: uppercase; display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
 
 /* orb */
 .orb { --s: 28px; width: var(--s); height: var(--s); border-radius: 50%; position: relative; flex-shrink: 0;
   background: conic-gradient(from var(--a), var(--accent), var(--violet), var(--orange), var(--accent));
   animation: orb 7s linear infinite; }
 .orb::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.85), rgba(255,255,255,0) 45%), radial-gradient(circle at 70% 80%, rgba(0,0,0,.25), transparent 55%); }
-.orb.big { --s: 92px; filter: saturate(1.1); box-shadow: 0 20px 60px -10px rgba(123,97,255,.45); cursor: pointer; transition: transform .3s; }
-.orb.big:hover { transform: scale(1.06) rotate(8deg); }
-.orb.big.boop { animation: orb 7s linear infinite, boop .5s; }
 .orb.think { animation: orb 1.4s linear infinite, pulse 1.2s ease-in-out infinite; }
 @keyframes orb { to { --a: 360deg; } }
 @keyframes pulse { 50% { transform: scale(.82); } }
-@keyframes boop { 40% { transform: scale(1.25); } }
 @keyframes blink { 50% { opacity: .3; } }
 
 /* messages */
@@ -311,13 +304,13 @@ pre.code .c { color: var(--faint); }
 .chips:empty { display: none; }
 .chips button { white-space: nowrap; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); font-size: 13px; color: var(--muted); }
 .chips button:hover { color: var(--text); border-color: var(--text); }
-.box { position: relative; background: var(--elev); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 12px 12px 10px 18px; transition: border-color .2s; }
+.box { position: relative; background: var(--elev); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 12px 12px 12px 18px; transition: border-color .2s; }
 .box:focus-within { border-color: var(--faint); }
 .box textarea { width: 100%; border: 0; outline: 0; resize: none; background: none; color: var(--text); font: 16px/1.5 var(--sans); max-height: 160px; padding: 4px 0; }
 .box textarea::placeholder { color: var(--faint); }
 .box-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; margin-left: -8px; }
 .box-row .hint { font: 11px var(--mono); color: var(--faint); margin-left: 4px; }
-.send { margin-left: auto; width: 36px; height: 36px; border-radius: 12px; background: var(--text); color: var(--bg); display: grid; place-items: center; transition: .15s; }
+.send { width: 36px; height: 36px; border-radius: 12px; background: var(--text); color: var(--bg); display: grid; place-items: center; transition: .15s; }
 .send:disabled { opacity: .25; cursor: default; }
 .send.stop { background: var(--text); }
 .disclaimer { text-align: center; font-size: 11.5px; color: var(--faint); margin-top: 8px; }
@@ -367,7 +360,7 @@ pre.code .c { color: var(--faint); }
   .flow div:nth-child(2) { border-right: 0; }
   .flow div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .pill-btn span { display: none; }
-  .model-menu { width: calc(100vw - 32px); }
+  .model-menu { width: auto; left: 0; }
   .doc { grid-template-columns: 90px 1fr; }
   .contact { flex-wrap: wrap; }
   .contact .btn { margin-left: 0; width: 100%; justify-content: center; }
@@ -386,7 +379,7 @@ pre.code .c { color: var(--faint); }
 <div class="app" id="app">
   <aside class="side" id="side">
     <div class="side-top">
-      <button class="logo" id="logo" aria-label="На главную"><div class="orb" style="--s:22px"></div>Руслан</button>
+      <button class="logo" id="logo" aria-label="На главную">Руслан</button>
       <button class="icon-btn burger" id="closeNav" aria-label="Закрыть меню"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <button class="new-chat" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый чат<kbd>/</kbd></button>
@@ -430,12 +423,6 @@ pre.code .c { color: var(--faint); }
   <main class="main">
     <div class="topbar">
       <button class="icon-btn burger" id="openNav" aria-label="Меню"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
-      <button class="model-btn" id="modelBtn"><span id="modelName">Подробно</span><span class="sub" id="modelSub">кейсы и цифры</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="model-menu" id="modelMenu">
-        <button class="model-opt" data-m="full"><b>Подробно</b><small>8+ лет в продукте: кейсы, исследования, цифры</small><span class="check">✓</span></button>
-        <button class="model-opt" data-m="mini"><b>Коротко <span class="badge">TL;DR</span></b><small>Для рекрутеров, у которых 30 секунд. Только суть</small><span class="check">✓</span></button>
-        <button class="model-opt" disabled><b>AI-native <span class="badge hot">в обучении</span></b><small>Откроется после оффера в AI-команду</small><span class="check">✓</span></button>
-      </div>
       <div class="top-right">
         <button class="pill-btn" id="shareBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4-4 4M12 2v13"/></svg><span>Поделиться</span></button>
       </div>
@@ -444,11 +431,9 @@ pre.code .c { color: var(--faint); }
     <div class="scroll" id="scroll">
       <div class="col" id="col">
         <section class="home thread show" id="t-home">
-          <div class="orb big" id="bigOrb" title="Тыкните"></div>
-          <h1>Я — <em>Руслан</em>,<br>дизайнер продуктов</h1>
+          <h1>Я — Руслан,<br>дизайнер продуктов</h1>
           <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
           <div class="sugg" id="sugg"></div>
-          <div class="marquee"><span>Ozon</span><span>·</span><span>Lamoda</span><span>·</span><span>Сбер</span><span>·</span><span>Simetra</span><span>·</span><span>B2B / B2E / B2G</span></div>
         </section>
       </div>
     </div>
@@ -462,6 +447,12 @@ pre.code .c { color: var(--faint); }
           <div class="box-row">
             <button class="icon-btn" id="attach" title="Прикрепить"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5"/></svg></button>
             <span class="hint">/ — команды</span>
+            <button class="model-btn" id="modelBtn"><span id="modelName">Подробно</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="model-menu" id="modelMenu">
+              <button class="model-opt" data-m="full"><b>Подробно</b><small>Полный разбор продуктов с исследованиями и цифрами</small><span class="check">✓</span></button>
+              <button class="model-opt" data-m="mini"><b>Коротко <span class="badge">TL;DR</span></b><small>Для рекрутеров, у которых 30 секунд. Только суть</small><span class="check">✓</span></button>
+              <button class="model-opt" disabled><b>AI-native <span class="badge hot">в обучении</span></b><small>Откроется после оффера в AI-команду</small><span class="check">✓</span></button>
+            </div>
             <button class="send" id="send" disabled aria-label="Отправить"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
           </div>
         </div>
@@ -1268,12 +1259,9 @@ document.addEventListener('keydown', e => {
 // ===== home =====
 function greet() {
   const s = $('#sugg');
-  [['about', 'Кто ты такой?', 'Коротко о 8 годах в дизайне'], ['ozon', 'Покажи лучший кейс', 'Как 10% стали 48% в Ozon'], ['why', 'Почему ты идёшь в AI?', 'И во что верю в AI UX'], ['telegram', 'Как с тобой связаться?', 'Telegram, почта, LinkedIn']]
+  [['about', 'Кто ты такой?', 'Коротко о 8 годах в дизайне'], ['ozon', 'Покажи лучший кейс', 'Как 10% стали 48% в Ozon']]
     .forEach(([id, t, d], i) => { const b = h('button', '', `<b>${t}</b><small>${d}</small>`); b.style.animation = `rise .5s ${i * 70}ms ease both`; b.onclick = () => open(id); s.append(b); });
 }
-const quips = ['Ой', 'Я просто анимация, но мне приятно', 'Ещё раз — и придётся звать Руслана', 'Ладно, вы победили. Откройте любой кейс 🙂'];
-let boops = 0;
-$('#bigOrb').onclick = e => { const o = e.currentTarget; o.classList.remove('boop'); void o.offsetWidth; o.classList.add('boop'); toast(quips[Math.min(boops++, quips.length - 1)]); };
 $('#logo').onclick = () => open('home');
 $('#newChat').onclick = () => open('home');
 
@@ -1288,7 +1276,6 @@ function setSpeed(v) { S.speed = v; store.set('speed', v); document.querySelecto
 function setModel(m) {
   S.model = m; store.set('model', m);
   $('#modelName').textContent = m === 'mini' ? 'Коротко' : 'Подробно';
-  $('#modelSub').textContent = m === 'mini' ? 'TL;DR' : 'кейсы и цифры';
   document.querySelectorAll('.model-opt').forEach(b => b.classList.toggle('on', b.dataset.m === m));
 }
 document.querySelectorAll('#themeSeg button').forEach(b => b.onclick = () => setTheme(b.dataset.v));
