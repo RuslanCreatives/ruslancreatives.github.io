@@ -673,7 +673,7 @@ const R = {
     follow: ['telegram', 'cv'],
   },
   cv: {
-    title: 'CV', q: 'Можно CV?', group: 'cv',
+    title: 'CV', q: 'Можно CV?', group: 'about',
     think: ['Ищу последнюю версию резюме', 'Проверяю, что она правда последняя'],
     blocks: [
       { t: 'tool', name: 'fetch_document', arg: 'ruslan_cv.pdf' },
@@ -692,10 +692,9 @@ const EXTRA = {
 };
 
 const NAV = [
-  { h: 'О себе', ids: ['about'] },
+  { h: 'О себе', ids: ['about', 'cv'] },
   { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
   { h: 'Контакты', ids: ['mail', 'telegram', 'linkedin'] },
-  { h: 'Документы', ids: ['cv'] },
 ];
 const ALL = NAV.flatMap(g => g.ids);
 
