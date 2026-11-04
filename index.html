@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 
 :root {
   --bg: #FFFFFF; --side: #F7F7F8; --elev: #FFFFFF; --soft: #EFEFF1; --line: #E4E4E7;
@@ -134,14 +133,6 @@ svg { flex-shrink: 0; }
 .sugg b { font-weight: 500; font-size: 14px; }
 .sugg small { color: var(--muted); font-size: 12px; }
 
-/* orb */
-.orb { --s: 28px; width: var(--s); height: var(--s); border-radius: 50%; position: relative; flex-shrink: 0;
-  background: conic-gradient(from var(--a), var(--accent), var(--violet), var(--orange), var(--accent));
-  animation: orb 7s linear infinite; }
-.orb::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.85), rgba(255,255,255,0) 45%), radial-gradient(circle at 70% 80%, rgba(0,0,0,.25), transparent 55%); }
-.orb.think { animation: orb 1.4s linear infinite, pulse 1.2s ease-in-out infinite; }
-@keyframes orb { to { --a: 360deg; } }
-@keyframes pulse { 50% { transform: scale(.82); } }
 @keyframes blink { 50% { opacity: .3; } }
 
 /* messages */
@@ -150,7 +141,7 @@ svg { flex-shrink: 0; }
 .home.thread.show { display: flex; }
 .msg-user { display: flex; justify-content: flex-end; margin: 28px 0 20px; animation: rise .35s ease; }
 .msg-user div { background: var(--soft); padding: 10px 16px; border-radius: 18px 18px 4px 18px; max-width: 80%; }
-.msg-ai { display: grid; grid-template-columns: 28px 1fr; gap: 14px; margin-bottom: 12px; }
+.msg-ai { margin-bottom: 12px; }
 .msg-ai .body { min-width: 0; padding-top: 2px; }
 .body > * { animation: rise .4s ease both; }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
@@ -166,13 +157,14 @@ svg { flex-shrink: 0; }
 .body ul li::before { content: '→'; position: absolute; left: 4px; color: var(--accent-text); }
 .caret::after { content: ''; display: inline-block; width: 8px; height: 15px; background: var(--text); margin-left: 2px; vertical-align: -2px; border-radius: 2px; animation: blink .7s infinite; }
 
-.thinking { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; font-size: 13px; overflow: hidden; }
-.thinking-h { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; color: var(--muted); }
-.thinking-h svg { transition: transform .2s; margin-left: auto; }
-.thinking.open .thinking-h svg { transform: rotate(180deg); }
+.thinking { margin-bottom: 14px; font-size: 14px; }
+.thinking-h { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 2px 0; color: var(--muted); text-align: left; transition: color .15s; }
+.thinking-h:hover { color: var(--text); }
+.thinking-h svg { transition: transform .2s; transform: rotate(-90deg); }
+.thinking.open .thinking-h svg { transform: none; }
 .thinking-h .shimmer { background: linear-gradient(90deg, var(--muted) 30%, var(--text) 50%, var(--muted) 70%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shim 1.4s linear infinite; }
 @keyframes shim { from { background-position: 100% 0; } to { background-position: -100% 0; } }
-.thinking-b { display: none; padding: 0 12px 10px 32px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+.thinking-b { display: none; margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px 10px 32px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 .thinking.open .thinking-b { display: block; }
 .thinking-b div { padding: 3px 0; position: relative; animation: rise .3s ease; }
 .thinking-b div::before { content: ''; position: absolute; left: -18px; top: 11px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--faint); }
@@ -353,7 +345,6 @@ pre.code .c { color: var(--faint); }
   .app.art-open .artifact { width: 100vw; }
   .art-h, .art-b { min-width: 0; }
   .follow { margin-left: 0; }
-  .msg-ai { grid-template-columns: 1fr; gap: 8px; }
   .disclaimer { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -913,15 +904,15 @@ async function answer(el, id, def, variant, reuse) {
   navItem && navItem.classList.add('typing');
   const wrap = reuse || h('div', 'msg-ai');
   wrap.innerHTML = '';
-  const orb = h('div', 'orb think');
   const body = h('div', 'body');
-  wrap.append(orb, body);
+  wrap.append(body);
   if (!reuse) el.append(wrap);
   scrollDown();
 
   // размышления
-  const th = h('div', 'thinking open');
+  const th = h('div', 'thinking');
   const thHead = h('button', 'thinking-h', `<span class="shimmer">Размышляю…</span>${ICON.chev}`);
+  const thLabel = thHead.firstChild;
   const thBody = h('div', 'thinking-b');
   th.append(thHead, thBody);
   thHead.onclick = () => th.classList.toggle('open');
@@ -930,6 +921,7 @@ async function answer(el, id, def, variant, reuse) {
   for (const step of def.think || []) {
     await wait(380 + Math.random() * 300);
     thBody.append(h('div', '', step));
+    thLabel.textContent = step;
     scrollDown();
   }
   await wait(300);
@@ -947,7 +939,6 @@ async function answer(el, id, def, variant, reuse) {
     else { await wait(160); activate(node, b); }
     scrollDown();
   }
-  orb.classList.remove('think');
 
   // действия
   const acts = h('div', 'actions');
