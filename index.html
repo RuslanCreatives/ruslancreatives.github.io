@@ -129,7 +129,7 @@ svg { flex-shrink: 0; }
 .home { min-height: calc(100% - 40px); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; }
 .home h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; letter-spacing: -.035em; font-weight: 600; margin: 28px 0 12px; max-width: 640px; }
 .home h1 em { font-style: normal; background: linear-gradient(100deg, var(--violet), var(--orange) 60%, var(--accent-text)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.home p { color: var(--muted); max-width: 500px; margin: 0 0 32px; font-size: 16px; }
+.home p { text-wrap: balance; color: var(--muted); max-width: 500px; margin: 0 0 32px; font-size: 16px; }
 .sugg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 620px; }
 .sugg button { text-align: left; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--elev); transition: .18s; display: flex; flex-direction: column; gap: 2px; }
 .sugg button:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--faint); }
@@ -385,7 +385,7 @@ pre.code .c { color: var(--faint); }
 <div class="app" id="app">
   <aside class="side" id="side">
     <div class="side-top">
-      <button class="logo" id="logo" aria-label="На главную"><div class="orb" style="--s:22px"></div>Ruslan</button>
+      <button class="logo" id="logo" aria-label="На главную"><div class="orb" style="--s:22px"></div>Руслан</button>
       <button class="icon-btn burger" id="closeNav" aria-label="Закрыть меню"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <button class="new-chat" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый чат<kbd>/</kbd></button>
@@ -408,13 +408,18 @@ pre.code .c { color: var(--faint); }
           <button data-v="stream">Печатать</button>
           <button data-v="instant">Мгновенно</button>
         </div>
+        <div class="menu-label">Звуки</div>
+        <div class="seg two" id="soundSeg">
+          <button data-v="on">Включены</button>
+          <button data-v="off">Выключены</button>
+        </div>
         <hr>
         <a class="menu-item" id="cvLink" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Скачать CV</a>
         <button class="menu-item" id="resetBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.7 9.7 0 00-6.7 2.8L3 8M3 3v5h5"/></svg>Очистить историю</button>
       </div>
       <button class="profile-btn" id="profileBtn">
         <div class="ava" id="ava">R</div>
-        <div><div class="profile-name">Ruslan</div><div class="profile-plan">Open to work · AI</div></div>
+        <div><div class="profile-name">Руслан</div><div class="profile-plan">Открыт к предложениям</div></div>
         <svg style="margin-left:auto;color:var(--faint)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
       </button>
     </div>
@@ -440,7 +445,7 @@ pre.code .c { color: var(--faint); }
         <section class="home thread show" id="t-home">
           <div class="orb big" id="bigOrb" title="Тыкните"></div>
           <h1>Я — <em>Руслан</em>,<br>дизайнер продуктов</h1>
-          <p>Спросите меня о работе в Ozon, Lamoda или Сбере, о том, почему я иду в AI, — или просто потыкайте. Тут почти всё кликается.</p>
+          <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
           <div class="sugg" id="sugg"></div>
           <div class="marquee"><span>Ozon</span><span>·</span><span>Lamoda</span><span>·</span><span>Сбер</span><span>·</span><span>Simetra</span><span>·</span><span>B2B / B2E / B2G</span></div>
         </section>
@@ -452,14 +457,14 @@ pre.code .c { color: var(--faint); }
         <div class="chips" id="chips"></div>
         <div class="box">
           <div class="slash" id="slash"></div>
-          <textarea id="input" rows="1" placeholder="Спросите что-нибудь о Руслане…"></textarea>
+          <textarea id="input" rows="1" placeholder="Спросите что-нибудь обо мне…"></textarea>
           <div class="box-row">
             <button class="icon-btn" id="attach" title="Прикрепить"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5"/></svg></button>
             <span class="hint">/ — команды</span>
             <button class="send" id="send" disabled aria-label="Отправить"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
           </div>
         </div>
-        <div class="disclaimer">Ruslan может ошибаться, но в макетах — редко</div>
+        <div class="disclaimer">Руслан может ошибаться, но в макетах — редко</div>
       </div>
     </div>
   </main>
@@ -773,6 +778,68 @@ const S = {
   stop: false,
 };
 const threads = {};
+
+// ===== звуки: синтез через Web Audio, без файлов =====
+const Sound = {
+  on: store.get('sound', true), ctx: null, out: null, last: 0,
+  init() {
+    if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
+    try {
+      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const lp = this.ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 6000;
+      this.out = this.ctx.createGain(); this.out.gain.value = 0.9;
+      this.out.connect(lp).connect(this.ctx.destination);
+    } catch { this.ctx = null; }
+  },
+  tone(f, to, dur, vol, type = 'sine', delay = 0) {
+    const c = this.ctx, t = c.currentTime + delay;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f, t);
+    if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(this.out);
+    o.start(t); o.stop(t + dur + 0.03);
+  },
+  whoosh(dur, vol, from, to) {
+    const c = this.ctx, t = c.currentTime;
+    const buf = c.createBuffer(1, Math.ceil(c.sampleRate * dur), c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const src = c.createBufferSource(); src.buffer = buf;
+    const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.2;
+    bp.frequency.setValueAtTime(from, t); bp.frequency.exponentialRampToValueAtTime(to, t + dur);
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + dur * 0.35); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(bp).connect(g).connect(this.out);
+    src.start(t); src.stop(t + dur);
+  },
+  play(name) {
+    if (!this.on || !this.ctx || this.ctx.state !== 'running') return;
+    const now = performance.now();
+    if (name === 'hover') { if (now - this.last < 45) return; this.last = now; this.tone(2400, 1900, 0.04, 0.016, 'triangle'); }
+    if (name === 'click') { this.tone(560, 260, 0.09, 0.07); this.tone(1400, null, 0.025, 0.012, 'triangle'); }
+    if (name === 'console') {
+      this.whoosh(0.2, 0.05, 500, 3200);
+      this.tone(330, 660, 0.12, 0.035);
+      this.tone(990, null, 0.09, 0.03, 'triangle', 0.1);
+      this.tone(1480, null, 0.14, 0.02, 'sine', 0.15);
+    }
+  },
+};
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => Sound.init(), { capture: true }));
+document.addEventListener('pointerover', e => {
+  if (e.pointerType !== 'mouse') return;
+  const el = e.target.closest('button:not(:disabled), a, .case');
+  if (!el || el.contains(e.relatedTarget)) return;
+  Sound.play('hover');
+});
+document.addEventListener('click', e => {
+  const el = e.target.closest('button:not(:disabled), a');
+  if (el) Sound.play('click');
+}, { capture: true });
 
 // ===== helpers =====
 const wait = ms => new Promise(r => setTimeout(r, S.stop || S.speed === 'instant' ? 0 : ms));
@@ -1176,9 +1243,11 @@ function updateSlash() {
   if (S.busy || (!empty && (!v.startsWith('/') || v.includes(' ')))) return closeSlash();
   const list = empty ? SLASH : SLASH.filter(c => c[0].startsWith(v.toLowerCase()) || c[1].toLowerCase().includes(v.slice(1).toLowerCase()));
   if (!list.length) return closeSlash();
+  const wasOpen = sl.classList.contains('open');
   sl.innerHTML = '<div class="slash-h">Команды</div>';
   list.forEach((c, i) => { const b = h('button', i === 0 && !empty ? 'on' : '', `<code>${c[0]}</code><span>${c[1]}</span>`); b.onclick = () => runCmd(c); sl.append(b); });
   sl.classList.add('open');
+  if (!wasOpen) Sound.play('console');
 }
 input.addEventListener('focus', updateSlash);
 input.addEventListener('click', updateSlash);
@@ -1205,7 +1274,7 @@ const quips = ['Ой', 'Я просто анимация, но мне прият
 let boops = 0;
 $('#bigOrb').onclick = e => { const o = e.currentTarget; o.classList.remove('boop'); void o.offsetWidth; o.classList.add('boop'); toast(quips[Math.min(boops++, quips.length - 1)]); };
 $('#logo').onclick = () => open('home');
-$('#newChat').onclick = () => { open('home'); input.focus(); };
+$('#newChat').onclick = () => open('home');
 
 // ===== settings =====
 function setTheme(v) {
@@ -1223,6 +1292,8 @@ function setModel(m) {
 }
 document.querySelectorAll('#themeSeg button').forEach(b => b.onclick = () => setTheme(b.dataset.v));
 document.querySelectorAll('#speedSeg button').forEach(b => b.onclick = () => setSpeed(b.dataset.v));
+function setSound(on) { Sound.on = on; store.set('sound', on); document.querySelectorAll('#soundSeg button').forEach(b => b.classList.toggle('on', (b.dataset.v === 'on') === on)); }
+document.querySelectorAll('#soundSeg button').forEach(b => b.onclick = () => { setSound(b.dataset.v === 'on'); Sound.play('click'); });
 document.querySelectorAll('.model-opt[data-m]').forEach(b => b.onclick = () => { setModel(b.dataset.m); closeMenus(); toast(b.dataset.m === 'mini' ? 'Режим «Коротко»: новые ответы будут короткими' : 'Режим «Подробно»: кейсы и цифры'); });
 function closeMenus() { $('#pmenu').classList.remove('open'); $('#modelMenu').classList.remove('open'); }
 $('#profileBtn').onclick = e => { e.stopPropagation(); $('#modelMenu').classList.remove('open'); $('#pmenu').classList.toggle('open'); };
@@ -1243,7 +1314,7 @@ document.querySelector('.ctx-done a').onclick = e => { e.preventDefault(); open(
 if (CONFIG.photo) (() => { const im = new Image(); im.onload = () => { const a = $('#ava'); a.style.backgroundImage = `url('${CONFIG.photo}')`; a.textContent = ''; }; im.src = CONFIG.photo; })();
 
 // ===== init =====
-setTheme(S.theme); setSpeed(S.speed); setModel(S.model);
+setTheme(S.theme); setSpeed(S.speed); setModel(S.model); setSound(Sound.on);
 buildNav(); greet();
 window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (id !== S.current) open(id || 'home'); });
 const startId = location.hash.slice(1);
