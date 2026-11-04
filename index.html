@@ -424,11 +424,10 @@ pre.code .c { color: var(--faint); }
           <div class="box-row">
             <button class="icon-btn" id="attach" title="Прикрепить"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5"/></svg></button>
             <span class="hint">/ — команды</span>
-            <button class="model-btn" id="modelBtn"><span id="modelName">Подробно</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
+            <button class="model-btn" id="modelBtn"><span id="modelName">Размышление</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
             <div class="model-menu" id="modelMenu">
-              <button class="model-opt" data-m="full"><b>Подробно</b><small>Полный разбор продуктов с исследованиями и цифрами</small><span class="check">✓</span></button>
-              <button class="model-opt" data-m="mini"><b>Коротко <span class="badge">TL;DR</span></b><small>Для рекрутеров, у которых 30 секунд. Только суть</small><span class="check">✓</span></button>
-              <button class="model-opt" disabled><b>AI-native <span class="badge hot">в обучении</span></b><small>Откроется после оффера в AI-команду</small><span class="check">✓</span></button>
+              <button class="model-opt" data-s="stream"><b>Размышление</b><small>Ответ печатается, видно ход мыслей</small><span class="check">✓</span></button>
+              <button class="model-opt" data-s="instant"><b>Быстро</b><small>Ответ появляется сразу целиком</small><span class="check">✓</span></button>
             </div>
             <button class="send" id="send" disabled aria-label="Отправить"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
           </div>
@@ -1208,17 +1207,20 @@ function setTheme(v) {
   else document.documentElement.setAttribute('data-theme', v);
   document.querySelectorAll('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
 }
-function setSpeed(v) { S.speed = v; store.set('speed', v); document.querySelectorAll('#speedSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === v)); }
+function setSpeed(v) {
+  S.speed = v; store.set('speed', v);
+  document.querySelectorAll('#speedSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  $('#modelName').textContent = v === 'instant' ? 'Быстро' : 'Размышление';
+  document.querySelectorAll('.model-opt').forEach(b => b.classList.toggle('on', b.dataset.s === v));
+}
 function setModel(m) {
   S.model = m; store.set('model', m);
-  $('#modelName').textContent = m === 'mini' ? 'Коротко' : 'Подробно';
-  document.querySelectorAll('.model-opt').forEach(b => b.classList.toggle('on', b.dataset.m === m));
 }
 document.querySelectorAll('#themeSeg button').forEach(b => b.onclick = () => setTheme(b.dataset.v));
 document.querySelectorAll('#speedSeg button').forEach(b => b.onclick = () => setSpeed(b.dataset.v));
 function setSound(on) { Sound.on = on; store.set('sound', on); document.querySelectorAll('#soundSeg button').forEach(b => b.classList.toggle('on', (b.dataset.v === 'on') === on)); }
 document.querySelectorAll('#soundSeg button').forEach(b => b.onclick = () => { setSound(b.dataset.v === 'on'); Sound.play('click'); });
-document.querySelectorAll('.model-opt[data-m]').forEach(b => b.onclick = () => { setModel(b.dataset.m); closeMenus(); toast(b.dataset.m === 'mini' ? 'Режим «Коротко»: новые ответы будут короткими' : 'Режим «Подробно»: кейсы и цифры'); });
+document.querySelectorAll('.model-opt[data-s]').forEach(b => b.onclick = () => { setSpeed(b.dataset.s); closeMenus(); toast(b.dataset.s === 'instant' ? 'Режим «Быстро»: ответы сразу целиком' : 'Режим «Размышление»: ответы печатаются'); });
 function closeMenus() { $('#pmenu').classList.remove('open'); $('#modelMenu').classList.remove('open'); }
 $('#profileBtn').onclick = e => { e.stopPropagation(); $('#modelMenu').classList.remove('open'); $('#pmenu').classList.toggle('open'); };
 $('#modelBtn').onclick = e => { e.stopPropagation(); $('#pmenu').classList.remove('open'); $('#modelMenu').classList.toggle('open'); };
