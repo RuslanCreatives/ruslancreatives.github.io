@@ -230,6 +230,9 @@ svg { flex-shrink: 0; }
 .btn:hover { transform: translateY(-1px); }
 .btn.acc { background: var(--accent); color: var(--on-accent); }
 .gallery-acts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
+[data-tip] { position: relative; }
+[data-tip]::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 4px); width: max-content; max-width: 240px; white-space: normal; text-align: center; padding: 6px 10px; border-radius: 8px; background: var(--text); color: var(--bg); font-size: 12px; font-weight: 400; line-height: 1.35; pointer-events: none; opacity: 0; transition: .15s; z-index: 5; }
+[data-tip]:hover::after, [data-tip]:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
 .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
 .contact .btn { margin-left: auto; }
 .contact-acts { margin-left: auto; display: flex; gap: 8px; }
@@ -586,7 +589,7 @@ const R = {
       { t: 'p', h: 'В Сбере я поддерживал и развивал дизайн <b>СберБизнеса</b> — дистанционного банковского обслуживания для юрлиц, ИП и корпоративных клиентов, делал <b>Android-приложение для инженеров</b> и развивал <a class="inl" href="https://triplex-design.ru/ru" target="_blank" rel="noopener"><b>Triplex</b></a> — дизайн-систему Sber B2B.' },
       caseCard('sber'),
       { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Design system'] },
-      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html' },
+      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться из-за российских сертификатов' },
     ],
     follow: ['simetra', 'about', 'telegram'],
   },
@@ -982,7 +985,7 @@ function renderBlock(b) {
     case 'case': return caseEl(b.id);
     case 'cases': { const g = h('div', 'cases-grid'); Object.keys(CASES).forEach(id => g.append(caseEl(id, true))); return g; }
     case 'gallery': {
-      const d = h('div', 'gallery-acts', `<button class="btn acc">${ICON.arrow} Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener">Сайт проекта ${ICON.arrow}</a>` : ''}`);
+      const d = h('div', 'gallery-acts', `<button class="btn acc">${ICON.arrow} Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
       d.firstChild.onclick = () => openArtifact(b.id);
       return d;
     }
