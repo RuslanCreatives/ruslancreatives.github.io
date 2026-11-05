@@ -189,7 +189,7 @@ svg { flex-shrink: 0; }
 .case { display: grid; grid-template-columns: 1fr; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--elev); margin: 0 0 18px; cursor: pointer; transition: .2s; text-align: left; width: 100%; }
 .case:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .case-img { aspect-ratio: 16/8.5; background: var(--soft) center/cover no-repeat; position: relative; }
-.case-img::after { content: 'Открыть артефакт ↗'; position: absolute; right: 12px; bottom: 12px; font: 500 12px var(--mono); background: var(--elev); color: var(--text); padding: 6px 10px; border-radius: 8px; opacity: 0; transform: translateY(4px); transition: .2s; }
+.case-img::after { content: 'Открыть все экраны ↗'; position: absolute; right: 12px; bottom: 12px; font: 500 12px var(--mono); background: var(--elev); color: var(--text); padding: 6px 10px; border-radius: 8px; opacity: 0; transform: translateY(4px); transition: .2s; }
 .case:hover .case-img::after { opacity: 1; transform: none; }
 .case-b { padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 .case-b b { font-size: 16px; font-weight: 600; display: block; }
@@ -516,10 +516,10 @@ const COVERS = {
 
 const caseCard = id => ({ t: 'case', id });
 const CASES = {
-  ozon: ['Chatzone Meet', 'Ozon — видеоконференции, мессенджер, видеонаблюдение', '2025—26'],
-  lamoda: ['Seller Center', 'Lamoda — кабинет продавца с нуля', '2023—25'],
-  sber: ['СберБизнес', 'Сбер — ДБО для бизнеса и Triplex', '2021—23'],
-  simetra: ['RITM³', 'Simetra — мониторинг транспорта города', '2018—20'],
+  ozon: ['Chatzone Meet', 'Ozon — видеоконференции, мессенджер, видеонаблюдение', '2025—2026'],
+  lamoda: ['Seller Center', 'Lamoda — кабинет продавца с нуля', '2023—2025'],
+  sber: ['СберБизнес', 'Сбер — ДБО для бизнеса и Triplex', '2021—2023'],
+  simetra: ['RITM³', 'Цифровая платформа для управления транспортной системой города', '2018—2020'],
 };
 
 // ===== Ответы модели =====
@@ -562,11 +562,11 @@ const R = {
       { t: 'p', h: 'Оставшийся негатив касался уже техники — зависаний и звука, а не интерфейса. Ещё в Ozon я делал <b>Chatzone Messenger</b> на базе Mattermost и <b>Watchzone</b> — систему видеонаблюдения за складами и ПВЗ. Всё это — в артефакте.' },
       { t: 'gallery', id: 'ozon' },
     ],
-    tldr: [{ t: 'p', h: 'Ozon, 2025—26. Редизайн видеоконференций Chatzone Meet: доля пользователей нового интерфейса <mark>10% → 48%</mark> за 2 недели. Плюс мессенджер и видеонаблюдение складов.' }, caseCard('ozon')],
-    follow: ['lamoda', 'sber', 'telegram'],
+    tldr: [{ t: 'p', h: 'Ozon, 2025—2026. Редизайн видеоконференций Chatzone Meet: доля пользователей нового интерфейса <mark>10% → 48%</mark> за 2 недели. Плюс мессенджер и видеонаблюдение складов.' }, caseCard('ozon')],
+    follow: ['lamoda', 'about', 'telegram'],
   },
   lamoda: {
-    title: 'Lamoda', q: 'Что ты делал в Lamoda?', group: 'work', meta: '2023—2025',
+    title: 'Lamoda', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
     think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
     blocks: [
       { t: 'p', h: 'Два года я проектировал <b>Seller Center</b> — личный кабинет продавца Lamoda — с нуля: товары, аналитика, заказы, акции.' },
@@ -581,11 +581,11 @@ const R = {
       { t: 'stats', items: [['6', '%', 'рост числа участников акций и продаж в акционный период'], ['10→5', '', 'часов до старта: селлеры стали добавлять товары быстрее']] },
       { t: 'gallery', id: 'lamoda' },
     ],
-    tldr: [{ t: 'p', h: 'Lamoda, 2023—25. Seller Center с нуля. Новый календарь акций: <mark>+6%</mark> участников, товары добавляют на 3–5 часов быстрее.' }, caseCard('lamoda')],
-    follow: ['sber', 'simetra', 'mail'],
+    tldr: [{ t: 'p', h: 'Lamoda, 2023—2025. Seller Center с нуля. Новый календарь акций: <mark>+6%</mark> участников, товары добавляют на 3–5 часов быстрее.' }, caseCard('lamoda')],
+    follow: ['sber', 'about', 'telegram'],
   },
   sber: {
-    title: 'Сбер', q: 'Что было в Сбере?', group: 'work', meta: '2021—2023',
+    title: 'Сбер', q: 'Расскажи про Сбер', group: 'work', meta: '2021—2023',
     think: ['Открываю СберБизнес, 2021—2023', 'Нахожу вклад в дизайн-систему Triplex'],
     blocks: [
       { t: 'p', h: 'В Сбере я поддерживал и развивал дизайн <b>СберБизнеса</b> — дистанционного банковского обслуживания для юрлиц, ИП и корпоративных клиентов. И делал <b>Android-приложение для инженеров</b>.' },
@@ -594,8 +594,8 @@ const R = {
       { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Design system'] },
       { t: 'gallery', id: 'sber' },
     ],
-    tldr: [{ t: 'p', h: 'Сбер, 2021—23. СберБизнес, Android-приложение для инженеров, вклад в дизайн-систему Triplex.' }, caseCard('sber')],
-    follow: ['simetra', 'ozon', 'cv'],
+    tldr: [{ t: 'p', h: 'Сбер, 2021—2023. СберБизнес, Android-приложение для инженеров, вклад в дизайн-систему Triplex.' }, caseCard('sber')],
+    follow: ['simetra', 'about', 'telegram'],
   },
   simetra: {
     title: 'Simetra', q: 'Расскажи про Simetra', group: 'work', meta: '2018—2020',
@@ -607,8 +607,8 @@ const R = {
       { t: 'tags', items: ['Web', 'B2B / B2G', 'Data-heavy', 'Maps'] },
       { t: 'gallery', id: 'simetra' },
     ],
-    tldr: [{ t: 'p', h: 'Simetra, 2018—20. RITM³ — платформа мониторинга транспорта города. B2G, карты, данные в реальном времени.' }, caseCard('simetra')],
-    follow: ['about', 'ozon', 'telegram'],
+    tldr: [{ t: 'p', h: 'Simetra, 2018—2020. RITM³ — платформа мониторинга транспорта города. B2G, карты, данные в реальном времени.' }, caseCard('simetra')],
+    follow: ['ozon', 'about', 'telegram'],
   },
   works: {
     title: 'Все работы', q: 'Покажи все работы', hidden: true,
