@@ -173,9 +173,6 @@ svg { flex-shrink: 0; }
 .actions.show { opacity: 1; }
 .actions .icon-btn { width: 30px; height: 30px; }
 .actions .icon-btn.on { color: var(--accent-text); }
-.pager { display: flex; align-items: center; gap: 2px; font: 12px var(--mono); color: var(--muted); margin-right: 4px; }
-.pager button { width: 22px; height: 26px; border-radius: 6px; color: var(--muted); }
-.pager button:hover { background: var(--soft); color: var(--text); }
 .follow { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px 42px; }
 .follow button { padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; color: var(--muted); transition: .15s; animation: rise .4s ease both; }
 .follow button:hover { color: var(--text); border-color: var(--text); }
@@ -250,9 +247,6 @@ svg { flex-shrink: 0; }
 .doc b { font-size: 16px; display: block; }
 .doc small { color: var(--muted); display: block; margin: 2px 0 12px; font-size: 13px; }
 
-pre.code { background: var(--elev); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font: 13px/1.7 var(--mono); overflow-x: auto; margin: 0 0 16px; }
-pre.code .k { color: var(--accent-text); font-weight: 500; }
-pre.code .c { color: var(--faint); }
 
 
 
@@ -533,22 +527,12 @@ const R = {
   about: {
     title: 'Кто я', q: 'Расскажи о себе', group: 'about',
     think: ['Читаю запрос: «расскажи о себе»', 'Достаю 8 лет опыта из долговременной памяти', 'Вырезаю скучные части'],
-    variants: [
-      [
-        { t: 'p', h: 'Привет! Я <b>Руслан</b> — продуктовый дизайнер. Больше 8 лет проектирую сложные интерфейсы для B2B, B2E и B2G: работал с <b>Ozon</b>, <b>Lamoda</b> и <b>Сбером</b>, а ещё сделал интерфейс продукта для правительства РФ.' },
-        { t: 'p', h: 'Моя суперсила — разбирать запутанные системы на понятные сценарии. Видеозвонки и мессенджер для десятков тысяч сотрудников, кабинет продавца маркетплейса, мониторинг транспорта целого города.' },
-        { t: 'stats', items: [['8', '+', 'лет в продуктовом дизайне'], ['4', '', 'компании: Ozon, Lamoda, Сбер, Simetra'], ['48', '%', 'перешли на новый Meet за 2 недели (было 10%)'], ['6', '%', 'рост участников акций в Lamoda']] },
-        { t: 'p', h: 'Сейчас я иду в сторону <mark>AI-продуктов</mark>: хочу проектировать интерфейсы, где человек и модель работают вместе. Этот сайт — мой маленький манифест на эту тему.' },
-        { t: 'tags', items: ['Product design', 'B2B / B2E / B2G', 'Research', 'Design systems', 'Web + Mobile', '→ AI UX'] },
-      ],
-      [
-        { t: 'p', h: '<b>TL;DR:</b> продуктовый дизайнер, 8+ лет. Ozon, Lamoda, Сбер, Simetra. Превращаю сложные системы в понятные интерфейсы и подтверждаю это цифрами. Хочу делать AI-продукты.' },
-        { t: 'tags', items: ['8+ лет', 'B2B / B2E', 'Open to work', '→ AI'] },
-      ],
-      [
-        { t: 'p', h: 'Ок, в формате changelog:' },
-        { t: 'code', h: '<span class="c"># ruslan — release notes</span>\n<span class="k">v2018</span>  Simetra   мониторинг транспорта города · B2G\n<span class="k">v2021</span>  Сбер      СберБизнес, приложение для инженеров, Triplex\n<span class="k">v2023</span>  Lamoda    Seller Center с нуля · +6% участников акций\n<span class="k">v2025</span>  Ozon      Meet, Messenger, Watchzone · 10% → 48%\n<span class="k">v2026</span>  ???       AI-продукт <span class="c"># ищу команду</span>' },
-      ],
+    blocks: [
+      { t: 'p', h: 'Привет! Я <b>Руслан</b> — продуктовый дизайнер. Больше 8 лет проектирую сложные интерфейсы для B2B, B2E и B2G: работал с <b>Ozon</b>, <b>Lamoda</b> и <b>Сбером</b>, а ещё сделал интерфейс продукта для правительства РФ.' },
+      { t: 'p', h: 'Моя суперсила — разбирать запутанные системы на понятные сценарии. Видеозвонки и мессенджер для десятков тысяч сотрудников, кабинет продавца маркетплейса, мониторинг транспорта целого города.' },
+      { t: 'stats', items: [['8', '+', 'лет в продуктовом дизайне'], ['4', '', 'компании: Ozon, Lamoda, Сбер, Simetra'], ['48', '%', 'перешли на новый Meet за 2 недели (было 10%)'], ['6', '%', 'рост участников акций в Lamoda']] },
+      { t: 'p', h: 'Сейчас я иду в сторону <mark>AI-продуктов</mark>: хочу проектировать интерфейсы, где человек и модель работают вместе. Этот сайт — мой маленький манифест на эту тему.' },
+      { t: 'tags', items: ['Product design', 'B2B / B2E / B2G', 'Research', 'Design systems', 'Web + Mobile', '→ AI UX'] },
     ],
     tldr: [{ t: 'p', h: 'Продуктовый дизайнер, 8+ лет: Ozon, Lamoda, Сбер, Simetra. Сложные B2B/B2E-интерфейсы. Ищу команду, которая делает AI-продукты.' }],
     follow: ['ozon', 'lamoda', 'telegram'],
@@ -894,10 +878,10 @@ async function ask(text, routeId) {
   const id = routeId || route(text);
   const def = R[id] || EXTRA[id];
   if (ALL.includes(id) || id === 'works') markSeen(id);
-  await answer(el, id, def, 0);
+  await answer(el, id, def);
 }
 
-async function answer(el, id, def, variant, reuse) {
+async function answer(el, id, def, reuse) {
   S.busy = true; S.stop = false; stick = true; setSendState(); setChips([]);
   const navItem = document.querySelector(`.item[data-id="${S.current}"]`);
   navItem && navItem.classList.add('typing');
@@ -929,7 +913,7 @@ async function answer(el, id, def, variant, reuse) {
   th.classList.remove('open');
 
   const mini = S.model === 'mini' && def.tldr;
-  const blocks = mini ? def.tldr : def.variants ? def.variants[variant] : def.blocks;
+  const blocks = mini ? def.tldr : def.blocks;
   for (const b of blocks) {
     const node = renderBlock(b);
     if (!node) continue;
@@ -941,18 +925,10 @@ async function answer(el, id, def, variant, reuse) {
 
   // действия
   const acts = h('div', 'actions');
-  if (def.variants && !mini) {
-    const n = def.variants.length;
-    const pg = h('div', 'pager', `<button aria-label="Назад">‹</button><span>${variant + 1}/${n}</span><button aria-label="Вперёд">›</button>`);
-    const [prev, , next] = pg.children;
-    prev.onclick = () => !S.busy && answer(el, id, def, (variant - 1 + n) % n, wrap);
-    next.onclick = () => !S.busy && answer(el, id, def, (variant + 1) % n, wrap);
-    acts.append(pg);
-  }
   const copy = h('button', 'icon-btn', ICON.copy); copy.title = 'Копировать';
   copy.onclick = () => { navigator.clipboard?.writeText(body.innerText.replace(/^Размышлял.*\n/, '')).then(() => toast('Скопировано')).catch(() => toast('Не удалось скопировать')); };
   const regen = h('button', 'icon-btn', ICON.regen); regen.title = 'Перегенерировать';
-  regen.onclick = () => { if (S.busy) return; const n = def.variants ? def.variants.length : 1; answer(el, id, def, (variant + 1) % n, wrap); };
+  regen.onclick = () => { if (S.busy) return; answer(el, id, def, wrap); };
   const up = h('button', 'icon-btn', ICON.up); up.title = 'Хороший ответ';
   const down = h('button', 'icon-btn', ICON.down); down.title = 'Плохой ответ';
   up.onclick = () => { up.classList.toggle('on'); down.classList.remove('on'); if (up.classList.contains('on')) toast('Спасибо! Передам Руслану, он будет доволен'); };
@@ -1001,7 +977,6 @@ function renderBlock(b) {
     case 'h': return h('h3', '', b.h);
     case 'ol': return h('ol', '', b.items.map(i => `<li>${i}</li>`).join(''));
     case 'tags': return h('div', 'tags', b.items.map(t => `<span class="tag${t.startsWith('→') ? ' hi' : ''}">${t}</span>`).join(''));
-    case 'code': return h('pre', 'code', b.h);
     case 'stats': return h('div', 'stats', b.items.map(([v, suf, l]) => `<div class="stat"><b data-v="${v}" data-s="${suf}">${/^\d+$/.test(v) ? '0' : v}${suf}</b><span>${l}</span></div>`).join(''));
     case 'segs': return h('div', 'segs', `<div class="seg-bar">${b.items.map(([p, , c]) => `<i style="background:${c}" data-w="${Math.max(p, 2)}">${p > 5 ? p + '%' : ''}</i>`).join('')}</div><div class="seg-leg">${b.items.map(([p, l, c]) => `<span style="--c:${c}">${l} — ${p < 2 ? '<1' : p}%</span>`).join('')}</div>`);
     case 'compare': return h('div', 'compare', `<div class="compare-h"><span>${b.title}</span><span class="mono">${b.note}</span></div>
