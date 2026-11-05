@@ -410,6 +410,12 @@ svg { flex-shrink: 0; }
           <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
           <div class="sugg" id="sugg"></div>
         </section>
+        <!-- Дубль главной для экспериментов: правки здесь не трогают настоящую главную -->
+        <section class="home thread" id="t-home2">
+          <h1>Я — Руслан,<br>дизайнер продуктов</h1>
+          <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
+          <div class="sugg" id="sugg2"></div>
+        </section>
       </div>
     </div>
 
@@ -528,6 +534,7 @@ const CASES = {
 
 // ===== Ответы модели =====
 const R = {
+  home2: { title: 'Дубль' },
   about: {
     title: 'Обо мне', q: 'Расскажи о себе', group: 'about',
     think: ['Читаю запрос: «расскажи о себе»', 'Достаю 8 лет опыта из долговременной памяти', 'Вырезаю скучные части'],
@@ -679,8 +686,11 @@ const NAV = [
   { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
   { h: 'Мои проекты', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
   { h: 'Прочее', ids: ['about', 'cv', 'contacts'] },
+  { h: 'Черновики', ids: ['home2'], draft: true },
 ];
-const ALL = NAV.flatMap(g => g.ids);
+const ALL = NAV.filter(g => !g.draft).flatMap(g => g.ids);
+// главная и её дубль для экспериментов
+const isHome = id => id === 'home' || id === 'home2';
 // отдельные контакты засчитываются во вкладку «Контакты»
 const ALIAS = { mail: 'contacts', telegram: 'contacts', linkedin: 'contacts' };
 
@@ -828,7 +838,7 @@ function markSeen(id) { id = ALIAS[id] || id; if (!ALL.includes(id)) return; S.s
 // ===== routing =====
 function open(id, opts = {}) {
   $('#app').classList.remove('nav-open');
-  if (id === 'home' || !R[id]) { showThread('home'); return; }
+  if (isHome(id) || !R[id]) { showThread(isHome(id) ? id : 'home'); return; }
   if (!threads[id]) {
     const el = h('section', 'thread');
     el.id = 't-' + id;
@@ -849,15 +859,15 @@ function showThread(id) {
   const hash = id === 'home' ? '' : '#' + id;
   if (location.hash !== hash) history.replaceState(null, '', hash || location.pathname);
   syncNav();
-  setChips(id === 'home' || S.busy ? [] : (R[id] && R[id].follow) || []);
+  setChips(isHome(id) || S.busy ? [] : (R[id] && R[id].follow) || []);
   const sc = $('#scroll');
   sc.style.scrollBehavior = 'auto';
-  sc.scrollTop = id === 'home' ? 0 : sc.scrollHeight;
+  sc.scrollTop = isHome(id) ? 0 : sc.scrollHeight;
   sc.style.scrollBehavior = '';
   document.title = id === 'home' ? 'Руслан — дизайнер продуктов' : `${R[id].title} · Руслан`;
 }
 function threadEl() {
-  if (S.current === 'home') {
+  if (isHome(S.current)) {
     // свободный вопрос с главной — отдельный тред
     if (!threads.free) {
       const el = h('section', 'thread'); el.id = 't-free'; $('#col').append(el); threads.free = el;
@@ -1131,7 +1141,7 @@ function runCmd(cmd) {
   const a = cmd[2];
   if (a === '!theme') { const order = ['light', 'dark', 'system']; setTheme(order[(order.indexOf(S.theme) + 1) % 3]); toast('Тема: ' + { light: 'светлая', dark: 'тёмная', system: 'как в системе' }[S.theme]); }
   else if (a === '!clear') reset();
-  else if (a === 'works') { if (S.current === 'home') threadEl(); ask(R.works.q, 'works'); }
+  else if (a === 'works') { if (isHome(S.current)) threadEl(); ask(R.works.q, 'works'); }
   else open(a);
 }
 function autosize() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 160) + 'px'; }
@@ -1169,7 +1179,7 @@ $('#slash').addEventListener('mousedown', e => e.preventDefault());
 function closeSlash() { $('#slash').classList.remove('open'); }
 function setChips(ids) {
   const c = $('#chips'); c.innerHTML = '';
-  ids.forEach(id => { const r = R[id]; if (!r) return; const b = h('button', '', r.q); b.onclick = () => { if (S.busy) return; if (id === 'works') { ask(r.q, 'works'); return; } threads[id] ? open(id) : (S.current === 'free' || S.current === 'home' ? (markSeen(id), ask(r.q, id)) : open(id)); }; c.append(b); });
+  ids.forEach(id => { const r = R[id]; if (!r) return; const b = h('button', '', r.q); b.onclick = () => { if (S.busy) return; if (id === 'works') { ask(r.q, 'works'); return; } threads[id] ? open(id) : (S.current === 'free' || isHome(S.current) ? (markSeen(id), ask(r.q, id)) : open(id)); }; c.append(b); });
 }
 $('#attach').onclick = () => toast('Вложения пока не поддерживаются. Но оффер можно прислать в Telegram 😉');
 document.addEventListener('keydown', e => {
@@ -1180,6 +1190,12 @@ document.addEventListener('keydown', e => {
 // ===== home =====
 function greet() {
   const s = $('#sugg');
+  [['about', 'Обо мне', 'Коротко о 8 годах в дизайне'], ['works', 'Посмотреть все кейсы', 'Продукты, исследования и цифры']]
+    .forEach(([id, t, d], i) => { const b = h('button', '', `<b>${t}</b><small>${d}</small>`); b.style.animation = `rise .5s ${i * 70}ms ease both`; b.onclick = () => open(id); s.append(b); });
+}
+// дубль главной — отдельная копия, чтобы экспериментировать
+function greet2() {
+  const s = $('#sugg2');
   [['about', 'Обо мне', 'Коротко о 8 годах в дизайне'], ['works', 'Посмотреть все кейсы', 'Продукты, исследования и цифры']]
     .forEach(([id, t, d], i) => { const b = h('button', '', `<b>${t}</b><small>${d}</small>`); b.style.animation = `rise .5s ${i * 70}ms ease both`; b.onclick = () => open(id); s.append(b); });
 }
@@ -1231,7 +1247,7 @@ if (window.visualViewport) {
     app.style.bottom = kb ? 'auto' : '';
     app.style.height = kb ? vv.height + 'px' : '';
     app.style.transform = kb && vv.offsetTop ? `translateY(${vv.offsetTop}px)` : '';
-    if (kb && !wasKb && S.current !== 'home') scEl.scrollTop = scEl.scrollHeight;
+    if (kb && !wasKb && !isHome(S.current)) scEl.scrollTop = scEl.scrollHeight;
     wasKb = kb;
   };
   vv.addEventListener('resize', fit);
@@ -1240,7 +1256,7 @@ if (window.visualViewport) {
 
 // ===== init =====
 setTheme(S.theme); setSpeed(S.speed); setSound(Sound.on);
-buildNav(); greet();
+buildNav(); greet(); greet2();
 window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (id !== S.current) open(id || 'home'); });
 const startId = location.hash.slice(1);
 if (startId && R[startId]) open(startId);
