@@ -229,6 +229,7 @@ svg { flex-shrink: 0; }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: var(--text); color: var(--bg); font-weight: 500; font-size: 14px; text-decoration: none; transition: .15s; white-space: nowrap; }
 .btn:hover { transform: translateY(-1px); }
 .btn.acc { background: var(--accent); color: var(--on-accent); }
+.gallery-acts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
 .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
 .contact .btn { margin-left: auto; }
 .contact-acts { margin-left: auto; display: flex; gap: 8px; }
@@ -596,9 +597,10 @@ const R = {
     blocks: [
       { t: 'p', h: 'В Simetra я проектировал <b>RITM³</b> — сложномодульную платформу для мониторинга транспортной ситуации в городе. Это B2G: интерфейс для тех, кто управляет движением целого мегаполиса.' },
       caseCard('simetra'),
-      { t: 'p', h: 'Отсюда моя любовь к плотным интерфейсам, картам и данным в реальном времени. Тут ошибка в UX — это пробка на проспекте.' },
+      { t: 'p', h: 'Это был первый сложный проект в моей карьере. Я спроектировал 5 модулей с разными инструментами, объединив их в общую стилистику. Для этого был создан UI Kit и визуальная стилистика проекта, которая сохранилась по сей день. А для удобства использования продукта были проведены полевые исследования и тестирования с пользователями.' },
+      { t: 'p', h: 'RITM³ занял свою нишу на рынке и в данный момент установлен в 10 крупных городах России (включая Москву и Санкт-Петербург), а также по нему ведётся обучение в высших учебных заведениях России (включая ВШЭ, МАДИ и СПбПУ).' },
       { t: 'tags', items: ['Web', 'B2B / B2G', 'Data-heavy', 'Maps'] },
-      { t: 'gallery', id: 'simetra' },
+      { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/' },
     ],
     follow: ['ozon', 'about', 'telegram'],
   },
@@ -981,8 +983,7 @@ function renderBlock(b) {
     case 'case': return caseEl(b.id);
     case 'cases': { const g = h('div', 'cases-grid'); Object.keys(CASES).forEach(id => g.append(caseEl(id, true))); return g; }
     case 'gallery': {
-      const d = h('div', '', `<button class="btn ghost">${ICON.arrow} Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>`);
-      d.style.margin = '4px 0 16px';
+      const d = h('div', 'gallery-acts', `<button class="btn acc">${ICON.arrow} Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener">Сайт проекта ${ICON.arrow}</a>` : ''}`);
       d.firstChild.onclick = () => openArtifact(b.id);
       return d;
     }
