@@ -189,7 +189,7 @@ svg { flex-shrink: 0; }
 .case { display: grid; grid-template-columns: 1fr; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--elev); margin: 0 0 18px; cursor: pointer; transition: .2s; text-align: left; width: 100%; }
 .case:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .case-img { aspect-ratio: 16/8.5; background: var(--soft) center/cover no-repeat; position: relative; }
-.case-img::after { content: 'Открыть все экраны ↗'; position: absolute; right: 12px; bottom: 12px; font: 500 12px var(--mono); background: var(--elev); color: var(--text); padding: 6px 10px; border-radius: 8px; opacity: 0; transform: translateY(4px); transition: .2s; }
+.case-img::after { content: 'Открыть все экраны'; position: absolute; right: 12px; bottom: 12px; font: 500 12px var(--mono); background: var(--elev); color: var(--text); padding: 6px 10px; border: 1px solid color-mix(in srgb, var(--text) 18%, transparent); box-shadow: 0 2px 8px rgba(0,0,0,.12); border-radius: 8px; opacity: 0; transform: translateY(4px); transition: .2s; }
 .case:hover .case-img::after { opacity: 1; transform: none; }
 .case-b { padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 .case-b b { font-size: 16px; font-weight: 600; display: block; }
@@ -985,7 +985,7 @@ function renderBlock(b) {
     case 'case': return caseEl(b.id);
     case 'cases': { const g = h('div', 'cases-grid'); Object.keys(CASES).forEach(id => g.append(caseEl(id, true))); return g; }
     case 'gallery': {
-      const d = h('div', 'gallery-acts', `<button class="btn acc">${ICON.arrow} Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
+      const d = h('div', 'gallery-acts', `<button class="btn acc">Открыть все экраны</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
       d.firstChild.onclick = () => openArtifact(b.id);
       return d;
     }
