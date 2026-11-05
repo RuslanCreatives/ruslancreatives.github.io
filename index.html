@@ -985,7 +985,7 @@ function renderBlock(b) {
     case 'case': return caseEl(b.id);
     case 'cases': { const g = h('div', 'cases-grid'); Object.keys(CASES).forEach(id => g.append(caseEl(id, true))); return g; }
     case 'gallery': {
-      const d = h('div', 'gallery-acts', `<button class="btn acc">Открыть все экраны</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
+      const d = h('div', 'gallery-acts', `<button class="btn acc">Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
       d.firstChild.onclick = () => openArtifact(b.id);
       return d;
     }
