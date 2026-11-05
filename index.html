@@ -816,9 +816,14 @@ function open(id, opts = {}) {
     el.id = 't-' + id;
     $('#col').append(el);
     threads[id] = el;
-    showThread(id);
-    ask(R[id].q, id);
-  } else showThread(id);
+  }
+  showThread(id);
+  fillPending();
+}
+// тред открыли, пока печатался другой ответ, — догружаем его, как только модель освободится
+function fillPending() {
+  const id = S.current, el = threads[id];
+  if (!S.busy && el && R[id] && R[id].q && !el.children.length) ask(R[id].q, id);
 }
 function showThread(id) {
   S.current = id;
@@ -939,6 +944,7 @@ async function answer(el, id, def, reuse) {
   S.busy = false; S.stop = false; setSendState();
   if (el.classList.contains('show')) setChips(def.follow || ['about', 'works', 'telegram']);
   scrollDown();
+  fillPending();
 }
 
 async function typeOut(node) {
