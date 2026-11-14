@@ -652,6 +652,19 @@ const R = {
       { t: 'p', h: 'Оставшийся негатив касался уже техники — зависаний и звука, а не интерфейса. Ещё в Ozon я делал <b>Chatzone Messenger</b> на базе Mattermost и <b>Watchzone</b> — систему видеонаблюдения за складами и ПВЗ. Всё это — в артефакте.' },
       { t: 'gallery', id: 'ozon' },
     ],
+    follow: ['messenger', 'about', 'contacts'],
+  },
+  messenger: {
+    title: 'Chatzone Messenger', q: 'Расскажи про Chatzone Messenger', group: 'work', meta: '2025—2026',
+    think: ['Открываю Chatzone Messenger', 'Считаю сообщения в архивных тредах', 'Подключаю DeepSeek'],
+    blocks: [
+      { t: 'p', h: '<b>Chatzone Messenger</b> — корпоративный мессенджер для сотрудников Ozon.' },
+      { t: 'h', h: 'Проблема' },
+      { t: 'p', h: 'В рабочих тредах скапливаются <b>сотни сообщений</b>, а в архивных — <b>до тысячи</b>. Чтобы прочитать всё, нужно много времени. Хочется его сэкономить и вынести только важную суть. С развитием ИИ-технологий напрашивалась функция краткой выжимки треда.' },
+      { t: 'h', h: 'Решение' },
+      { t: 'p', h: 'В Ozon уже использовалась открытая модель <b>DeepSeek</b>, поэтому решили подключить её к мессенджеру. Сначала я спроектировал чат: можно сделать суммаризацию треда и дополнительно уточнить детали. Но из-за технических сложностей от чата отказались в пользу готовых промптов:' },
+      { t: 'ol', items: ['Краткая сводка', 'Нерешённые вопросы', 'Дальнейшие действия'] },
+    ],
     follow: ['lamoda', 'about', 'contacts'],
   },
   lamoda: {
@@ -763,7 +776,7 @@ const EXTRA = {
 };
 
 const NAV = [
-  { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
+  { h: 'Работы', ids: ['ozon', 'messenger', 'lamoda', 'sber', 'simetra'] },
   { h: 'Мои проекты', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
   { h: 'Прочее', ids: ['about', 'cv', 'contacts'] },
   { h: 'Черновики', ids: ['home2'], draft: true },
@@ -776,7 +789,7 @@ const ALIAS = { mail: 'contacts', telegram: 'contacts', linkedin: 'contacts' };
 
 const SLASH = [
   ['/about', 'О себе', 'about'], ['/works', 'Все работы', 'works'],
-  ['/ozon', 'Кейс Ozon', 'ozon'], ['/lamoda', 'Кейс Lamoda', 'lamoda'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
+  ['/ozon', 'Кейс Ozon', 'ozon'], ['/messenger', 'Кейс Chatzone Messenger', 'messenger'], ['/lamoda', 'Кейс Lamoda', 'lamoda'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
   ['/cv', 'Резюме', 'cv'], ['/contact', 'Контакты', 'contacts'], ['/theme', 'Сменить тему', '!theme'], ['/clear', 'Очистить историю', '!clear'],
 ];
 
@@ -966,6 +979,7 @@ function route(text) {
   const has = (...w) => w.some(x => s.includes(x));
   if (has('ignore', 'игнорир', 'system prompt', 'системный промпт', 'забудь все', 'jailbreak')) return 'jailbreak';
   if (has('зарплат', 'деньг', 'сколько стоишь', 'вилк', 'salary', 'ставк')) return 'money';
+  if (has('мессендж', 'messenger', 'суммариз', 'выжимк', 'deepseek')) return 'messenger';
   if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone')) return 'ozon';
   if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци')) return 'lamoda';
   if (has('сбер', 'sber', 'triplex', 'триплекс', 'банк')) return 'sber';
