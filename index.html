@@ -188,7 +188,9 @@ svg { flex-shrink: 0; }
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
 .body p { margin: 0 0 14px; }
 .ph { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; aspect-ratio: 16 / 9; max-width: 100%; margin: 4px 0 18px; border: 1px dashed var(--line); border-radius: 14px; background: var(--soft); color: var(--faint); font: 12px var(--mono); }
-.shot { display: block; width: 100%; height: auto; margin: 4px 0 18px; border-radius: 14px; background: var(--soft); }
+.shot { display: block; width: 100%; height: auto; margin: 4px 0 18px; border-radius: 14px; background: var(--soft); cursor: zoom-in; transition: transform .2s, box-shadow .2s; }
+.shot:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.18); }
+.shot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .body h3 { margin: 26px 0 10px; font-size: 13px; font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); display: flex; align-items: center; gap: 10px; }
 .body h3::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 .body b, .body strong { font-weight: 600; }
@@ -1115,7 +1117,14 @@ function renderBlock(b) {
     case 'p': return h('p', '', b.h);
     case 'h': return h('h3', '', b.h);
     // скриншот кейса
-    case 'img': { const i = h('img', 'shot'); i.src = b.src; i.alt = b.alt || ''; i.loading = 'lazy'; i.decoding = 'async'; if (b.w) { i.width = b.w; i.height = b.hgt; } return i; }
+    case 'img': {
+      const i = h('img', 'shot'); i.src = b.src; i.alt = b.alt || ''; i.loading = 'lazy'; i.decoding = 'async'; if (b.w) { i.width = b.w; i.height = b.hgt; }
+      // клик или Enter — открыть картинку на весь экран
+      i.tabIndex = 0; i.setAttribute('role', 'button'); i.setAttribute('aria-label', 'Увеличить: ' + i.alt);
+      const zoom = () => { const lb = $('#lightbox'), im = lb.querySelector('img'); im.src = i.src; im.alt = i.alt; lb.classList.add('open'); };
+      i.onclick = zoom; i.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zoom(); } };
+      return i;
+    }
     // плейсхолдер картинки, пока нет скриншота
     case 'ph': return h('div', 'ph', '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span>Здесь будет картинка</span>');
     case 'ol': return h('ol', '', b.items.map(i => `<li>${i}</li>`).join(''));
