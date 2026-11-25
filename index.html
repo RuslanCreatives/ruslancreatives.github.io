@@ -978,6 +978,7 @@ function fillPending() {
   if (!S.busy && el && R[id] && R[id].q && !el.children.length) ask(R[id].q, id);
 }
 function showThread(id) {
+  if (id !== S.artFrom) $('#app').classList.remove('art-open');
   S.current = id;
   document.querySelectorAll('.thread').forEach(t => t.classList.toggle('show', t.id === 't-' + id));
   const hash = id === 'home' ? '' : '#' + id;
@@ -1343,6 +1344,7 @@ function openArtifact(id) {
   });
   body.scrollTop = 0;
   $('#app').classList.add('art-open');
+  S.artFrom = S.current; // панель с экранами живёт только на той странице, где её открыли
 }
 $('#artClose').onclick = () => $('#app').classList.remove('art-open');
 $('#artBody').onclick = e => { if (e.target.tagName === 'IMG') LB.open(e.target); };
