@@ -14,7 +14,7 @@
   --bg: #FFFFFF; --side: #F7F7F8; --elev: #FFFFFF; --soft: #EFEFF1; --line: #E4E4E7;
   --text: #0D0D0F; --muted: #5E5E66; --faint: #8E8E96;
   --accent: #D4FF3A; --on-accent: #10110C; --accent-text: #5F7A00;
-  --violet: #7B61FF; --orange: #FF6B3D;
+  --violet: #7B61FF; --orange: #FF6B3D; --fx-glow: transparent;
   --shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 28px rgba(0,0,0,.07);
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'Onest', system-ui, -apple-system, sans-serif;
@@ -23,7 +23,7 @@
 :root[data-theme="dark"] {
   --bg: #0F0F0D; --side: #151513; --elev: #1C1C19; --soft: #22221F; --line: #2B2B27;
   --text: #EDEBE4; --muted: #8E8B81; --faint: #5F5D56;
-  --accent-text: #D4FF3A;
+  --accent-text: #D4FF3A; --fx-glow: rgba(255,255,255,.55);
   --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 40px rgba(0,0,0,.35);
   color-scheme: dark;
 }
@@ -31,7 +31,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0F0F0D; --side: #151513; --elev: #1C1C19; --soft: #22221F; --line: #2B2B27;
     --text: #EDEBE4; --muted: #8E8B81; --faint: #5F5D56;
-    --accent-text: #D4FF3A;
+    --accent-text: #D4FF3A; --fx-glow: rgba(255,255,255,.55);
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 40px rgba(0,0,0,.35);
     color-scheme: dark;
   }
@@ -200,6 +200,15 @@ svg { flex-shrink: 0; }
 .body li { position: relative; padding-left: 30px; margin-bottom: 8px; }
 .body ol li::before { counter-increment: li; content: counter(li, decimal-leading-zero); position: absolute; left: 0; top: 2px; font: 500 11px var(--mono); color: var(--accent-text); }
 .body ul li::before { content: '→'; position: absolute; left: 4px; color: var(--accent-text); }
+/* генерация ответа: буквы сначала проступают силуэтом из точек, затем из размытия становятся шрифтом */
+.ch { opacity: 0; }
+.ch.d { opacity: 1; color: transparent; background-image: radial-gradient(circle, var(--text) 1px, transparent 1.3px); background-size: 2.4px 2.4px; -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: .7px transparent; filter: drop-shadow(0 0 2px var(--fx-glow)); animation: chDot .18s ease both; }
+@keyframes chDot { from { opacity: 0; transform: translateY(2px); } }
+.ch.r { opacity: 1; animation: chIn .32s cubic-bezier(.2,.8,.2,1) both; }
+/* генерация картинки: собирается кусочками слева направо, сверху вниз — сначала точками, как буквы, потом проявляется */
+.gen-wrap { position: relative; display: block; }
+.gen-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; border-radius: inherit; }
+@keyframes chIn { from { opacity: .25; filter: blur(5px); } 60% { opacity: .85; filter: blur(1px); } to { opacity: 1; filter: none; } }
 .caret::after { content: ''; display: inline-block; width: 8px; height: 15px; background: var(--text); margin-left: 2px; vertical-align: -2px; border-radius: 2px; animation: blink .7s infinite; }
 
 .thinking { margin-bottom: 14px; font-size: 14px; }
@@ -1065,6 +1074,7 @@ async function answer(el, id, def, reuse) {
     if (!node) continue;
     body.append(node);
     if (b.t === 'p') await typeOut(node);
+    else if ((b.t === 'img' || b.t === 'case') && S.speed !== 'instant' && !S.stop) { const gi = genImage(b.t === 'img' ? node : node.querySelector('.case-img')); await Promise.race([gi, wait(160)]); activate(node, b); }
     else { await wait(160); activate(node, b); }
     scrollDown();
   }
@@ -1090,25 +1100,114 @@ async function answer(el, id, def, reuse) {
   fillPending();
 }
 
+// картинка «генерируется», как буквы в ответе: по ней от верхнего левого угла к нижнему правому
+// проходит волна — сначала вспыхивают отдельные точки, их становится больше, потом картинка проступает размытой и становится чёткой
+async function genImage(el) {
+  if (!el) return;
+  const isImg = el.tagName === 'IMG';
+  const url = isImg ? el.src : (getComputedStyle(el).backgroundImage.match(/url\("?(.*?)"?\)/) || [])[1];
+  if (!url) return;
+  const im = new Image(); im.src = url;
+  el.style.visibility = 'hidden'; // пока грузится — пустое место нужного размера
+  await Promise.race([im.decode().catch(() => {}), new Promise(r => setTimeout(r, 2500))]);
+  if (S.stop || !im.naturalWidth) { el.style.visibility = ''; return; }
+  let host = el, wrap = null;
+  if (isImg) { wrap = h('span', 'gen-wrap'); wrap.style.margin = getComputedStyle(el).margin; el.style.margin = '0'; el.replaceWith(wrap); wrap.append(el); host = wrap; }
+  const cv = h('canvas', 'gen-cv'); host.append(cv);
+  const rect = el.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+  const W = Math.round(rect.width * d), H = Math.round(rect.height * d);
+  cv.width = W; cv.height = H; cv.style.borderRadius = getComputedStyle(el).borderRadius;
+  const mk = (w = W, hh = H) => { const c = document.createElement('canvas'); c.width = w; c.height = hh; return c; };
+  // как картинка вписана: у <img> целиком, у обложки — cover по центру
+  let sx = 0, sy = 0, sw = im.naturalWidth, sh = im.naturalHeight;
+  if (!isImg) { const k = Math.max(rect.width / sw, rect.height / sh); const cw = rect.width / k, ch = rect.height / k; sx = (sw - cw) / 2; sy = (sh - ch) / 2; sw = cw; sh = ch; }
+  // три слоя: чёткая картинка, размытая и «точечная» (та же сетка, что у букв: шаг 2.4px, точка ~1px)
+  const sharp = mk(); sharp.getContext('2d').drawImage(im, sx, sy, sw, sh, 0, 0, W, H);
+  const small = mk(Math.max(1, W / 10 | 0), Math.max(1, H / 10 | 0));
+  small.getContext('2d').drawImage(sharp, 0, 0, small.width, small.height);
+  const blur = mk(); { const g = blur.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(small, 0, 0, W, H); }
+  const STEP = 2.4 * d, cols = Math.ceil(W / STEP), rows = Math.ceil(H / STEP);
+  const dots = mk(); {
+    const g = dots.getContext('2d'); g.drawImage(sharp, 0, 0);
+    g.globalCompositeOperation = 'destination-in'; g.beginPath();
+    const rad = 1 * d;
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const x = (i + .5) * STEP, y = (j + .5) * STEP; g.moveTo(x + rad, y); g.arc(x, y, rad, 0, 7); }
+    g.fill();
+    // точки чуть ярче, как светящиеся
+    g.globalCompositeOperation = 'lighter'; g.globalAlpha = .25; g.drawImage(g.canvas, 0, 0);
+  }
+  // для каждой точки — когда до неё дойдёт волна (по диагонали + немного случайности) и порог вспышки
+  const N = cols * rows, delay = new Float32Array(N), seed = new Float32Array(N);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const k = j * cols + i, r = Math.random();
+    delay[k] = (i / cols * .62 + j / rows * .38) * .72 + r * .1; seed[k] = Math.random();
+  }
+  // маски в разрешении сетки точек: одна клетка = одна точка
+  const mDots = mk(cols, rows), mBlur = mk(cols, rows), mSharp = mk(cols, rows);
+  const dD = mDots.getContext('2d'), dB = mBlur.getContext('2d'), dS = mSharp.getContext('2d');
+  const iD = dD.createImageData(cols, rows), iB = dB.createImageData(cols, rows), iS = dS.createImageData(cols, rows);
+  const tmp = mk(), tg = tmp.getContext('2d'), ctx = cv.getContext('2d');
+  const layer = (src, mask, smooth) => {
+    tg.globalCompositeOperation = 'copy'; tg.drawImage(src, 0, 0);
+    tg.globalCompositeOperation = 'destination-in'; tg.imageSmoothingEnabled = smooth; tg.drawImage(mask, 0, 0, W, H);
+    ctx.drawImage(tmp, 0, 0);
+  };
+  const bg = el.style.backgroundImage;
+  el.style.visibility = '';
+  if (isImg) el.style.opacity = '0'; else el.style.backgroundImage = 'none';
+  const DUR = 1500, SPAN = .26; // общая длительность и сколько длится превращение одной точки
+  const t0 = performance.now();
+  await new Promise(done => {
+    const frame = now => {
+      const p = (now - t0) / DUR * (.82 + SPAN);
+      const a = iD.data, b = iB.data, c = iS.data;
+      for (let k = 0; k < N; k++) {
+        const v = (p - delay[k]) / SPAN, o = k * 4 + 3; // 0…1 — стадия этой точки
+        // 0–.45: точки вспыхивают по одной, к .45 горят все; .35–.75: проступает размытая; .65–1: становится чёткой
+        a[o] = v <= 0 ? 0 : v < .45 ? (seed[k] < v / .45 ? 255 : 0) : v < .8 ? 255 * (1 - (v - .45) / .35) : 0;
+        b[o] = v < .35 ? 0 : v < .65 ? 255 * (v - .35) / .3 : v < 1 ? 255 * (1 - (v - .65) / .35) : 0;
+        c[o] = v < .65 ? 0 : v < 1 ? 255 * (v - .65) / .35 : 255;
+      }
+      dD.putImageData(iD, 0, 0); dB.putImageData(iB, 0, 0); dS.putImageData(iS, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      layer(blur, mBlur, true);
+      layer(sharp, mSharp, true);
+      layer(dots, mDots, false);
+      if (p >= .82 + SPAN + .1 || S.stop) return done();
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  });
+  if (isImg) el.style.opacity = ''; else el.style.backgroundImage = bg;
+  cv.remove();
+  if (wrap) { el.style.margin = ''; wrap.replaceWith(el); }
+}
+
 async function typeOut(node) {
   if (S.speed === 'instant' || S.stop) return;
+  // каждую букву оборачиваем в span; оригинальные текстовые узлы вернём в конце
   const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
   const texts = [];
-  while (walker.nextNode()) texts.push([walker.currentNode, walker.currentNode.textContent]);
-  texts.forEach(([n]) => n.textContent = '');
-  node.classList.add('caret');
-  for (const [n, full] of texts) {
-    const words = full.split(/(\s+)/);
-    let acc = '';
-    for (let i = 0; i < words.length; i++) {
-      if (S.stop) { n.textContent = full; break; }
-      acc += words[i];
-      n.textContent = acc;
-      if (i % 2 === 0) await new Promise(r => setTimeout(r, 14 + Math.random() * 30));
-    }
+  while (walker.nextNode()) texts.push(walker.currentNode);
+  const chars = [], swaps = [];
+  for (const n of texts) {
+    const box = document.createElement('span');
+    for (const c of n.textContent) { const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = c; box.append(sp); chars.push(sp); }
+    n.replaceWith(box); swaps.push([box, n]);
   }
-  texts.forEach(([n, full]) => n.textContent = full);
-  node.classList.remove('caret');
+  const DOTS = 7; // сколько последних букв ещё «точки»
+  let head = 0;
+  while (head < chars.length && !S.stop) {
+    // за такт — одно слово с пробелом после него, с той же скоростью, что и обычная печать
+    do { chars[head].className = 'ch d'; head++; } while (head < chars.length && chars[head].textContent.trim());
+    while (head < chars.length && !chars[head].textContent.trim()) { chars[head].className = 'ch d'; head++; }
+    for (let i = 0; i < head - DOTS; i++) if (chars[i].className === 'ch d') chars[i].className = 'ch r';
+    scrollDown();
+    await new Promise(r => setTimeout(r, 14 + Math.random() * 30));
+  }
+  // хвост из точек проявляется уже без ожидания — ответ идёт дальше так же быстро, как без анимации
+  for (let i = Math.max(0, chars.length - DOTS - 4); i < chars.length; i++) chars[i].className = 'ch r';
+  setTimeout(() => swaps.forEach(([box, n]) => box.isConnected && box.replaceWith(n)), S.stop ? 0 : 360);
 }
 
 // автоскролл, пока пользователь сам не прокрутил вверх
