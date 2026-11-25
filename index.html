@@ -319,8 +319,9 @@ svg { flex-shrink: 0; }
 .cal-note { font-size: 12px; color: var(--muted); margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
 
 /* composer */
-.composer-wrap { padding: 0 24px 14px; position: relative; }
-.composer { max-width: 760px; margin: 0 auto; position: relative; }
+.composer-wrap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; padding: 0 24px; pointer-events: none; }
+/* подложка только под инпутом: той же ширины и со скруглением сверху, контент прокручивается под ней */
+.composer { max-width: 760px; margin: 0 auto; position: relative; pointer-events: auto; background: var(--bg); border-radius: 22px 22px 0 0; padding-bottom: 14px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 8px; padding-top: 16px; border-top: 1px solid var(--line); animation: rise .35s ease both; }
 .chips:empty { display: none; }
 .chips button { white-space: nowrap; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); font-size: 13px; color: var(--muted); }
@@ -376,7 +377,8 @@ svg { flex-shrink: 0; }
   .burger { display: grid; }
   .col { padding: 56px 16px 32px; }
   .burger { background: var(--bg); border: 1px solid var(--line); }
-  .composer-wrap { padding: 0 12px max(10px, env(safe-area-inset-bottom)); }
+  .composer-wrap { padding: 0 12px; }
+  .composer { padding-bottom: max(10px, env(safe-area-inset-bottom)); }
   .sugg, .cases-grid { grid-template-columns: 1fr; }
   .pill-btn span { display: none; }
   .model-menu { width: auto; left: 0; }
@@ -1110,6 +1112,8 @@ async function typeOut(node) {
 let stick = true;
 const scEl = $('#scroll');
 ['wheel', 'touchmove', 'keydown'].forEach(ev => scEl.addEventListener(ev, () => requestAnimationFrame(() => { stick = scEl.scrollHeight - scEl.scrollTop - scEl.clientHeight < 80; }), { passive: true }));
+// контент не прячется под плавающим инпутом: отступ снизу = высота инпута
+new ResizeObserver(() => { $('#col').style.paddingBottom = $('.composer-wrap').offsetHeight + 24 + 'px'; }).observe($('.composer-wrap'));
 function scrollDown() { if (stick) scEl.scrollTop = scEl.scrollHeight; }
 
 // ===== блоки =====
