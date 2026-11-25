@@ -356,9 +356,13 @@ svg { flex-shrink: 0; }
 .art-b img { display: block; width: 100%; height: auto; cursor: zoom-in; }
 .art-b figcaption { padding: 8px 12px; font: 11px var(--mono); color: var(--faint); }
 
-.lightbox { position: fixed; inset: 0; background: rgba(5,5,4,.88); z-index: 100; display: none; place-items: center; padding: 24px; cursor: zoom-out; }
-.lightbox.open { display: grid; }
-.lightbox img { width: auto; height: auto; max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); object-fit: contain; border-radius: 10px; }
+.lightbox { position: fixed; inset: 0; z-index: 100; display: none; overflow: hidden; touch-action: none; cursor: zoom-out; }
+.lightbox.open { display: block; }
+.lightbox::before { content: ''; position: absolute; inset: 0; background: rgba(5,5,4,.9); opacity: 0; transition: opacity .3s ease; }
+.lightbox.shown::before { opacity: 1; }
+.lightbox img { position: absolute; max-width: none; transform-origin: 0 0; border-radius: 10px; user-select: none; -webkit-user-drag: none; will-change: transform; }
+.lightbox.zoomed img { cursor: grab; }
+.lightbox.zoomed.drag img { cursor: grabbing; }
 
 .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: var(--elev); color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow); padding: 10px 16px; border-radius: 12px; font-size: 13px; opacity: 0; pointer-events: none; transition: .25s; z-index: 200; max-width: calc(100vw - 32px); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -1126,7 +1130,7 @@ function renderBlock(b) {
       const i = h('img', 'shot'); i.src = b.src; i.alt = b.alt || ''; i.loading = 'lazy'; i.decoding = 'async'; if (b.w) { i.width = b.w; i.height = b.hgt; }
       // клик или Enter — открыть картинку на весь экран
       i.tabIndex = 0; i.setAttribute('role', 'button'); i.setAttribute('aria-label', 'Увеличить: ' + i.alt);
-      const zoom = () => { const lb = $('#lightbox'), im = lb.querySelector('img'); im.src = i.src; im.alt = i.alt; lb.classList.add('open'); };
+      const zoom = () => LB.open(i);
       i.onclick = zoom; i.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zoom(); } };
       return i;
     }
@@ -1243,8 +1247,114 @@ function openArtifact(id) {
   $('#app').classList.add('art-open');
 }
 $('#artClose').onclick = () => $('#app').classList.remove('art-open');
-$('#artBody').onclick = e => { if (e.target.tagName === 'IMG') { $('#lightbox img').src = e.target.src; $('#lightbox').classList.add('open'); } };
-$('#lightbox').onclick = () => $('#lightbox').classList.remove('open');
+$('#artBody').onclick = e => { if (e.target.tagName === 'IMG') LB.open(e.target); };
+
+// ===== просмотр картинки: плавно вылетает из своего места и возвращается обратно,
+// увеличивается щипком (тачпад, телефон) или двойным кликом — масштабируется только картинка, не страница
+const LB = (() => {
+  const lb = $('#lightbox'), im = lb.querySelector('img');
+  const EASE = 'transform .34s cubic-bezier(.2,.8,.2,1)';
+  let src = null, base = null, s = 1, tx = 0, ty = 0, closing = false;
+  const apply = (anim) => { im.style.transition = anim ? EASE : 'none'; im.style.transform = `translate(${tx}px,${ty}px) scale(${s})`; };
+  // куда вписать картинку без зума
+  const fit = () => {
+    const pad = innerWidth < 600 ? 12 : 32, vw = innerWidth, vh = innerHeight;
+    const nw = im.naturalWidth || src.naturalWidth || 1, nh = im.naturalHeight || src.naturalHeight || 1;
+    const k = Math.min((vw - pad * 2) / nw, (vh - pad * 2) / nh, 1.5);
+    const w = nw * k, h = nh * k;
+    base = { l: (vw - w) / 2, t: (vh - h) / 2, w, h };
+    Object.assign(im.style, { left: base.l + 'px', top: base.t + 'px', width: w + 'px', height: h + 'px' });
+  };
+  // трансформация, которая кладёт картинку ровно на исходное место в ленте
+  const toSrc = () => {
+    const r = src.getBoundingClientRect();
+    s = r.width / base.w; tx = r.left - base.l; ty = r.top - base.t;
+  };
+  // при зуме не даём картинке уехать за край
+  const clamp = () => {
+    const W = base.w * s, H = base.h * s, vw = innerWidth, vh = innerHeight;
+    tx = W <= vw ? (base.w - W) / 2 : Math.min(-base.l, Math.max(vw - base.l - W, tx));
+    ty = H <= vh ? (base.h - H) / 2 : Math.min(-base.t, Math.max(vh - base.t - H, ty));
+  };
+  const zoomAt = (ns, x, y, anim) => {
+    ns = Math.min(6, Math.max(1, ns));
+    const lx = (x - base.l - tx) / s, ly = (y - base.t - ty) / s;
+    s = ns; tx = x - base.l - lx * s; ty = y - base.t - ly * s;
+    if (s <= 1.001) { s = 1; tx = ty = 0; } else clamp();
+    lb.classList.toggle('zoomed', s > 1);
+    apply(anim);
+  };
+  function open(el) {
+    if (lb.classList.contains('open')) return;
+    src = el; closing = false;
+    im.src = el.currentSrc || el.src; im.alt = el.alt || '';
+    lb.classList.add('open'); lb.classList.remove('zoomed', 'shown');
+    fit(); toSrc(); apply(false);
+    el.style.visibility = 'hidden';
+    im.getBoundingClientRect(); // фиксируем стартовое положение, чтобы переход сработал
+    lb.classList.add('shown'); s = 1; tx = ty = 0; apply(true);
+  }
+  function close() {
+    if (!lb.classList.contains('open') || closing) return;
+    closing = true; lb.classList.remove('shown', 'zoomed');
+    const r = src.getBoundingClientRect();
+    const visible = r.width && r.bottom > 0 && r.top < innerHeight && src.isConnected;
+    if (visible) toSrc(); else { s = .92; tx = base.w * .04; ty = base.h * .04; im.style.opacity = '0'; }
+    im.style.transition = EASE + ', opacity .25s ease'; im.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
+    setTimeout(() => { lb.classList.remove('open'); src.style.visibility = ''; im.style.opacity = ''; closing = false; }, 340);
+  }
+  // тачпад: щипок приходит как wheel с ctrlKey, прокрутка двумя пальцами — как обычный wheel
+  lb.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (closing) return;
+    if (e.ctrlKey) zoomAt(s * Math.exp(-e.deltaY * 0.01), e.clientX, e.clientY, false);
+    else if (s > 1) { tx -= e.deltaX; ty -= e.deltaY; clamp(); apply(false); }
+  }, { passive: false });
+  // Safari на Mac шлёт свои gesture-события
+  let gs = 1;
+  lb.addEventListener('gesturestart', e => { e.preventDefault(); gs = s; });
+  lb.addEventListener('gesturechange', e => { e.preventDefault(); zoomAt(gs * e.scale, e.clientX, e.clientY, false); });
+  lb.addEventListener('gestureend', e => e.preventDefault());
+  // пальцы и мышь: щипок, перетаскивание, клик
+  const pts = new Map(); let pinch = null, drag = null, moved = false;
+  lb.addEventListener('pointerdown', e => {
+    if (closing) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); moved = false;
+    lb.setPointerCapture(e.pointerId);
+    if (pts.size === 2) {
+      const [a, b] = [...pts.values()];
+      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s }; drag = null;
+    } else if (s > 1) { drag = { x: e.clientX - tx, y: e.clientY - ty }; lb.classList.add('drag'); }
+  });
+  lb.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    const p = pts.get(e.pointerId);
+    if (Math.hypot(e.clientX - p.x, e.clientY - p.y) > 4) moved = true;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && pts.size === 2) {
+      const [a, b] = [...pts.values()];
+      zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d, (a.x + b.x) / 2, (a.y + b.y) / 2, false);
+    } else if (drag) { tx = e.clientX - drag.x; ty = e.clientY - drag.y; clamp(); apply(false); }
+  });
+  const up = e => {
+    pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!pts.size) { drag = null; lb.classList.remove('drag'); }
+  };
+  lb.addEventListener('pointerup', up); lb.addEventListener('pointercancel', up);
+  // клик без перетаскивания: по фону — закрыть; по картинке — закрыть, если не увеличена
+  // по картинке ждём чуть-чуть: вдруг это двойной клик
+  let ct = 0;
+  lb.addEventListener('click', e => {
+    if (moved) return;
+    if (e.target !== im) return close();
+    if (s === 1 && e.detail === 1) ct = setTimeout(close, 260);
+  });
+  // двойной клик/тап — увеличить в 2.5 раза в точке или вернуть
+  lb.addEventListener('dblclick', e => { clearTimeout(ct); if (e.target === im) zoomAt(s > 1 ? 1 : 2.5, e.clientX, e.clientY, true); });
+  addEventListener('resize', () => { if (lb.classList.contains('open') && !closing) { fit(); s = 1; tx = ty = 0; lb.classList.remove('zoomed'); apply(false); } });
+  return { open, close };
+})();
 
 // ===== composer =====
 const input = $('#input');
@@ -1315,7 +1425,7 @@ function setChips(ids) {
 $('#attach').onclick = () => toast('Вложения пока не поддерживаются. Но оффер можно прислать в Telegram 😉');
 document.addEventListener('keydown', e => {
   if (e.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); input.value = '/'; updateSlash(); setSendState(); }
-  if (e.key === 'Escape') { $('#app').classList.remove('art-open'); $('#lightbox').classList.remove('open'); closeMenus(); }
+  if (e.key === 'Escape') { $('#app').classList.remove('art-open'); LB.close(); closeMenus(); }
 });
 
 // ===== home =====
