@@ -511,7 +511,7 @@ svg { flex-shrink: 0; }
               <div class="pj-kpi"><b>10 городов</b> и 3 университета</div>
               <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
-            <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>RITM³ · Карта</span></div><div class="pj-scr" style="background-image:url('https://static.tildacdn.com/tild3535-6565-4233-a637-366532636636/image_4.png');--size:140%;--pos:left top"></div></div>
+            <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>RITM³ · Карта</span></div><div class="pj-scr" style="background-image:url('covers/simetra-cover.webp');--size:140%;--pos:left top"></div></div>
           </button>
             <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
           </div>
@@ -604,23 +604,12 @@ const GALLERY = {
     ['tild6263-3064-4365-b665-353763323536/2.png', ''],
     ['tild6466-6463-4530-b162-383538396531/triplex.jpg', 'Triplex — дизайн-система Sber B2B'],
   ]},
-  simetra: { title: 'RITM³', sub: 'Simetra · 2018—2020', link: 'https://ruslan.design/simetra', imgs: [
-    ['tild3535-6565-4233-a637-366532636636/image_4.png', 'Мониторинг транспортной ситуации'],
-    ['tild3332-6130-4264-b331-623461323636/image_5.png', ''],
-    ['tild3439-3565-4137-a362-333465663566/image_6.png', ''],
-    ['tild6331-6661-4435-b665-363738376233/image_7.png', ''],
-    ['tild6234-3066-4839-b063-313131613231/image_8.png', ''],
-    ['tild3433-3530-4232-b436-333266383531/image_9.png', ''],
-    ['tild6565-6433-4537-b862-356666323862/image_10.png', ''],
-    ['tild3539-6535-4536-b063-343733396364/image_11.png', ''],
-  ]},
 };
 
 const COVERS = {
   ozon: img('tild3366-3861-4066-b736-643665396662/Ozon.png'),
   lamoda: img('tild6464-3436-4262-a230-336332353561/Lamoda.png'),
   sber: 'covers/sber.jpg',
-  simetra: img('tild3334-3461-4838-b737-643437316530/Ritm.png'),
 };
 
 const caseCard = id => ({ t: 'case', id });
@@ -628,7 +617,6 @@ const CASES = {
   ozon: ['Chatzone Meet', 'Ozon — видеоконференции, мессенджер, видеонаблюдение', '2025—2026'],
   lamoda: ['Seller Center', 'Lamoda — кабинет продавца с нуля', '2023—2025'],
   sber: ['СберБизнес', 'Сбер — ДБО для бизнеса и Triplex', '2021—2023'],
-  simetra: ['RITM³', 'Цифровая платформа для управления транспортной системой города', '2018—2020'],
 };
 
 // ===== Ответы модели =====
@@ -732,18 +720,23 @@ const R = {
     think: ['Возвращаюсь в 2018', 'Загружаю карту города'],
     blocks: [
       { t: 'p', h: 'В Simetra я проектировал <b>RITM³</b> — сложномодульную платформу для мониторинга транспортной ситуации в городе. Это B2G: интерфейс для тех, кто управляет движением целого мегаполиса.' },
-      caseCard('simetra'),
+      { t: 'img', src: 'covers/simetra-1.webp', w: 2400, hgt: 1800, alt: 'RITM³: визуализация слоя «Аварии» на карте Москвы' },
       { t: 'p', h: 'Это был первый сложный проект в моей карьере. Я спроектировал 5 модулей с разными инструментами, объединив их в общую стилистику. Для этого был создан UI Kit и визуальная стилистика проекта, которая сохранилась по сей день. А для удобства использования продукта были проведены полевые исследования и тестирования с пользователями.' },
+      { t: 'img', src: 'covers/simetra-2.webp', w: 2400, hgt: 1800, alt: 'RITM³: редактор геометрии слоя «Аварии»' },
+      { t: 'img', src: 'covers/simetra-3.webp', w: 2400, hgt: 1800, alt: 'RITM³: справочник, таблица «Районы Москвы»' },
+      { t: 'img', src: 'covers/simetra-4.webp', w: 2400, hgt: 1800, alt: 'RITM³: создание маршрутов общественного транспорта, Томск' },
+      { t: 'img', src: 'covers/simetra-5.webp', w: 2400, hgt: 1800, alt: 'RITM³: редактор событий, район Тушино' },
+      { t: 'img', src: 'covers/simetra-6.webp', w: 2400, hgt: 1800, alt: 'RITM³: дашборд города Челябинск' },
       { t: 'p', h: 'RITM³ занял свою нишу на рынке и в данный момент установлен в 10 крупных городах России (включая Москву и Санкт-Петербург), а также по нему ведётся обучение в высших учебных заведениях России (включая ВШЭ, МАДИ и СПбПУ).' },
       { t: 'tags', items: ['Web', 'B2B / B2G', 'Data-heavy', 'Maps'] },
-      { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/' },
+      { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/', all: false },
     ],
     follow: ['ozon', 'about', 'contacts'],
   },
   works: {
     title: 'Все работы', q: 'Покажи все работы', hidden: true,
     think: ['Собираю все кейсы в одном месте'],
-    blocks: [{ t: 'p', h: 'Вот всё, над чем я работал последние 8 лет. Нажмите на карточку, чтобы открыть артефакт с экранами.' }, { t: 'cases' }],
+    blocks: [{ t: 'projects' }],
     follow: ['ozon', 'lamoda', 'cv'],
   },
   contacts: {
@@ -1243,10 +1236,17 @@ function renderBlock(b) {
       <div class="cmp-row"><span>До</span><div class="tr"><i data-w="${b.from}"></i></div><b>${b.from}%</b></div>
       <div class="cmp-row after"><span>После</span><div class="tr"><i data-w="${b.to}"></i></div><b data-v="${b.to}" data-s="%">0%</b></div>`);
     case 'case': return caseEl(b.id);
-    case 'cases': { const g = h('div', 'cases-grid'); Object.keys(CASES).forEach(id => g.append(caseEl(id, true))); return g; }
+    // карточки проектов — копия сетки со страницы «Дубль», чтобы карточки жили в одном месте
+    case 'projects': {
+      const g = $('#t-home2 .pj-grid').cloneNode(true);
+      g.querySelectorAll('[data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
+      return g;
+    }
     case 'gallery': {
-      const d = h('div', 'gallery-acts', `<button class="btn acc">Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
-      d.firstChild.onclick = () => openArtifact(b.id);
+      // all: false — без кнопки «Открыть все экраны», только ссылка на сайт проекта
+      const d = h('div', 'gallery-acts', `${b.all === false ? '' : `<button class="btn acc">Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>`}${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
+      const all = d.querySelector('button');
+      if (all) all.onclick = () => openArtifact(b.id);
       return d;
     }
     case 'tool': return h('div', 'tool', `<span class="st"></span>Использую инструмент <code>${b.name}</code>(${b.arg})`);
@@ -1265,10 +1265,10 @@ function renderBlock(b) {
     case 'cal': return calendar();
   }
 }
-function caseEl(id, compact) {
+function caseEl(id) {
   const [t, d, y] = CASES[id];
   const c = h('button', 'case', `<div class="case-img" style="background-image:url('${COVERS[id]}')"></div><div class="case-b"><div><b>${t}</b><small>${d}</small></div><span class="yr">${y}</span></div>`);
-  c.onclick = () => compact && S.current !== id && !threads[id] ? open(id) : openArtifact(id);
+  c.onclick = () => openArtifact(id);
   return c;
 }
 function activate(node, b) {
