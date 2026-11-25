@@ -205,6 +205,16 @@ svg { flex-shrink: 0; }
 .ch.d { opacity: 1; color: transparent; background-image: radial-gradient(circle, var(--text) 1px, transparent 1.3px); background-size: 2.4px 2.4px; -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: .7px transparent; filter: drop-shadow(0 0 2px var(--fx-glow)); animation: chDot .18s ease both; }
 @keyframes chDot { from { opacity: 0; transform: translateY(2px); } }
 .ch.r { opacity: 1; animation: chIn .32s cubic-bezier(.2,.8,.2,1) both; }
+/* генерация картинки: сверху вниз проступает россыпью цветных точек, точки растут и сливаются, размытие уходит */
+@property --gr { syntax: '<length>'; inherits: false; initial-value: 4px; }
+@property --gp { syntax: '<percentage>'; inherits: false; initial-value: 110%; }
+.gen-img { --gr: 1px; --gp: -10%; -webkit-mask-image: radial-gradient(circle, #000 var(--gr), transparent calc(var(--gr) + .7px)), linear-gradient(#000 var(--gp), transparent calc(var(--gp) + 10%)); mask-image: radial-gradient(circle, #000 var(--gr), transparent calc(var(--gr) + .7px)), linear-gradient(#000 var(--gp), transparent calc(var(--gp) + 10%)); -webkit-mask-size: 5px 5px, 100% 100%; mask-size: 5px 5px, 100% 100%; -webkit-mask-composite: source-in; mask-composite: intersect; animation: genImg 2.2s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes genImg {
+  0% { --gr: 1px; --gp: -10%; filter: brightness(1.4); }
+  45% { --gr: 1.1px; --gp: 100%; filter: brightness(1.3) blur(0); }
+  75% { --gr: 2.6px; --gp: 100%; filter: brightness(1.1) blur(3px); }
+  100% { --gr: 4px; --gp: 110%; filter: none; }
+}
 @keyframes chIn { from { opacity: .25; filter: blur(5px); } 60% { opacity: .85; filter: blur(1px); } to { opacity: 1; filter: none; } }
 .caret::after { content: ''; display: inline-block; width: 8px; height: 15px; background: var(--text); margin-left: 2px; vertical-align: -2px; border-radius: 2px; animation: blink .7s infinite; }
 
@@ -1071,6 +1081,7 @@ async function answer(el, id, def, reuse) {
     if (!node) continue;
     body.append(node);
     if (b.t === 'p') await typeOut(node);
+    else if ((b.t === 'img' || b.t === 'case') && S.speed !== 'instant' && !S.stop) { await genImage(b.t === 'img' ? node : node.querySelector('.case-img')); activate(node, b); }
     else { await wait(160); activate(node, b); }
     scrollDown();
   }
@@ -1094,6 +1105,19 @@ async function answer(el, id, def, reuse) {
   if (el.classList.contains('show')) setChips(def.follow || ['about', 'works', 'contacts']);
   scrollDown();
   fillPending();
+}
+
+// картинка «генерируется»: ждём загрузку и проигрываем маску из точек
+async function genImage(el) {
+  if (!el) return;
+  el.style.opacity = '0'; // пока грузится, не показываем готовую картинку
+  const url = el.tagName === 'IMG' ? el.src : (getComputedStyle(el).backgroundImage.match(/url\("?(.*?)"?\)/) || [])[1];
+  if (url) await Promise.race([new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = url; }), new Promise(r => setTimeout(r, 2500))]);
+  el.style.opacity = '';
+  if (S.stop) return;
+  el.classList.add('gen-img');
+  el.addEventListener('animationend', () => el.classList.remove('gen-img'), { once: true });
+  await new Promise(r => setTimeout(r, 900)); // текст продолжает печататься, пока картинка дорисовывается
 }
 
 async function typeOut(node) {
