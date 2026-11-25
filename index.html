@@ -1074,7 +1074,7 @@ async function answer(el, id, def, reuse) {
     if (!node) continue;
     body.append(node);
     if (b.t === 'p') await typeOut(node);
-    else if ((b.t === 'img' || b.t === 'case') && S.speed !== 'instant' && !S.stop) { const gi = genImage(b.t === 'img' ? node : node.querySelector('.case-img')); await Promise.race([gi, wait(350)]); activate(node, b); }
+    else if ((b.t === 'img' || b.t === 'case') && S.speed !== 'instant' && !S.stop) { const gi = genImage(b.t === 'img' ? node : node.querySelector('.case-img')); await Promise.race([gi, wait(160)]); activate(node, b); }
     else { await wait(160); activate(node, b); }
     scrollDown();
   }
@@ -1205,10 +1205,9 @@ async function typeOut(node) {
     scrollDown();
     await new Promise(r => setTimeout(r, 14 + Math.random() * 30));
   }
-  // хвост из точек дорисовываем, затем возвращаем обычный текст
-  for (let i = 0; i < chars.length; i++) if (chars[i].className !== 'ch r') { chars[i].className = 'ch r'; if (!S.stop && i % 3 === 2) await new Promise(r => setTimeout(r, 14)); }
-  await new Promise(r => setTimeout(r, S.stop ? 0 : 340));
-  swaps.forEach(([box, n]) => box.replaceWith(n));
+  // хвост из точек проявляется уже без ожидания — ответ идёт дальше так же быстро, как без анимации
+  for (let i = Math.max(0, chars.length - DOTS - 4); i < chars.length; i++) chars[i].className = 'ch r';
+  setTimeout(() => swaps.forEach(([box, n]) => box.isConnected && box.replaceWith(n)), S.stop ? 0 : 360);
 }
 
 // автоскролл, пока пользователь сам не прокрутил вверх
