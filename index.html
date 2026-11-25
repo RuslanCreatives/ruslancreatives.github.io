@@ -14,7 +14,7 @@
   --bg: #FFFFFF; --side: #F7F7F8; --elev: #FFFFFF; --soft: #EFEFF1; --line: #E4E4E7;
   --text: #0D0D0F; --muted: #5E5E66; --faint: #8E8E96;
   --accent: #D4FF3A; --on-accent: #10110C; --accent-text: #5F7A00;
-  --violet: #7B61FF; --orange: #FF6B3D;
+  --violet: #7B61FF; --orange: #FF6B3D; --fx-glow: transparent;
   --shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 28px rgba(0,0,0,.07);
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --sans: 'Onest', system-ui, -apple-system, sans-serif;
@@ -23,7 +23,7 @@
 :root[data-theme="dark"] {
   --bg: #0F0F0D; --side: #151513; --elev: #1C1C19; --soft: #22221F; --line: #2B2B27;
   --text: #EDEBE4; --muted: #8E8B81; --faint: #5F5D56;
-  --accent-text: #D4FF3A;
+  --accent-text: #D4FF3A; --fx-glow: rgba(255,255,255,.55);
   --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 40px rgba(0,0,0,.35);
   color-scheme: dark;
 }
@@ -31,7 +31,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0F0F0D; --side: #151513; --elev: #1C1C19; --soft: #22221F; --line: #2B2B27;
     --text: #EDEBE4; --muted: #8E8B81; --faint: #5F5D56;
-    --accent-text: #D4FF3A;
+    --accent-text: #D4FF3A; --fx-glow: rgba(255,255,255,.55);
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 40px rgba(0,0,0,.35);
     color-scheme: dark;
   }
@@ -200,6 +200,14 @@ svg { flex-shrink: 0; }
 .body li { position: relative; padding-left: 30px; margin-bottom: 8px; }
 .body ol li::before { counter-increment: li; content: counter(li, decimal-leading-zero); position: absolute; left: 0; top: 2px; font: 500 11px var(--mono); color: var(--accent-text); }
 .body ul li::before { content: '→'; position: absolute; left: 4px; color: var(--accent-text); }
+/* генерация ответа: буквы проявляются из точек и размытия, из горки точек к ним летят частицы */
+.ch { opacity: 0; }
+.ch.d { opacity: 1; color: transparent; background: radial-gradient(circle, var(--text) 1.3px, transparent 1.7px) center / .42em .5em; filter: drop-shadow(0 0 3px var(--fx-glow)); border-radius: 2px; }
+.ch.r { opacity: 1; animation: chIn .32s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes chIn { from { opacity: .25; filter: blur(5px); } 60% { opacity: .85; filter: blur(1px); } to { opacity: 1; filter: none; } }
+.gen-fx { height: 76px; margin: -4px 0 6px; transition: height .4s ease, opacity .4s ease; }
+.gen-fx.out { height: 0; opacity: 0; }
+.fx-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
 .caret::after { content: ''; display: inline-block; width: 8px; height: 15px; background: var(--text); margin-left: 2px; vertical-align: -2px; border-radius: 2px; animation: blink .7s infinite; }
 
 .thinking { margin-bottom: 14px; font-size: 14px; }
@@ -1092,24 +1100,127 @@ async function answer(el, id, def, reuse) {
 
 async function typeOut(node) {
   if (S.speed === 'instant' || S.stop) return;
+  // каждую букву оборачиваем в span; оригинальные текстовые узлы вернём в конце
   const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
   const texts = [];
-  while (walker.nextNode()) texts.push([walker.currentNode, walker.currentNode.textContent]);
-  texts.forEach(([n]) => n.textContent = '');
-  node.classList.add('caret');
-  for (const [n, full] of texts) {
-    const words = full.split(/(\s+)/);
-    let acc = '';
-    for (let i = 0; i < words.length; i++) {
-      if (S.stop) { n.textContent = full; break; }
-      acc += words[i];
-      n.textContent = acc;
-      if (i % 2 === 0) await new Promise(r => setTimeout(r, 14 + Math.random() * 30));
-    }
+  while (walker.nextNode()) texts.push(walker.currentNode);
+  const chars = [], swaps = [];
+  for (const n of texts) {
+    const box = document.createElement('span');
+    for (const c of n.textContent) { const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = c; box.append(sp); if (c.trim()) chars.push(sp); else chars.push(sp); }
+    n.replaceWith(box); swaps.push([box, n]);
   }
-  texts.forEach(([n, full]) => n.textContent = full);
-  node.classList.remove('caret');
+  const fx = GenFX.start(node);
+  const DOTS = 7; // сколько последних букв ещё «точки»
+  let head = 0;
+  while (head < chars.length && !S.stop) {
+    const step = 2 + (Math.random() * 3 | 0);
+    for (let k = 0; k < step && head < chars.length; k++, head++) chars[head].className = 'ch d';
+    for (let i = Math.max(0, head - DOTS - step); i < head - DOTS; i++) if (chars[i].className !== 'ch r') chars[i].className = 'ch r';
+    fx.target(chars[Math.max(0, head - 1)]);
+    scrollDown();
+    await new Promise(r => setTimeout(r, 26 + Math.random() * 22));
+  }
+  // хвост из точек дорисовываем, затем возвращаем обычный текст
+  for (let i = 0; i < chars.length; i++) if (chars[i].className !== 'ch r') { chars[i].className = 'ch r'; if (!S.stop && i % 2) await new Promise(r => setTimeout(r, 18)); }
+  fx.stop();
+  await new Promise(r => setTimeout(r, S.stop ? 0 : 360));
+  swaps.forEach(([box, n]) => box.replaceWith(n));
 }
+
+// ===== эффект генерации: горка точек под абзацем и частицы, летящие к печатающемуся месту =====
+const GenFX = (() => {
+  let cv = null, ctx = null, raf = 0, runs = [];
+  const main = () => $('.main');
+  function ensure() {
+    if (cv) return;
+    cv = h('canvas', 'fx-canvas'); main().append(cv); ctx = cv.getContext('2d');
+  }
+  function size() {
+    const r = cv.getBoundingClientRect(), d = devicePixelRatio || 1;
+    if (cv.width !== Math.round(r.width * d) || cv.height !== Math.round(r.height * d)) { cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); }
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    return r;
+  }
+  const noise = (x, t) => Math.sin(x * 1.7 + t * 2.1) * .5 + Math.sin(x * .63 - t * 3.3) * .3 + Math.sin(x * 3.1 + t * 5.2) * .2;
+  function frame(now) {
+    const cr = size();
+    ctx.clearRect(0, 0, cr.width, cr.height);
+    const css = getComputedStyle(document.documentElement);
+    const col = css.getPropertyValue('--text').trim() || '#fff';
+    const glow = css.getPropertyValue('--fx-glow').trim();
+    ctx.fillStyle = col; ctx.strokeStyle = col;
+    const t = now / 1000;
+    runs = runs.filter(R => R.alive || R.fade > 0);
+    for (const R of runs) {
+      if (!R.alive) R.fade = Math.max(0, R.fade - 0.04);
+      const box = R.fx.getBoundingClientRect();
+      const ox = box.left - cr.left, oy = box.top - cr.top;
+      const W = box.width, baseY = oy + box.height - 10;
+      // горка точек: столбики под гауссовой огибающей, высота дышит шумом
+      const step = 7, cols = Math.floor(W / step), mid = W * .5, peaks = [];
+      ctx.globalAlpha = R.fade;
+      ctx.shadowColor = glow; ctx.shadowBlur = glow && glow !== 'transparent' ? 8 : 0;
+      for (let c = 0; c < cols; c++) {
+        const x = ox + c * step + step / 2, u = (c * step - mid) / (W * .17);
+        const env = Math.exp(-u * u);
+        const hgt = Math.max(0, env * (0.6 + 0.4 * noise(c * .35, t)) * 9 * R.fade);
+        const rows = Math.round(hgt);
+        // нижняя линия из мелких точек
+        ctx.globalAlpha = R.fade * .35; ctx.beginPath(); ctx.arc(x, baseY, .8, 0, 7); ctx.fill();
+        for (let k = 1; k <= rows; k++) {
+          const y = baseY - k * step, rr = .9 + 1.5 * env * (1 - k / 10);
+          ctx.globalAlpha = R.fade * (0.35 + 0.65 * env) * (1 - k / (rows + 3));
+          ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.fill();
+        }
+        if (rows > 2) peaks.push([x, baseY - rows * step]);
+      }
+      // частицы: вылетают с верхушек столбиков и по дуге летят к текущей букве
+      if (R.alive && R.tgt && peaks.length) {
+        const n = Math.random() < .7 ? 1 : 2;
+        for (let i = 0; i < n; i++) {
+          const [px, py] = peaks[Math.random() * peaks.length | 0];
+          R.parts.push({ x0: px, y0: py, t0: now, d: 420 + Math.random() * 360, jx: (Math.random() - .5) * 14, jy: (Math.random() - .5) * 8, r: .9 + Math.random() * 1.2, lift: 30 + Math.random() * 50 });
+        }
+      }
+      const tr = R.tgt && R.tgt.isConnected ? R.tgt.getBoundingClientRect() : null;
+      const tx = tr ? tr.right - cr.left : 0, ty = tr ? tr.top + tr.height / 2 - cr.top : 0;
+      R.parts = R.parts.filter(P => now - P.t0 < P.d);
+      for (const P of R.parts) {
+        const k = (now - P.t0) / P.d, e = k * k * (3 - 2 * k);
+        const x2 = tx + P.jx, y2 = ty + P.jy;
+        const cx = (P.x0 + x2) / 2 + (x2 - P.x0) * .15, cy = Math.min(P.y0, y2) - P.lift;
+        const bx = (1 - e) * (1 - e) * P.x0 + 2 * (1 - e) * e * cx + e * e * x2;
+        const by = (1 - e) * (1 - e) * P.y0 + 2 * (1 - e) * e * cy + e * e * y2;
+        // короткий хвост
+        const e2 = Math.max(0, e - .06);
+        const qx = (1 - e2) * (1 - e2) * P.x0 + 2 * (1 - e2) * e2 * cx + e2 * e2 * x2;
+        const qy = (1 - e2) * (1 - e2) * P.y0 + 2 * (1 - e2) * e2 * cy + e2 * e2 * y2;
+        const a = R.fade * (k < .15 ? k / .15 : k > .85 ? (1 - k) / .15 : 1);
+        ctx.globalAlpha = a * .45; ctx.lineWidth = P.r; ctx.beginPath(); ctx.moveTo(qx, qy); ctx.lineTo(bx, by); ctx.stroke();
+        ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(bx, by, P.r, 0, 7); ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    raf = runs.length ? requestAnimationFrame(frame) : 0;
+    if (!runs.length) ctx.clearRect(0, 0, cr.width, cr.height);
+  }
+  function start(node) {
+    ensure();
+    const fx = h('div', 'gen-fx'); node.after(fx);
+    const R = { fx, tgt: null, parts: [], alive: true, fade: 0 };
+    runs.push(R);
+    // плавное появление горки
+    const grow = () => { if (R.alive && R.fade < 1) { R.fade = Math.min(1, R.fade + .06); setTimeout(grow, 16); } };
+    grow();
+    if (!raf) raf = requestAnimationFrame(frame);
+    return {
+      target(el) { R.tgt = el; },
+      stop() { R.alive = false; fx.classList.add('out'); setTimeout(() => fx.remove(), 450); },
+    };
+  }
+  return { start };
+})();
 
 // автоскролл, пока пользователь сам не прокрутил вверх
 let stick = true;
