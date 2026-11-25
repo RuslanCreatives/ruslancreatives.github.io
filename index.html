@@ -1100,66 +1100,84 @@ async function answer(el, id, def, reuse) {
   fillPending();
 }
 
-// картинка «генерируется»: собирается кусочками слева направо и сверху вниз,
-// каждый кусочек сначала из точек (как буквы), потом проявляется целиком
+// картинка «генерируется», как буквы в ответе: по ней от верхнего левого угла к нижнему правому
+// проходит волна — сначала вспыхивают отдельные точки, их становится больше, потом картинка проступает размытой и становится чёткой
 async function genImage(el) {
   if (!el) return;
   const isImg = el.tagName === 'IMG';
   const url = isImg ? el.src : (getComputedStyle(el).backgroundImage.match(/url\("?(.*?)"?\)/) || [])[1];
   if (!url) return;
   const im = new Image(); im.src = url;
-  // пока грузится — пустое место нужного размера
-  el.style.visibility = 'hidden';
+  el.style.visibility = 'hidden'; // пока грузится — пустое место нужного размера
   await Promise.race([im.decode().catch(() => {}), new Promise(r => setTimeout(r, 2500))]);
   if (S.stop || !im.naturalWidth) { el.style.visibility = ''; return; }
-  // холст поверх картинки
   let host = el, wrap = null;
   if (isImg) { wrap = h('span', 'gen-wrap'); wrap.style.margin = getComputedStyle(el).margin; el.style.margin = '0'; el.replaceWith(wrap); wrap.append(el); host = wrap; }
   const cv = h('canvas', 'gen-cv'); host.append(cv);
-  const r = el.getBoundingClientRect(), d = devicePixelRatio || 1, W = r.width, H = r.height;
-  cv.width = Math.round(W * d); cv.height = Math.round(H * d);
+  const rect = el.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+  const W = Math.round(rect.width * d), H = Math.round(rect.height * d);
+  cv.width = W; cv.height = H; cv.style.borderRadius = getComputedStyle(el).borderRadius;
+  const mk = (w = W, hh = H) => { const c = document.createElement('canvas'); c.width = w; c.height = hh; return c; };
   // как картинка вписана: у <img> целиком, у обложки — cover по центру
   let sx = 0, sy = 0, sw = im.naturalWidth, sh = im.naturalHeight;
-  if (!isImg) { const k = Math.max(W / sw, H / sh); const cw = W / k, ch = H / k; sx = (sw - cw) / 2; sy = (sh - ch) / 2; sw = cw; sh = ch; }
-  const full = document.createElement('canvas'); full.width = cv.width; full.height = cv.height;
-  const f = full.getContext('2d'); f.drawImage(im, sx, sy, sw, sh, 0, 0, full.width, full.height);
-  // та же сетка точек, что у букв: шаг 2.4px, точка ~1px
-  const dots = document.createElement('canvas'); dots.width = cv.width; dots.height = cv.height;
-  const g = dots.getContext('2d'); g.drawImage(full, 0, 0);
-  g.globalCompositeOperation = 'destination-in';
-  const step = 2.4 * d, rad = 1 * d;
-  g.beginPath();
-  for (let y = step / 2; y < dots.height; y += step) for (let x = step / 2; x < dots.width; x += step) { g.moveTo(x + rad, y); g.arc(x, y, rad, 0, 7); }
-  g.fill();
-  // кусочки: строки «как строки текста», внутри — слева направо
-  const T = 22 * d, cols = Math.ceil(cv.width / T), rows = Math.ceil(cv.height / T), n = cols * rows;
-  const ctx = cv.getContext('2d'), DUR = 900, WIN = Math.max(6, cols * .4), FT = 160 / DUR * (n + WIN);
-  el.style.visibility = '';
-  cv.style.borderRadius = getComputedStyle(el).borderRadius;
+  if (!isImg) { const k = Math.max(rect.width / sw, rect.height / sh); const cw = rect.width / k, ch = rect.height / k; sx = (sw - cw) / 2; sy = (sh - ch) / 2; sw = cw; sh = ch; }
+  // три слоя: чёткая картинка, размытая и «точечная» (та же сетка, что у букв: шаг 2.4px, точка ~1px)
+  const sharp = mk(); sharp.getContext('2d').drawImage(im, sx, sy, sw, sh, 0, 0, W, H);
+  const small = mk(Math.max(1, W / 10 | 0), Math.max(1, H / 10 | 0));
+  small.getContext('2d').drawImage(sharp, 0, 0, small.width, small.height);
+  const blur = mk(); { const g = blur.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(small, 0, 0, W, H); }
+  const STEP = 2.4 * d, cols = Math.ceil(W / STEP), rows = Math.ceil(H / STEP);
+  const dots = mk(); {
+    const g = dots.getContext('2d'); g.drawImage(sharp, 0, 0);
+    g.globalCompositeOperation = 'destination-in'; g.beginPath();
+    const rad = 1 * d;
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const x = (i + .5) * STEP, y = (j + .5) * STEP; g.moveTo(x + rad, y); g.arc(x, y, rad, 0, 7); }
+    g.fill();
+    // точки чуть ярче, как светящиеся
+    g.globalCompositeOperation = 'lighter'; g.globalAlpha = .25; g.drawImage(g.canvas, 0, 0);
+  }
+  // для каждой точки — когда до неё дойдёт волна (по диагонали + немного случайности) и порог вспышки
+  const N = cols * rows, delay = new Float32Array(N), seed = new Float32Array(N);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const k = j * cols + i, r = Math.random();
+    delay[k] = (i / cols * .62 + j / rows * .38) * .72 + r * .1; seed[k] = Math.random();
+  }
+  // маски в разрешении сетки точек: одна клетка = одна точка
+  const mDots = mk(cols, rows), mBlur = mk(cols, rows), mSharp = mk(cols, rows);
+  const dD = mDots.getContext('2d'), dB = mBlur.getContext('2d'), dS = mSharp.getContext('2d');
+  const iD = dD.createImageData(cols, rows), iB = dB.createImageData(cols, rows), iS = dS.createImageData(cols, rows);
+  const tmp = mk(), tg = tmp.getContext('2d'), ctx = cv.getContext('2d');
+  const layer = (src, mask, smooth) => {
+    tg.globalCompositeOperation = 'copy'; tg.drawImage(src, 0, 0);
+    tg.globalCompositeOperation = 'destination-in'; tg.imageSmoothingEnabled = smooth; tg.drawImage(mask, 0, 0, W, H);
+    ctx.drawImage(tmp, 0, 0);
+  };
   const bg = el.style.backgroundImage;
+  el.style.visibility = '';
   if (isImg) el.style.opacity = '0'; else el.style.backgroundImage = 'none';
+  const DUR = 1500, SPAN = .26; // общая длительность и сколько длится превращение одной точки
   const t0 = performance.now();
   await new Promise(done => {
     const frame = now => {
-      const head = Math.min(n + WIN, (now - t0) / DUR * (n + WIN)); // сколько кусочков уже «написано»
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      for (let i = 0; i < Math.min(n, head); i++) {
-        const x = (i % cols) * T, y = (i / cols | 0) * T;
-        const age = head - i; // давно ли появился
-        if (age < WIN) ctx.drawImage(dots, x, y, T, T, x, y, T, T);
-        else {
-          const a = Math.min(1, (age - WIN) / FT);
-          ctx.globalAlpha = 1 - a; ctx.drawImage(dots, x, y, T, T, x, y, T, T);
-          ctx.globalAlpha = a; ctx.drawImage(full, x, y, T, T, x, y, T, T);
-          ctx.globalAlpha = 1;
-        }
+      const p = (now - t0) / DUR * (.82 + SPAN);
+      const a = iD.data, b = iB.data, c = iS.data;
+      for (let k = 0; k < N; k++) {
+        const v = (p - delay[k]) / SPAN, o = k * 4 + 3; // 0…1 — стадия этой точки
+        // 0–.45: точки вспыхивают по одной, к .45 горят все; .35–.75: проступает размытая; .65–1: становится чёткой
+        a[o] = v <= 0 ? 0 : v < .45 ? (seed[k] < v / .45 ? 255 : 0) : v < .8 ? 255 * (1 - (v - .45) / .35) : 0;
+        b[o] = v < .35 ? 0 : v < .65 ? 255 * (v - .35) / .3 : v < 1 ? 255 * (1 - (v - .65) / .35) : 0;
+        c[o] = v < .65 ? 0 : v < 1 ? 255 * (v - .65) / .35 : 255;
       }
-      if (head >= n + WIN || S.stop) return done();
+      dD.putImageData(iD, 0, 0); dB.putImageData(iB, 0, 0); dS.putImageData(iS, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      layer(blur, mBlur, true);
+      layer(sharp, mSharp, true);
+      layer(dots, mDots, false);
+      if (p >= .82 + SPAN + .1 || S.stop) return done();
       requestAnimationFrame(frame);
     };
     requestAnimationFrame(frame);
   });
-  // финал: настоящая картинка вместо холста
   if (isImg) el.style.opacity = ''; else el.style.backgroundImage = bg;
   cv.remove();
   if (wrap) { el.style.margin = ''; wrap.replaceWith(el); }
