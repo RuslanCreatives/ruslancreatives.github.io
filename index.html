@@ -593,30 +593,17 @@ const GALLERY = {
     ['tild3761-6432-4565-b037-306161356637/__KAM.png', 'КАМ'],
     ['tild6339-3739-4066-b964-633437316364/_.png', 'Экран кабинета'],
   ]},
-  sber: { title: 'СберБизнес', sub: 'Сбер · 2021—2023', link: 'https://ruslan.design/sber', imgs: [
-    ['tild6131-3865-4466-a231-656632353838/Group_1_1.png', 'СберБизнес'],
-    ['tild3463-6232-4937-b663-333037316332/Container.png', ''],
-    ['tild6130-3735-4531-a533-393064393361/Group_4.png', ''],
-    ['tild6431-3239-4164-b637-666232666365/Group_3.png', ''],
-    ['tild6564-3233-4538-b133-343737383535/Group_270988036.png', ''],
-    ['tild3531-3163-4330-b937-323232306137/Group_270988039.png', ''],
-    ['tild3634-3964-4930-a364-646663363932/1.png', 'Приложение для инженеров'],
-    ['tild6263-3064-4365-b665-353763323536/2.png', ''],
-    ['tild6466-6463-4530-b162-383538396531/triplex.jpg', 'Triplex — дизайн-система Sber B2B'],
-  ]},
 };
 
 const COVERS = {
   ozon: img('tild3366-3861-4066-b736-643665396662/Ozon.png'),
   lamoda: img('tild6464-3436-4262-a230-336332353561/Lamoda.png'),
-  sber: 'covers/sber.jpg',
 };
 
 const caseCard = id => ({ t: 'case', id });
 const CASES = {
   ozon: ['Chatzone Meet', 'Ozon — видеоконференции, мессенджер, видеонаблюдение', '2025—2026'],
   lamoda: ['Seller Center', 'Lamoda — кабинет продавца с нуля', '2023—2025'],
-  sber: ['СберБизнес', 'Сбер — ДБО для бизнеса и Triplex', '2021—2023'],
 };
 
 // ===== Ответы модели =====
@@ -709,9 +696,13 @@ const R = {
     think: ['Открываю СберБизнес, 2021—2023', 'Нахожу вклад в дизайн-систему Triplex'],
     blocks: [
       { t: 'p', h: 'В Сбере я поддерживал и развивал дизайн <b>СберБизнеса</b> — дистанционного банковского обслуживания для юрлиц, ИП и корпоративных клиентов, делал <b>Android-приложение для инженеров</b> и развивал <a class="inl" href="https://triplex-design.ru/ru" target="_blank" rel="noopener"><b>Triplex</b></a> — дизайн-систему Sber B2B.' },
-      caseCard('sber'),
-      { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Design system'] },
-      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться без сертификатов Минцифры' },
+      { t: 'img', src: 'covers/sber-1.webp', w: 2400, hgt: 1433, alt: 'СберБизнес: главная и панель профиля со СберРейтингом' },
+      { t: 'img', src: 'covers/sber-2.webp', w: 2400, hgt: 1140, alt: 'СберБизнес: сертификаты в профиле и выпуск нового сертификата' },
+      { t: 'img', src: 'covers/sber-3.webp', w: 2400, hgt: 1641, alt: 'СберБизнес: моя организация' },
+      { t: 'img', src: 'covers/sber-4.webp', w: 2400, hgt: 1379, alt: 'СберБизнес: покупки в рассрочку и изменение лимита' },
+      { t: 'img', src: 'covers/sber-5.webp', w: 2400, hgt: 1734, alt: 'СберБизнес: оплата заказа и рублёвый платёж контрагенту' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Banking'] },
+      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться без сертификатов Минцифры', all: false },
     ],
     follow: ['simetra', 'about', 'contacts'],
   },
