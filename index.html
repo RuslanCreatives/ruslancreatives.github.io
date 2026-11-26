@@ -232,6 +232,7 @@ svg { flex-shrink: 0; }
 .follow button:hover { color: var(--text); border-color: var(--text); }
 
 /* blocks */
+.sep { border: 0; border-top: 1px solid var(--line); margin: 28px 0 22px; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 4px 0 18px; }
 .stat { background: var(--elev); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
 .stat b { display: block; font-size: 30px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; }
@@ -724,8 +725,9 @@ const R = {
       { t: 'img', src: 'covers/ozon-meet-new.webp', w: 2400, hgt: 1793, alt: 'Новый интерфейс Chatzone Meet: спикер на весь экран, миниатюры справа' },
       { t: 'img', src: 'covers/ozon-meet-main.webp', w: 2400, hgt: 1436, alt: 'Chatzone Meet: встреча с чатом и панель участников' },
       { t: 'h', h: 'Результат' },
-      { t: 'p', h: 'Результат не заставил долго ждать.<br>В течение 2 недель аудитория нового интерфейса возросла до 48%, что для нас было успехом. Негативные отзывы всё же оставались, но они относились к техническим проблемам вроде зависания картинки или багов со звуком' },
       { t: 'stats', items: [['10', '%', 'до обновления'], ['48', '%', 'после обновления']] },
+      { t: 'p', h: 'Результат не заставил долго ждать.<br>В течение 2 недель аудитория нового интерфейса возросла до 48%, что для нас было успехом. Негативные отзывы всё же оставались, но они относились к техническим проблемам вроде зависания картинки или багов со звуком' },
+      { t: 'hr' },
       { t: 'p', h: 'Остальные экраны в рамках последующих обновлений Chatzone Meet' },
       { t: 'img', src: 'covers/ozon-meet-rest-1.webp', w: 2400, hgt: 1262, alt: 'Chatzone Meet: подготовка к встрече, настройки камеры и подсказки о проблемах со звуком' },
       { t: 'img', src: 'covers/ozon-meet-rest-2.webp', w: 2400, hgt: 1490, alt: 'Chatzone Meet: встреча в режиме сетки и выбор камеры, микрофона и звука' },
@@ -1302,6 +1304,7 @@ function renderBlock(b) {
     // плейсхолдер картинки, пока нет скриншота
     case 'ph': return h('div', 'ph', '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span>Здесь будет картинка</span>');
     case 'ol': return h('ol', '', b.items.map(i => `<li>${i}</li>`).join(''));
+    case 'hr': return h('hr', 'sep');
     case 'tags': return h('div', 'tags', b.items.map(t => `<span class="tag${t.startsWith('→') ? ' hi' : ''}">${t}</span>`).join(''));
     case 'stats': return h('div', 'stats', b.items.map(([v, suf, l]) => `<div class="stat"><b data-v="${v}" data-s="${suf}">${/^\d+$/.test(v) ? '0' : v}${suf}</b><span>${l}</span></div>`).join(''));
     case 'segs': return h('div', 'segs', `<div class="seg-bar">${b.items.map(([p, , c]) => `<i style="background:${c}" data-w="${Math.max(p, 2)}">${p > 5 ? p + '%' : ''}</i>`).join('')}</div><div class="seg-leg">${b.items.map(([p, l, c]) => `<span style="--c:${c}">${l} — ${p < 2 ? '<1' : p}%</span>`).join('')}</div>`);
