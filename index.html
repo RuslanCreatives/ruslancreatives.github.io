@@ -703,7 +703,7 @@ const R = {
       { t: 'img', src: 'covers/sber-5.webp', w: 2400, hgt: 1734, alt: 'СберБизнес: оплата заказа и рублёвый платёж контрагенту' },
       { t: 'img', src: 'covers/sber-triplex.webp', w: 1264, hgt: 300, alt: 'Triplex — дизайн-система СберБизнеса' },
       { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Banking'] },
-      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться без сертификатов Минцифры', all: false },
+      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться без сертификатов Минцифры', all: false, links: [['Дизайн-система', 'https://triplex-design.ru']] },
     ],
     follow: ['simetra', 'about', 'contacts'],
   },
@@ -1235,8 +1235,8 @@ function renderBlock(b) {
       return g;
     }
     case 'gallery': {
-      // all: false — без кнопки «Открыть все экраны», только ссылка на сайт проекта
-      const d = h('div', 'gallery-acts', `${b.all === false ? '' : `<button class="btn acc">Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>`}${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}`);
+      // all: false — без кнопки «Открыть все экраны», только ссылка на сайт проекта; links — дополнительные ссылки [подпись, адрес]
+      const d = h('div', 'gallery-acts', `${b.all === false ? '' : `<button class="btn acc">Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>`}${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}${(b.links || []).map(([t, u]) => `<a class="btn ghost" href="${u}" target="_blank" rel="noopener">${t} ${ICON.arrow}</a>`).join('')}`);
       const all = d.querySelector('button');
       if (all) all.onclick = () => openArtifact(b.id);
       return d;
