@@ -282,6 +282,16 @@ svg { flex-shrink: 0; }
 .cmp-row .tr i { display: block; height: 100%; width: 0; border-radius: 6px; background: var(--faint); transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
 .cmp-row.after .tr i { background: linear-gradient(90deg, var(--violet), var(--accent)); }
 .cmp-row b { font-family: var(--mono); font-weight: 500; text-align: right; }
+/* split: одна полоса, поделённая на «новый» и «старый» */
+.split { border: 1px solid var(--line); border-radius: 16px; padding: 18px 18px 16px; margin: 4px 0 18px; background: var(--elev); }
+.split-n, .split-l { display: flex; justify-content: space-between; gap: 12px; }
+.split-n b { font-size: 34px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.split-n b.a { color: var(--accent-text); }
+.split-bar { display: flex; gap: 3px; height: 18px; margin: 12px 0 10px; border-radius: 7px; overflow: hidden; }
+.split-bar i { flex: 0 1 0; min-width: 4px; }
+.split-bar i.a { background: var(--accent); }
+.split-bar i.o { background: color-mix(in srgb, var(--text) 16%, transparent); }
+.split-l { font-size: 13px; color: var(--muted); }
 
 .tool { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px 6px 8px; border-radius: 10px; background: var(--soft); font: 12px var(--mono); color: var(--muted); margin: 0 0 14px; }
 .tool .st { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--faint); border-top-color: var(--accent-text); animation: spin .7s linear infinite; }
@@ -707,6 +717,7 @@ const R = {
       { t: 'img', src: 'covers/watchzone-1.webp', w: 2400, hgt: 1956, alt: 'Watchzone: карточка камеры, настройки потока и параметры устройства' },
       { t: 'img', src: 'covers/watchzone-2.webp', w: 2400, hgt: 1794, alt: 'Watchzone: список видеорегистраторов со статусами и заполненностью дисков' },
       { t: 'img', src: 'covers/watchzone-3.webp', w: 2400, hgt: 1572, alt: 'Watchzone: редактирование инцидента с видео и таймлайном' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Communication, AI'] },
     ],
     follow: ['messenger', 'meet', 'contacts'],
   },
@@ -759,6 +770,7 @@ const R = {
       { t: 'ph' },
       { t: 'p', h: 'И оценить суммаризацию, чтобы помочь улучшить нам результат генерации' },
       { t: 'ph' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Communication, AI'] },
     ],
     follow: ['lamoda', 'about', 'contacts'],
   },
@@ -791,9 +803,9 @@ const R = {
       { t: 'p', h: 'В компании существуют 2 версии одного и того же продукта видеоконференций. Обе версии дорого поддерживать. Необходимо перевести пользователей на новую актуальную версию, а от старой отказаться' },
       { t: 'h', h: 'Аналитика' },
       { t: 'p', h: 'По собранной аналитике 90% пользователей продолжало пользоваться старым интерфейсом, который было тяжелее поддерживать. Новый интерфейс, по нашему мнению, был красивее и удобнее, но пользователи выбирали старый. Мы решили узнать почему' },
-      { t: 'stats', items: [['90', '%', 'за старый интерфейс'], ['10', '%', 'за новый интерфейс']] },
+      { t: 'split', from: 10, labels: ['за новый интерфейс', 'за старый интерфейс'] },
       { t: 'p', h: 'Мы выяснили, что наша аудитория делится так: 30% — продвинутые гики (разработчики), 32% — средние пользователи (остальное IT), 37% — обычные юзеры и &lt;1% — топ-менеджмент' },
-      { t: 'stats', items: [['30', '%', 'продвинутые'], ['32', '%', 'средние'], ['37', '%', 'обычные']] },
+      { t: 'stats', items: [['30', '%', 'продвинутые'], ['32', '%', 'средние'], ['37', '%', 'обычные'], ['&lt;1', '%', 'топ-менеджмент']] },
       { t: 'p', h: 'Среди активных пользователей разных аудиторий мы отобрали несколько человек, с которыми решили пообщаться.<br>Оказалось, что пользователей не устраивает новая структура миниатюр, лишняя загруженность интерфейса, а также проблемы с периодическим зависанием связи' },
       { t: 'ol', items: [
         'Верхняя панель занимала 46px высоты',
@@ -813,14 +825,14 @@ const R = {
       { t: 'img', src: 'covers/ozon-meet-new.webp', w: 2400, hgt: 1793, alt: 'Новый интерфейс Chatzone Meet: спикер на весь экран, миниатюры справа' },
       { t: 'img', src: 'covers/ozon-meet-main.webp', w: 2400, hgt: 1436, alt: 'Chatzone Meet: встреча с чатом и панель участников' },
       { t: 'h', h: 'Результат' },
-      { t: 'stats', items: [['10', '%', 'до обновления'], ['48', '%', 'после обновления']] },
+      { t: 'split', from: 10, to: 48, labels: ['за новый интерфейс', 'за старый интерфейс'] },
       { t: 'p', h: 'Результат не заставил себя долго ждать.<br>В течение 2 недель аудитория нового интерфейса возросла до 48%, что для нас было успехом. Негативные отзывы всё же оставались, но они относились к техническим проблемам вроде зависания картинки или багов со звуком' },
       { t: 'hr', n: 3 },
       { t: 'p', h: 'Остальные экраны в рамках последующих обновлений Chatzone Meet' },
       { t: 'img', src: 'covers/ozon-meet-rest-1.webp', w: 2400, hgt: 1262, alt: 'Chatzone Meet: подготовка к встрече, настройки камеры и подсказки о проблемах со звуком' },
       { t: 'img', src: 'covers/ozon-meet-rest-2.webp', w: 2400, hgt: 1490, alt: 'Chatzone Meet: встреча в режиме сетки и выбор камеры, микрофона и звука' },
       { t: 'img', src: 'covers/ozon-meet-rest-3.webp', w: 2400, hgt: 1376, alt: 'Chatzone Meet: четыре экрана мобильной версии' },
-      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Meetings'] },
+      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Communication'] },
     ],
     follow: ['lamoda', 'about', 'contacts'],
   },
@@ -855,7 +867,7 @@ const R = {
       { t: 'img', src: 'covers/lamoda-calendar-v2.webp', w: 2400, hgt: 1325, alt: 'Вторая версия календаря акций, тултип акции и выбор процента скидки' },
       { t: 'h', h: 'Результат' },
       // неразрывные пробелы вокруг стрелки, чтобы «10 → 5» не слипалось и не переносилось
-      { t: 'stats', items: [['6', '%', 'рост числа участников акций и продаж в акционный период'], ['10\u00a0→\u00a05', '', 'часов до старта: селлеры стали добавлять товары быстрее']] },
+      { t: 'stats', items: [['на\u00a06', '%', 'рост числа участников акций'], ['10\u00a0→\u00a05\u00a0часов', '', 'селлеры стали добавлять товары быстрее']] },
       { t: 'p', h: 'Количество участников акций увеличилось на 6%, за чем последовало и увеличение продаж в акционный период.' },
       { t: 'p', h: 'Мы также заметили, что среднее время добавления товаров в акцию сократилось. Большая часть пользователей начинает добавлять товары за 10–8 часов до начала акции, а после обновления дизайна время сократилось до 7–5 часов. Позже это подтвердилось в фидбеках пользователей на исследовании других разделов' },
       { t: 'hr', n: 3 },
@@ -1425,6 +1437,9 @@ function renderBlock(b) {
     case 'compare': return h('div', 'compare', `<div class="compare-h"><span>${b.title}</span><span class="mono">${b.note}</span></div>
       <div class="cmp-row"><span>До</span><div class="tr"><i data-w="${b.from}"></i></div><b>${b.from}%</b></div>
       <div class="cmp-row after"><span>После</span><div class="tr"><i data-w="${b.to}"></i></div><b data-v="${b.to}" data-s="%">0%</b></div>`);
+    case 'split': return h('div', 'split', `<div class="split-n"><b class="a">0%</b><b class="o">0%</b></div>
+      <div class="split-bar"><i class="a"></i><i class="o"></i></div>
+      <div class="split-l"><span>${b.labels[0]}</span><span>${b.labels[1]}</span></div>`);
     case 'case': return caseEl(b.id);
     // карточки проектов — копия сетки с главной, чтобы карточки жили в одном месте
     case 'projects': {
@@ -1468,11 +1483,40 @@ function caseEl(id) {
   return c;
 }
 function activate(node, b) {
+  if (b.t === 'split') runSplit(node, b);
   requestAnimationFrame(() => {
     node.querySelectorAll('[data-w]').forEach(i => i.style.width = i.dataset.w + '%');
     node.querySelectorAll('b[data-v]').forEach(el => countUp(el));
   });
   if (b.t === 'tool') setTimeout(() => node.classList.add('done'), S.speed === 'instant' || S.stop ? 0 : 700);
+}
+// split: без to — статичный график; с to — доля «нового» растёт от from до to, когда график доезжает до середины ленты
+function runSplit(el, b) {
+  const [na, no] = el.querySelectorAll('.split-n b'), [ba, bo] = el.querySelectorAll('.split-bar i');
+  let cur = 0;
+  const set = (v, dur) => new Promise(res => {
+    const from = cur, t0 = performance.now();
+    const step = t => {
+      const k = dur ? Math.min(1, (t - t0) / dur) : 1, e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      cur = from + (v - from) * e; ba.style.flexGrow = cur; bo.style.flexGrow = 100 - cur;
+      na.textContent = Math.round(cur) + '%'; no.textContent = 100 - Math.round(cur) + '%';
+      if (k < 1) requestAnimationFrame(step); else res();
+    };
+    requestAnimationFrame(step);
+  });
+  const end = b.to ?? b.from;
+  // скорость печати ответа тут ни при чём: график растёт при прокрутке всегда, кроме системного «уменьшить движение»
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (still || b.to == null) { set(end, 0); return; }
+  set(b.from, 0);
+  // ждём, пока график доедет до верхних ~60% ленты — чтобы человек успел на него посмотреть, а не увидел уже готовым;
+  // порог 1 не годится: при масштабе и дробных пикселях доля видимости бывает 0.99 и анимация не стартует
+  const io = new IntersectionObserver(es => {
+    if (!es.some(x => x.isIntersecting && x.intersectionRatio >= .5)) return;
+    io.disconnect();
+    setTimeout(() => set(end, 1600), 150);
+  }, { root: scEl, rootMargin: '0px 0px -40% 0px', threshold: [.5, .75, 1] });
+  io.observe(el);
 }
 function countUp(el) {
   const v = el.dataset.v, s = el.dataset.s || '';
@@ -1776,7 +1820,9 @@ if (window.visualViewport) {
   const vv = window.visualViewport, app = $('#app');
   let wasKb = false;
   const fit = () => {
-    const kb = vv.height < window.innerHeight - 80;
+    // щипок (масштаб) тоже уменьшает видимую область — клавиатурой считаем только без масштаба и с фокусом в поле ввода
+    const typing = document.activeElement && document.activeElement.matches('input, textarea, [contenteditable]');
+    const kb = typing && vv.scale < 1.05 && vv.height < window.innerHeight - 80;
     app.style.bottom = kb ? 'auto' : '';
     app.style.height = kb ? vv.height + 'px' : '';
     app.style.transform = kb && vv.offsetTop ? `translateY(${vv.offsetTop}px)` : '';
