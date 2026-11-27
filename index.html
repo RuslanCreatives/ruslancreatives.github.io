@@ -125,6 +125,11 @@ svg { flex-shrink: 0; }
 .top-right { margin-left: auto; display: flex; gap: 6px; }
 .pill-btn { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); font-size: 13px; }
 .pill-btn:hover { background: var(--soft); }
+/* переключатель языка RU / EN */
+.lang { display: flex; padding: 3px; gap: 2px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); }
+.lang button { padding: 3px 8px; border-radius: 7px; font: 500 12px var(--mono); letter-spacing: .04em; color: var(--faint); transition: background .2s, color .2s; }
+.lang button:hover { color: var(--text); }
+.lang button.on { background: var(--soft); color: var(--text); }
 
 .scroll { flex: 1; overflow-y: auto; scroll-behavior: smooth; min-height: 0; }
 .col { max-width: 760px; margin: 0 auto; padding: 56px 24px 40px; }
@@ -380,41 +385,41 @@ svg { flex-shrink: 0; }
 <div class="app" id="app">
   <aside class="side" id="side">
     <div class="side-top">
-      <button class="logo" id="logo" aria-label="На главную">Руслан</button>
-      <button class="icon-btn burger" id="closeNav" aria-label="Закрыть меню"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="logo" id="logo" data-i18n="name" data-i18n-aria="toHome" aria-label="На главную">Руслан</button>
+      <button class="icon-btn burger" id="closeNav" data-i18n-aria="closeMenu" aria-label="Закрыть меню"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
-    <button class="new-chat" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Новый чат<kbd>/</kbd></button>
+    <button class="new-chat" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="newChat">Новый чат</span><kbd>/</kbd></button>
     <nav class="nav" id="nav"></nav>
     <div class="ctx" id="ctx">
-      <div class="ctx-row"><span>Контекст изучен</span><span id="ctxNum">0%</span></div>
+      <div class="ctx-row"><span data-i18n="ctx">Контекст изучен</span><span id="ctxNum">0%</span></div>
       <div class="ctx-bar"><i id="ctxBar"></i></div>
-      <div class="ctx-done">Вы знаете обо мне всё. Пора созвониться → <a href="#telegram" class="inl" style="color:var(--accent-text)">Telegram</a></div>
+      <div class="ctx-done"><span data-i18n="ctxDone">Вы знаете обо мне всё. Пора созвониться →</span> <a href="#telegram" class="inl" style="color:var(--accent-text)">Telegram</a></div>
     </div>
     <div class="profile">
       <div class="menu" id="pmenu">
-        <div class="menu-label">Тема</div>
+        <div class="menu-label" data-i18n="theme">Тема</div>
         <div class="seg" id="themeSeg">
-          <button data-v="light"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Светлая</button>
-          <button data-v="dark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>Тёмная</button>
-          <button data-v="system">Авто</button>
+          <button data-v="light"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-i18n="light">Светлая</span></button>
+          <button data-v="dark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg><span data-i18n="dark">Тёмная</span></button>
+          <button data-v="system" data-i18n="auto">Авто</button>
         </div>
-        <div class="menu-label">Скорость ответа</div>
+        <div class="menu-label" data-i18n="speed">Скорость ответа</div>
         <div class="seg two" id="speedSeg">
-          <button data-v="stream">Печатать</button>
-          <button data-v="instant">Мгновенно</button>
+          <button data-v="stream" data-i18n="typing">Печатать</button>
+          <button data-v="instant" data-i18n="instantly">Мгновенно</button>
         </div>
-        <div class="menu-label">Звуки</div>
+        <div class="menu-label" data-i18n="sounds">Звуки</div>
         <div class="seg two" id="soundSeg">
-          <button data-v="on">Включены</button>
-          <button data-v="off">Выключены</button>
+          <button data-v="on" data-i18n="on">Включены</button>
+          <button data-v="off" data-i18n="off">Выключены</button>
         </div>
         <hr>
-        <a class="menu-item" id="cvLink" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Скачать CV</a>
-        <button class="menu-item" id="resetBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.7 9.7 0 00-6.7 2.8L3 8M3 3v5h5"/></svg>Очистить историю</button>
+        <a class="menu-item" id="cvLink" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i18n="downloadCv">Скачать CV</span></a>
+        <button class="menu-item" id="resetBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.7 9.7 0 00-6.7 2.8L3 8M3 3v5h5"/></svg><span data-i18n="clearHistory">Очистить историю</span></button>
       </div>
       <button class="profile-btn" id="profileBtn">
         <div class="ava" id="ava">R</div>
-        <div><div class="profile-name">Руслан</div><div class="profile-plan">Открыт к предложениям</div></div>
+        <div><div class="profile-name" data-i18n="name">Руслан</div><div class="profile-plan" data-i18n="openToOffers">Открыт к предложениям</div></div>
         <svg style="margin-left:auto;color:var(--faint)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
       </button>
     </div>
@@ -423,25 +428,26 @@ svg { flex-shrink: 0; }
 
   <main class="main">
     <div class="topbar">
-      <button class="icon-btn burger" id="openNav" aria-label="Меню"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+      <button class="icon-btn burger" id="openNav" data-i18n-aria="menu" aria-label="Меню"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
       <div class="top-right">
-        <button class="pill-btn" id="shareBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4-4 4M12 2v13"/></svg><span>Поделиться</span></button>
+        <button class="pill-btn" id="shareBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7M16 6l-4-4-4 4M12 2v13"/></svg><span data-i18n="share">Поделиться</span></button>
+        <div class="lang" id="langSeg" role="group" aria-label="Язык / Language"><button data-l="ru" lang="ru">RU</button><button data-l="en" lang="en">EN</button></div>
       </div>
     </div>
 
     <div class="scroll" id="scroll">
       <div class="col" id="col">
         <section class="home home2 thread show" id="t-home">
-          <h1>Я — Руслан,<br>дизайнер продуктов</h1>
-          <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
+          <h1 data-i18n="heroTitle">Я — Руслан,<br>дизайнер продуктов</h1>
+          <p data-i18n="heroSub">Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
           <div class="pj-grid">
           <button class="pj pj-wide" data-open="messenger" style="--c:#2F6BFF">
             <div class="pj-txt">
               <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
               <h3>Chatzone Messenger</h3>
-              <p>Чаты, треды и календарь для десятков тысяч сотрудников Ozon</p>
-              <p class="pj-case">Познакомить пользователей с AI-функционалом и сэкономить им <b>десятки часов</b></p>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p data-i18n="cMessenger">Чаты, треды и календарь для десятков тысяч сотрудников Ozon</p>
+              <p class="pj-case" data-i18n="cMessengerCase">Познакомить пользователей с AI-функционалом и сэкономить им <b>десятки часов</b></p>
+              <span class="pj-go"><span data-i18n="openCase">Открыть кейс</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-messenger.webp');--size:cover;--pos:left top"></div></div>
           </button>
@@ -449,9 +455,9 @@ svg { flex-shrink: 0; }
             <div class="pj-txt">
               <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
               <h3>Chatzone Meet</h3>
-              <p>Видеоконференции для десятков тысяч сотрудников Ozon</p>
-              <p class="pj-case">Помочь полюбить новый дизайн и увеличить аудиторию <b>с&nbsp;10% до&nbsp;48%</b></p>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p data-i18n="cMeet">Видеоконференции для десятков тысяч сотрудников Ozon</p>
+              <p class="pj-case" data-i18n="cMeetCase">Помочь полюбить новый дизайн и увеличить аудиторию <b>с&nbsp;10% до&nbsp;48%</b></p>
+              <span class="pj-go"><span data-i18n="openCase">Открыть кейс</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-meet.webp');--size:cover;--pos:left top"></div></div>
           </button>
@@ -459,18 +465,18 @@ svg { flex-shrink: 0; }
             <div class="pj-txt">
               <div class="pj-meta"><b>Lamoda</b> · 2023—2025</div>
               <h3>Seller Center</h3>
-              <p>Кабинет продавца с нуля: акции, онбординг, логистика</p>
-              <p class="pj-case">Подарить селлерам удобный интерфейс и увеличить их количество <b>на&nbsp;6%</b></p>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p data-i18n="cLamoda">Кабинет продавца с нуля: акции, онбординг, логистика</p>
+              <p class="pj-case" data-i18n="cLamodaCase">Подарить селлерам удобный интерфейс и увеличить их количество <b>на&nbsp;6%</b></p>
+              <span class="pj-go"><span data-i18n="openCase">Открыть кейс</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-lamoda.webp');--size:cover;--pos:left top"></div></div>
           </button>
           <button class="pj " data-open="sber" style="--c:#21A038">
             <div class="pj-txt">
-              <div class="pj-meta"><b>Сбер</b> · 2021—2023</div>
-              <h3>СберБизнес</h3>
-              <p>ДБО для бизнеса, Android-приложение для инженеров и дизайн-система Triplex</p>
-              <span class="pj-go">Смотреть экраны <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <div class="pj-meta"><b data-i18n="sber">Сбер</b> · 2021—2023</div>
+              <h3 data-i18n="sberBiz">СберБизнес</h3>
+              <p data-i18n="cSber">ДБО для бизнеса, Android-приложение для инженеров и дизайн-система Triplex</p>
+              <span class="pj-go"><span data-i18n="viewScreens">Смотреть экраны</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-sber.webp');--size:cover;--pos:left top"></div></div>
           </button>
@@ -478,15 +484,14 @@ svg { flex-shrink: 0; }
             <div class="pj-txt">
               <div class="pj-meta"><b>Simetra</b> · 2018—2020</div>
               <h3>RITM³</h3>
-              <p>Цифровая платформа для управления транспортной системой города</p>
-              <span class="pj-go">Смотреть экраны <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p data-i18n="cRitm">Цифровая платформа для управления транспортной системой города</p>
+              <span class="pj-go"><span data-i18n="viewScreens">Смотреть экраны</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-ritm.webp');--size:cover;--pos:left top"></div></div>
           </button>
-            <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+            <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta" data-i18n="myProject">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
           </div>
         </section>
-        <!-- Дубль главной для экспериментов: правки здесь не трогают настоящую главную -->
       </div>
     </div>
 
@@ -494,19 +499,19 @@ svg { flex-shrink: 0; }
       <div class="composer">
         <div class="box">
           <div class="slash" id="slash"></div>
-          <textarea id="input" rows="1" placeholder="Спросите что-нибудь обо мне…"></textarea>
+          <textarea id="input" rows="1" data-i18n-ph="placeholder" placeholder="Спросите что-нибудь обо мне…"></textarea>
           <div class="box-row">
-            <button class="icon-btn" id="attach" title="Прикрепить"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5"/></svg></button>
-            <span class="hint">/ — команды</span>
+            <button class="icon-btn" id="attach" data-i18n-title="attach" title="Прикрепить"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5"/></svg></button>
+            <span class="hint" data-i18n="hint">/ — команды</span>
             <button class="model-btn" id="modelBtn"><span id="modelName">Размышление</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
             <div class="model-menu" id="modelMenu">
-              <button class="model-opt" data-s="stream"><b>Размышление</b><small>Ответ печатается, видно ход мыслей</small><span class="check">✓</span></button>
-              <button class="model-opt" data-s="instant"><b>Быстро</b><small>Ответ появляется сразу целиком</small><span class="check">✓</span></button>
+              <button class="model-opt" data-s="stream"><b data-i18n="modeThink">Размышление</b><small data-i18n="modeThinkD">Ответ печатается, видно ход мыслей</small><span class="check">✓</span></button>
+              <button class="model-opt" data-s="instant"><b data-i18n="modeFast">Быстро</b><small data-i18n="modeFastD">Ответ появляется сразу целиком</small><span class="check">✓</span></button>
             </div>
             <button class="send" id="send" disabled aria-label="Отправить"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
           </div>
         </div>
-        <div class="disclaimer">Руслан может ошибаться, но в макетах — редко</div>
+        <div class="disclaimer" data-i18n="disclaimer">Руслан может ошибаться, но в макетах — редко</div>
       </div>
     </div>
   </main>
@@ -523,11 +528,13 @@ const CONFIG = {
   linkedin: 'https://www.linkedin.com/in/ruslandesign/',
   cv: 'https://drive.google.com/file/d/1qdI2GuxhC3_AQu0EkZ7oT15ToQs1zljL/view?usp=sharing',
   photo: '', // ссылка на фото для аватара; пусто — буква R
+  // звук при переключении языка: путь к файлу (например 'audio/lang-en.mp3'); пусто — короткий синтезированный звук
+  langSound: { ru: 'audio/lang-ru.m4a', en: 'audio/lang-en.m4a' },
 };
 
 
-// ===== Ответы модели =====
-const R = {
+// ===== Ответы модели (русский; английский — R_EN ниже) =====
+const R_RU = {
   about: {
     title: 'Обо мне', q: 'Расскажи о себе', group: 'about',
     think: ['Читаю запрос: «расскажи о себе»', 'Достаю 8 лет опыта из долговременной памяти', 'Вырезаю скучные части'],
@@ -763,28 +770,29 @@ const R = {
   },
 };
 // tool-only ответы для свободного ввода
-const EXTRA = {
+const EXTRA_RU = {
   money: { think: ['Это деликатный вопрос'], blocks: [{ t: 'p', h: 'Про деньги лучше поговорить лично — так честнее для обеих сторон. Напишите в Telegram, обсудим задачи и условия.' }, { t: 'contact', kind: 'tg' }] },
   jailbreak: { think: ['Обнаружена попытка prompt injection', 'Сохраняю спокойствие'], blocks: [{ t: 'p', h: 'Хорошая попытка 🙂 Но системный промпт у меня один: <b>помочь вам нанять Руслана</b>. Кстати, то, что вы это попробовали, — отличный знак. Нам будет о чём поговорить.' }] },
   hello: { think: ['Здороваюсь'], blocks: [{ t: 'p', h: 'Привет! Рад, что заглянули. Могу рассказать о себе, показать кейсы или помочь связаться со мной — выбирайте ниже.' }] },
   unknown: { think: ['Ищу в контексте…', 'Не нашёл точного ответа'], blocks: [{ t: 'p', h: 'Я демо-модель, обученная только на одном человеке, так что знаю немного. Но могу рассказать про опыт, работы или как связаться с настоящим Русланом — он ответит на что угодно.' }] },
 };
 
+// h — ключ подписи группы в I18N
 const NAV = [
-  { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
-  { h: 'Мои проекты', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
-  { h: 'Прочее', ids: ['about', 'cv', 'contacts'] },
+  { h: 'navWork', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
+  { h: 'navOwn', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
+  { h: 'navMore', ids: ['about', 'cv', 'contacts'] },
 ];
 const ALL = NAV.flatMap(g => g.ids);
-// главная и её дубль для экспериментов
 const isHome = id => id === 'home';
 // отдельные контакты засчитываются во вкладку «Контакты»
 const ALIAS = { mail: 'contacts', telegram: 'contacts', linkedin: 'contacts' };
 
+// команды: [команда, ключ подписи в I18N, действие]
 const SLASH = [
-  ['/about', 'О себе', 'about'], ['/works', 'Все работы', 'works'],
-  ['/ozon', 'Кейс Ozon', 'ozon'], ['/messenger', 'Кейс Chatzone Messenger', 'messenger'], ['/lamoda', 'Кейс Lamoda', 'lamoda'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
-  ['/cv', 'Резюме', 'cv'], ['/contact', 'Контакты', 'contacts'], ['/theme', 'Сменить тему', '!theme'], ['/clear', 'Очистить историю', '!clear'],
+  ['/about', 'cmdAbout', 'about'], ['/works', 'cmdWorks', 'works'],
+  ['/ozon', 'cmdOzon', 'ozon'], ['/messenger', 'cmdMessenger', 'messenger'], ['/lamoda', 'cmdLamoda', 'lamoda'], ['/sber', 'cmdSber', 'sber'], ['/simetra', 'cmdSimetra', 'simetra'],
+  ['/cv', 'cmdCv', 'cv'], ['/contact', 'cmdContacts', 'contacts'], ['/theme', 'cmdTheme', '!theme'], ['/clear', 'cmdClear', '!clear'],
 ];
 
 // ===== state =====
@@ -793,6 +801,322 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem('r8.' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
   set(k, v) { try { localStorage.setItem('r8.' + k, JSON.stringify(v)); } catch {} },
 };
+
+// ===== Английская версия ответов =====
+// Структура та же, что у R_RU; поля без текста (group, meta, follow, hidden) берутся из R_RU
+const R_EN_TEXT = {
+  about: {
+    title: 'About me', q: 'Tell me about yourself',
+    think: ['Reading the request: “tell me about yourself”', 'Pulling 8 years of experience from long-term memory', 'Cutting the boring parts'],
+    blocks: [
+      { t: 'p', h: 'Hi! I’m <b>Ruslan</b>, a product designer. For over 8 years I’ve been designing complex interfaces for B2B, B2E and B2G: I’ve worked with <b>Ozon</b>, <b>Lamoda</b> and <b>Sber</b>, and also designed a product interface for the Russian government.' },
+      { t: 'p', h: 'My superpower is breaking tangled systems down into clear scenarios: video calls and a messenger for tens of thousands of employees, a marketplace seller dashboard, traffic monitoring for an entire city.' },
+      { t: 'stats', items: [['8', '+', 'years in product design'], ['4', '', 'companies: Ozon, Lamoda, Sber, Simetra'], ['48', '%', 'switched to the new Meet in 2 weeks (up from 10%)'], ['6', '%', 'more promo participants at Lamoda']] },
+      { t: 'p', h: 'Now I’m moving towards <mark>AI products</mark>: I want to design interfaces where people and models work together. This site is my small manifesto on that.' },
+      { t: 'tags', items: ['Product design', 'B2B / B2E / B2G', 'Research', 'Design systems', 'Web + Mobile', '→ AI UX'] },
+    ],
+  },
+  ozon: {
+    title: 'Ozon', q: 'Tell me about your work at Ozon',
+    think: ['Opening Ozon Tech, 2025—2026', 'Gathering the Chatzone cases'],
+    blocks: [
+      { t: 'p', h: 'At Ozon I designed internal communication systems: a messenger, video conferencing and video surveillance for warehouses and pickup points. The key cases are Chatzone Messenger and Meet' },
+      { t: 'cards', ids: ['messenger', 'meet'] },
+      { t: 'hr', n: 3 },
+      { t: 'p', h: 'Watchzone screens — the video surveillance system for Ozon warehouses' },
+      { t: 'img', src: 'covers/watchzone-1.webp', w: 2400, hgt: 1956, alt: 'Watchzone: camera card, stream settings and device parameters' },
+      { t: 'img', src: 'covers/watchzone-2.webp', w: 2400, hgt: 1794, alt: 'Watchzone: list of video recorders with statuses and disk usage' },
+      { t: 'img', src: 'covers/watchzone-3.webp', w: 2400, hgt: 1572, alt: 'Watchzone: editing an incident with video and a timeline' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Communication, AI'] },
+    ],
+  },
+  messenger: {
+    title: 'Chatzone Messenger', q: 'Tell me about Chatzone Messenger',
+    think: ['Opening Chatzone Messenger', 'Counting messages in archived threads', 'Connecting DeepSeek'],
+    blocks: [
+      { t: 'p', h: '<b>Chatzone Messenger</b> is a corporate messenger for Ozon employees.' },
+      { t: 'h', h: 'Problem' },
+      { t: 'p', h: 'Work threads pile up <b>hundreds of messages</b>, and archived ones reach <b>up to a thousand</b>. Reading all of it takes a lot of time. We wanted to save that time and pull out only what matters. With AI on the rise, a thread summary feature was the obvious next step.' },
+      { t: 'h', h: 'Solution' },
+      { t: 'p', h: 'Ozon was already using the open DeepSeek model, so we decided to connect it to the messenger. At first I designed a chat for summarizing a thread and asking follow-up questions.' },
+      { t: 'img', src: 'covers/messenger-summary.webp', w: 2400, hgt: 1800, alt: 'Chatzone Messenger: thread summary and a field for asking AI in the right panel' },
+      { t: 'p', h: 'But due to technical constraints we replaced the chat with ready-made prompts:' },
+      { t: 'ol', items: ['Brief summary', 'Open questions', 'Next steps'] },
+      { t: 'ph' },
+      { t: 'p', h: 'Summarization ran in several stages, and generation time varied each time. One problem was that it first went through Ozon’s security server, so I had to figure out how to tell users that summarization was in progress.' },
+      { t: 'p', h: 'Another problem was that the server didn’t keep summarization history, so we somehow had to keep users on the page until the answer arrived.' },
+      { t: 'p', h: 'The familiar pattern is a shimmering skeleton animation that signals an answer is being generated, but I wanted to make the wait more interesting.' },
+      { t: 'p', h: 'While a summary was being prepared, users could read a dozen pre-written texts I added for the wait' },
+      { t: 'ph' },
+      { t: 'p', h: 'In the end, users got the summary and could refine it with additional ready-made prompts' },
+      { t: 'ph' },
+      { t: 'p', h: 'They could also rate the summary to help us improve the generation' },
+      { t: 'ph' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Communication, AI'] },
+    ],
+  },
+  meet: {
+    title: 'Chatzone Meet', q: 'Tell me about Chatzone Meet',
+    think: ['Opening Chatzone Meet, Ozon Tech', 'Looking at why people stick with the old interface', 'Counting how many switched after the update'],
+    blocks: [
+      { t: 'p', h: '<b>Chatzone Meet</b> is Ozon’s internal platform for video conferences and presentations' },
+      { t: 'h', h: 'Problem' },
+      { t: 'p', h: 'The company had 2 versions of the same video conferencing product, and both were expensive to maintain. We needed to move users to the new version and retire the old one' },
+      { t: 'h', h: 'Analytics' },
+      { t: 'p', h: 'Analytics showed that 90% of users kept using the old interface, which was harder to maintain. We believed the new interface was better looking and easier to use, yet users chose the old one. We decided to find out why' },
+      { t: 'split', from: 10, labels: ['new interface', 'old interface'] },
+      { t: 'p', h: 'We found that our audience splits like this: 30% — advanced geeks (developers), 32% — intermediate users (the rest of IT), 37% — regular users and &lt;1% — top management' },
+      { t: 'stats', items: [['30', '%', 'advanced'], ['32', '%', 'intermediate'], ['37', '%', 'regular'], ['&lt;1', '%', 'top management']] },
+      { t: 'p', h: 'We picked a few active users from each audience and talked to them.<br>It turned out they were unhappy with the new thumbnail layout, an overloaded interface and occasional connection freezes' },
+      { t: 'ol', items: [
+        'The top bar took up 46px of height',
+        'Thumbnails at the bottom were inconvenient',
+        'There was no single indicator for meeting recording and summarization',
+      ]},
+      { t: 'img', src: 'covers/ozon-meet-old.webp', w: 2400, hgt: 1800, alt: 'Old Chatzone Meet interface: the top bar, bottom thumbnails and recording indicator outlined in red' },
+      { t: 'h', h: 'Solution' },
+      { t: 'p', h: 'With the data in hand, we decided to rebuild the app’s interface.' },
+      { t: 'ol', items: [
+        'We removed the top bar, which held the switch to the old interface and buttons for copying the meeting link. Most users said they had never paid attention to that part of the screen',
+        'We moved user thumbnails to the right and let people show them in 1 or 2 columns. The thumbnail reflow logic took some digging',
+        'We combined the recording and note-taking indicators, since both relate to the meeting',
+        'As an experiment, we dropped the dynamic speaker view so the video fills the whole screen without black bars',
+        'Other rarely used controls moved into the additional settings menu',
+      ]},
+      { t: 'img', src: 'covers/ozon-meet-new.webp', w: 2400, hgt: 1793, alt: 'New Chatzone Meet interface: speaker in full screen, thumbnails on the right' },
+      { t: 'img', src: 'covers/ozon-meet-main.webp', w: 2400, hgt: 1436, alt: 'Chatzone Meet: a meeting with chat and the participants panel' },
+      { t: 'h', h: 'Result' },
+      { t: 'split', from: 10, to: 48, labels: ['new interface', 'old interface'] },
+      { t: 'p', h: 'The result came quickly.<br>Within 2 weeks the new interface’s audience grew to 48%, which was a success for us. Some negative feedback remained, but it was about technical issues like frozen video or audio bugs' },
+      { t: 'hr', n: 3 },
+      { t: 'p', h: 'Other screens from later Chatzone Meet updates' },
+      { t: 'img', src: 'covers/ozon-meet-rest-1.webp', w: 2400, hgt: 1262, alt: 'Chatzone Meet: getting ready for a meeting, camera settings and audio troubleshooting tips' },
+      { t: 'img', src: 'covers/ozon-meet-rest-2.webp', w: 2400, hgt: 1490, alt: 'Chatzone Meet: a meeting in grid view and choosing a camera, microphone and speakers' },
+      { t: 'img', src: 'covers/ozon-meet-rest-3.webp', w: 2400, hgt: 1376, alt: 'Chatzone Meet: four screens of the mobile version' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E', 'Communication'] },
+    ],
+  },
+  lamoda: {
+    title: 'Lamoda', q: 'Tell me about Lamoda',
+    think: ['Opening Seller Center, 2023—2025', 'Looking at how sellers plan promotions', 'Comparing calendar v1 and v2'],
+    blocks: [
+      { t: 'p', h: 'At Lamoda I designed the <b>Seller Dashboard</b>, where sellers add products to the site, view analytics, manage orders and join promotions' },
+      { t: 'h', h: 'Problem' },
+      { t: 'p', h: 'Users struggled with the promotions section. All promotions appeared as one long list, and sellers found it hard to tell them apart. Because of this, they had to set aside more time for adding products.' },
+      { t: 'h', h: 'Analytics' },
+      { t: 'p', h: 'To find out which pattern users were already used to, we ran a competitor analysis focused on the 3 leading marketplaces in Russia. Each of them solved this problem in its own way. To see which solution worked better, we invited our clients who also sold on competitor marketplaces to take part in research' },
+      { t: 'p', h: 'The analysis revealed 2 calendar structures: a vertical one showing the whole month, and a horizontal one showing a week with smooth scrolling' },
+      { t: 'img', src: 'covers/lamoda-competitors.webp', w: 2400, hgt: 1292, alt: 'Promotion calendars at Wildberries, Ozon and Yandex Market' },
+      { t: 'p', h: 'Users found the vertical month calendar the most convenient: they plan promotions a month ahead, so it’s easier to see all of the month’s promotions at once. Promotion duration is also easier to read in this view' },
+      { t: 'h', h: 'Solution' },
+      { t: 'p', h: 'Once we had gathered all the data we needed, we built the first version of the calendar' },
+      { t: 'p', h: 'The first version immediately showed obvious problems:' },
+      { t: 'ol', items: [
+        'Long promotion names didn’t fit in the card',
+        'Too many colors. We planned to color-code promotions by theme (for example, Black Friday in black, Valentine’s Day and March 8 in pink, and so on)',
+        'We planned to put icons next to promotion names, so we added a legend at the bottom of the calendar, but few people found it, and the many icons took up space',
+        'When 3+ promotions ran within 2 weeks, they started to blend together',
+        'Nobody used the filters',
+        'Finished promotions that sellers hadn’t joined turned out to be unnecessary too',
+      ]},
+      { t: 'img', src: 'covers/lamoda-calendar.webp', w: 2400, hgt: 2526, alt: 'First version of the promotions calendar, October 2024' },
+      { t: 'p', h: 'The first version was followed by a second, more refined one. We fixed the most obvious problems with long names and overlapping promotions. This is the version we took to usability testing' },
+      { t: 'p', h: 'After testing, we dropped the many colors and kept only 3. They show not the promotion’s theme but its status: joined, not joined, finished. We also dropped the icons: they gave users no information and only confused them and cluttered the interface. With the icons and extra colors gone, the legend went too. We removed the filters nobody used and stopped showing finished promotions the user hadn’t joined' },
+      { t: 'p', h: 'Overall, the second version looked neater and cleaner' },
+      { t: 'img', src: 'covers/lamoda-calendar-v2.webp', w: 2400, hgt: 1325, alt: 'Second version of the promotions calendar, a promotion tooltip and choosing the discount percentage' },
+      { t: 'h', h: 'Result' },
+      // неразрывные пробелы, чтобы «10 → 5 hours» не переносилось
+      { t: 'stats', items: [['+6', '%', 'more promo participants'], ['10 → 5 hours', '', 'sellers add products faster']] },
+      { t: 'p', h: 'The number of promotion participants grew by 6%, followed by higher sales during promotions.' },
+      { t: 'p', h: 'We also noticed that the average time to add products to a promotion went down. Most users start adding products 10–8 hours before a promotion begins; after the redesign this dropped to 7–5 hours. User feedback during research on other sections later confirmed this' },
+      { t: 'hr', n: 3 },
+      { t: 'p', h: 'Other screens from later Seller Center updates' },
+      { t: 'img', src: 'covers/lamoda-rest-1.webp', w: 2400, hgt: 1296, alt: 'Seller registration, welcome screen and password requirements' },
+      { t: 'img', src: 'covers/lamoda-rest-2.webp', w: 2400, hgt: 1425, alt: 'Onboarding: steps before you start selling on Lamoda Seller' },
+      { t: 'img', src: 'covers/lamoda-rest-3.webp', w: 2400, hgt: 1332, alt: 'Order card and status history' },
+      { t: 'img', src: 'covers/lamoda-rest-4.webp', w: 2400, hgt: 1482, alt: 'Products in a promotion and the promotion terms' },
+      { t: 'img', src: 'covers/lamoda-rest-5.webp', w: 2400, hgt: 1518, alt: 'Creating a warehouse in two steps and the list of warehouses' },
+      { t: 'img', src: 'covers/lamoda-rest-6.webp', w: 2400, hgt: 1482, alt: 'Lamoda Seller design system' },
+      { t: 'tags', items: ['Web', 'B2B', 'E-com'] },
+      { t: 'gallery', id: 'lamoda', site: 'https://seller.lamoda.ru/' },
+    ],
+  },
+  sber: {
+    title: 'Sber', q: 'Tell me about Sber',
+    think: ['Opening SberBusiness, 2021—2023', 'Finding my contribution to the Triplex design system'],
+    blocks: [
+      { t: 'p', h: 'At Sber I maintained and evolved the design of <b>SberBusiness</b>, an online banking system for companies, sole proprietors and corporate clients. I also built an <b>Android app for engineers</b> and developed <a class="inl" href="https://triplex-design.ru/ru" target="_blank" rel="noopener"><b>Triplex</b></a>, the Sber B2B design system.' },
+      { t: 'img', src: 'covers/sber-1.webp', w: 2400, hgt: 1433, alt: 'SberBusiness: home screen and profile panel with SberRating' },
+      { t: 'img', src: 'covers/sber-2.webp', w: 2400, hgt: 1140, alt: 'SberBusiness: certificates in the profile and issuing a new certificate' },
+      { t: 'img', src: 'covers/sber-3.webp', w: 2400, hgt: 1641, alt: 'SberBusiness: the “My organization” section' },
+      { t: 'img', src: 'covers/sber-4.webp', w: 2400, hgt: 1379, alt: 'SberBusiness: installment purchases and changing the limit' },
+      { t: 'img', src: 'covers/sber-5.webp', w: 2400, hgt: 1734, alt: 'SberBusiness: paying for an order and a ruble payment to a counterparty' },
+      { t: 'img', src: 'covers/sber-triplex.webp', w: 1264, hgt: 300, alt: 'Triplex — the SberBusiness design system' },
+      { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Banking'] },
+      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'May not open without Russian Ministry of Digital Development certificates', links: [['Design system', 'https://triplex-design.ru']] },
+    ],
+  },
+  simetra: {
+    title: 'Simetra', q: 'Tell me about Simetra',
+    think: ['Going back to 2018', 'Loading the city map'],
+    blocks: [
+      { t: 'p', h: 'At Simetra I designed <b>RITM³</b>, a complex modular platform for monitoring a city’s traffic. It’s B2G: an interface for the people who manage traffic across an entire metropolis.' },
+      { t: 'img', src: 'covers/simetra-v3-1.webp', w: 2400, hgt: 1488, alt: 'RITM³: the “Accidents” layer on a map of Moscow' },
+      { t: 'p', h: 'It was the first complex project of my career. I designed 5 modules with different tools and brought them together in a single style. For that, I created a UI kit and the project’s visual style, which is still in use today. To make the product easy to use, we ran field research and testing with users.' },
+      { t: 'img', src: 'covers/simetra-v3-2.webp', w: 2400, hgt: 1488, alt: 'RITM³: geometry editor for the “Accidents” layer' },
+      { t: 'img', src: 'covers/simetra-v3-3.webp', w: 2400, hgt: 1488, alt: 'RITM³: reference table “Moscow districts”' },
+      { t: 'img', src: 'covers/simetra-v3-4.webp', w: 2400, hgt: 1488, alt: 'RITM³: creating public transport routes, Tomsk' },
+      { t: 'img', src: 'covers/simetra-v3-5.webp', w: 2400, hgt: 1488, alt: 'RITM³: event editor, Tushino district' },
+      { t: 'img', src: 'covers/simetra-v3-6.webp', w: 2400, hgt: 1493, alt: 'RITM³: Chelyabinsk city dashboard' },
+      { t: 'p', h: 'RITM³ found its niche: it’s now installed in 10 major Russian cities (including Moscow and Saint Petersburg) and taught at universities (including HSE, MADI and SPbPU).' },
+      { t: 'tags', items: ['Web', 'B2B / B2G', 'Maps'] },
+      { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/' },
+    ],
+  },
+  works: {
+    title: 'All work', q: 'Show me all your work',
+    think: ['Gathering all the cases in one place'],
+    blocks: [{ t: 'projects' }],
+  },
+  contacts: {
+    title: 'Contacts', q: 'How can I reach you?',
+    think: ['Collecting all the ways to reach me'],
+    blocks: [
+      { t: 'p', h: 'Write wherever is convenient — about jobs, projects or just to get acquainted. I reply fastest on Telegram.' },
+      { t: 'contact', kind: 'tg' },
+      { t: 'email' },
+      { t: 'contact', kind: 'li' },
+    ],
+  },
+  mail: {
+    title: 'Email', q: 'I’d like to send you an email',
+    think: ['Drafting an email'],
+    blocks: [
+      { t: 'tool', name: 'compose_email', arg: CONFIG.email },
+      { t: 'p', h: 'Email me — about jobs, projects or just to get acquainted.' },
+      { t: 'email' },
+    ],
+  },
+  telegram: {
+    title: 'Telegram', q: 'Are you on Telegram?',
+    think: ['Looking for the fastest way to reach me'],
+    blocks: [
+      { t: 'tool', name: 'open_link', arg: 't.me/' + CONFIG.telegram },
+      { t: 'p', h: 'Telegram is the fastest way. Write about jobs, AI products or just to talk about interfaces.' },
+      { t: 'contact', kind: 'tg' },
+    ],
+  },
+  linkedin: {
+    title: 'LinkedIn', q: 'Are you on LinkedIn?',
+    think: ['Opening the profile'],
+    blocks: [
+      { t: 'tool', name: 'open_link', arg: 'linkedin.com/in/ruslandesign' },
+      { t: 'p', h: 'Sure, my whole work history and recommendations are there.' },
+      { t: 'contact', kind: 'li' },
+    ],
+  },
+  cv: {
+    title: 'CV', q: 'Can I see your CV?',
+    think: ['Looking for the latest version of my CV', 'Checking it really is the latest'],
+    blocks: [
+      { t: 'tool', name: 'fetch_document', arg: 'ruslan_cv.pdf' },
+      { t: 'p', h: 'Here you go — all on one page:' },
+      { t: 'cv' },
+    ],
+  },
+};
+// поля без текста (group, meta, follow, hidden) — общие с русской версией
+const R_EN = Object.fromEntries(Object.entries(R_RU).map(([id, r]) => [id, { ...r, ...R_EN_TEXT[id] }]));
+const EXTRA_EN = {
+  money: { think: ['That’s a delicate question'], blocks: [{ t: 'p', h: 'Money is better discussed in person — it’s fairer for both sides. Message me on Telegram and we’ll talk about the role and terms.' }, { t: 'contact', kind: 'tg' }] },
+  jailbreak: { think: ['Prompt injection attempt detected', 'Staying calm'], blocks: [{ t: 'p', h: 'Nice try 🙂 But I only have one system prompt: <b>help you hire Ruslan</b>. By the way, the fact that you tried is a great sign. We’ll have plenty to talk about.' }] },
+  hello: { think: ['Saying hi'], blocks: [{ t: 'p', h: 'Hi! Glad you stopped by. I can tell you about myself, show my cases or help you get in touch — pick below.' }] },
+  unknown: { think: ['Searching the context…', 'Couldn’t find an exact answer'], blocks: [{ t: 'p', h: 'I’m a demo model trained on just one person, so I don’t know much. But I can tell you about my experience and work, or how to reach the real Ruslan — he’ll answer anything.' }] },
+};
+
+// ===== Тексты интерфейса на двух языках =====
+const I18N = {
+  ru: {
+    name: 'Руслан', toHome: 'На главную', closeMenu: 'Закрыть меню', menu: 'Меню', newChat: 'Новый чат',
+    ctx: 'Контекст изучен', ctxDone: 'Вы знаете обо мне всё. Пора созвониться →', ctxToast: 'Контекст изучен на 100%. Кажется, нам пора познакомиться',
+    theme: 'Тема', light: 'Светлая', dark: 'Тёмная', auto: 'Авто', speed: 'Скорость ответа', typing: 'Печатать', instantly: 'Мгновенно',
+    sounds: 'Звуки', on: 'Включены', off: 'Выключены', downloadCv: 'Скачать CV', clearHistory: 'Очистить историю', openToOffers: 'Открыт к предложениям',
+    share: 'Поделиться', shared: 'Ссылка на этот чат скопирована',
+    heroTitle: 'Я — Руслан,<br>дизайнер продуктов', heroSub: 'Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты',
+    cMessenger: 'Чаты, треды и календарь для десятков тысяч сотрудников Ozon',
+    cMessengerCase: 'Познакомить пользователей с AI-функционалом и сэкономить им <b>десятки часов</b>',
+    cMeet: 'Видеоконференции для десятков тысяч сотрудников Ozon',
+    cMeetCase: 'Помочь полюбить новый дизайн и увеличить аудиторию <b>с&nbsp;10% до&nbsp;48%</b>',
+    cLamoda: 'Кабинет продавца с нуля: акции, онбординг, логистика',
+    cLamodaCase: 'Подарить селлерам удобный интерфейс и увеличить их количество <b>на&nbsp;6%</b>',
+    sber: 'Сбер', sberBiz: 'СберБизнес', cSber: 'ДБО для бизнеса, Android-приложение для инженеров и дизайн-система Triplex',
+    cRitm: 'Цифровая платформа для управления транспортной системой города',
+    openCase: 'Открыть кейс', viewScreens: 'Смотреть экраны', myProject: 'Мой проект',
+    placeholder: 'Спросите что-нибудь обо мне…', attach: 'Прикрепить', hint: '/ — команды',
+    modeThink: 'Размышление', modeThinkD: 'Ответ печатается, видно ход мыслей', modeFast: 'Быстро', modeFastD: 'Ответ появляется сразу целиком',
+    disclaimer: 'Руслан может ошибаться, но в макетах — редко',
+    navWork: 'Работы', navOwn: 'Мои проекты', navMore: 'Прочее',
+    cmdAbout: 'О себе', cmdWorks: 'Все работы', cmdOzon: 'Кейс Ozon', cmdMessenger: 'Кейс Chatzone Messenger', cmdLamoda: 'Кейс Lamoda', cmdSber: 'Кейс Сбер', cmdSimetra: 'Кейс Simetra',
+    cmdCv: 'Резюме', cmdContacts: 'Контакты', cmdTheme: 'Сменить тему', cmdClear: 'Очистить историю', commands: 'Команды',
+    docTitle: 'Руслан — дизайнер продуктов', docDesc: 'Портфолио Руслана — продуктового дизайнера, который хочет делать AI-продукты. Сделано в виде AI-чата.',
+    thinking: 'Размышляю…', thought: s => `Размышлял ${s} с`,
+    copy: 'Копировать', copied: 'Скопировано', copyFail: 'Не удалось скопировать', regen: 'Перегенерировать', good: 'Хороший ответ', bad: 'Плохой ответ',
+    goodToast: 'Спасибо! Передам Руслану, он будет доволен', badToast: 'Принято. Лучший фидбек — в Telegram, Руслан правда читает',
+    zoom: 'Увеличить: ', ph: 'Здесь будет картинка', before: 'До', after: 'После', site: 'Сайт проекта', tool: 'Использую инструмент',
+    write: 'Написать', openProfile: 'Открыть профиль', email: 'Почта', copyAddr: 'Скопировать адрес', openMail: 'Открыть в почте', addrCopied: 'Адрес скопирован',
+    cvTitle: 'Руслан — Product Designer', cvSub: 'PDF · Ozon, Lamoda, Сбер, Simetra · 8+ лет', openCv: 'Открыть CV',
+    stop: 'Остановить', send: 'Отправить', themeToast: { light: 'Тема: светлая', dark: 'Тема: тёмная', system: 'Тема: как в системе' },
+    attachToast: 'Вложения пока не поддерживаются. Но оффер можно прислать в Telegram 😉',
+    fastToast: 'Режим «Быстро»: ответы сразу целиком', thinkToast: 'Режим «Размышление»: ответы печатаются', cleared: 'История очищена',
+  },
+  en: {
+    name: 'Ruslan', toHome: 'Home', closeMenu: 'Close menu', menu: 'Menu', newChat: 'New chat',
+    ctx: 'Context learned', ctxDone: 'You know everything about me. Time to talk →', ctxToast: 'Context 100% learned. Looks like it’s time we met',
+    theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Auto', speed: 'Response speed', typing: 'Typing', instantly: 'Instant',
+    sounds: 'Sounds', on: 'On', off: 'Off', downloadCv: 'Download CV', clearHistory: 'Clear history', openToOffers: 'Open to offers',
+    share: 'Share', shared: 'Link to this chat copied',
+    heroTitle: 'I’m Ruslan,<br>a product designer', heroSub: 'I’ve worked at Ozon, Lamoda and Sber, and now I design AI&nbsp;products',
+    cMessenger: 'Chats, threads and a calendar for tens of thousands of Ozon employees',
+    cMessengerCase: 'Introduce users to AI features and save them <b>dozens of hours</b>',
+    cMeet: 'Video conferencing for tens of thousands of Ozon employees',
+    cMeetCase: 'Help users love the new design and grow its audience <b>from&nbsp;10% to&nbsp;48%</b>',
+    cLamoda: 'A seller dashboard built from scratch: promotions, onboarding, logistics',
+    cLamodaCase: 'Give sellers a convenient interface and grow their number <b>by&nbsp;6%</b>',
+    sber: 'Sber', sberBiz: 'SberBusiness', cSber: 'Online banking for businesses, an Android app for engineers and the Triplex design system',
+    cRitm: 'A digital platform for managing a city’s transport system',
+    openCase: 'Open case', viewScreens: 'View screens', myProject: 'My project',
+    placeholder: 'Ask me anything…', attach: 'Attach', hint: '/ — commands',
+    modeThink: 'Thinking', modeThinkD: 'The answer types out, you see the reasoning', modeFast: 'Fast', modeFastD: 'The whole answer appears at once',
+    disclaimer: 'Ruslan can make mistakes, but rarely in mockups',
+    navWork: 'Work', navOwn: 'My projects', navMore: 'More',
+    cmdAbout: 'About me', cmdWorks: 'All work', cmdOzon: 'Ozon case', cmdMessenger: 'Chatzone Messenger case', cmdLamoda: 'Lamoda case', cmdSber: 'Sber case', cmdSimetra: 'Simetra case',
+    cmdCv: 'CV', cmdContacts: 'Contacts', cmdTheme: 'Change theme', cmdClear: 'Clear history', commands: 'Commands',
+    docTitle: 'Ruslan — Product Designer', docDesc: 'Portfolio of Ruslan, a product designer who wants to build AI products. Made as an AI chat.',
+    thinking: 'Thinking…', thought: s => `Thought for ${s} s`,
+    copy: 'Copy', copied: 'Copied', copyFail: 'Couldn’t copy', regen: 'Regenerate', good: 'Good answer', bad: 'Bad answer',
+    goodToast: 'Thanks! I’ll tell Ruslan, he’ll be pleased', badToast: 'Noted. The best feedback goes to Telegram — Ruslan really reads it',
+    zoom: 'Enlarge: ', ph: 'Image coming soon', before: 'Before', after: 'After', site: 'Project website', tool: 'Using tool',
+    write: 'Message', openProfile: 'Open profile', email: 'Email', copyAddr: 'Copy address', openMail: 'Open in mail app', addrCopied: 'Address copied',
+    cvTitle: 'Ruslan — Product Designer', cvSub: 'PDF · Ozon, Lamoda, Sber, Simetra · 8+ years', openCv: 'Open CV',
+    stop: 'Stop', send: 'Send', themeToast: { light: 'Theme: light', dark: 'Theme: dark', system: 'Theme: system' },
+    attachToast: 'Attachments aren’t supported yet. But you can send an offer on Telegram 😉',
+    fastToast: '“Fast” mode: whole answers at once', thinkToast: '“Thinking” mode: answers type out', cleared: 'History cleared',
+  },
+};
+// язык: ссылка с ?lang= → выбор посетителя → язык браузера (русский для ru/uk/be/kk, иначе английский)
+const LANGS = ['ru', 'en'];
+let LANG = (() => {
+  const q = new URLSearchParams(location.search).get('lang');
+  // язык из ссылки запоминаем и убираем из адреса — дальше действует переключатель
+  if (LANGS.includes(q)) { store.set('lang', q); history.replaceState(null, '', location.pathname + location.hash); return q; }
+  const saved = store.get('lang', null);
+  if (LANGS.includes(saved)) return saved;
+  return (navigator.languages || [navigator.language || 'ru']).some(l => /^(ru|uk|be|kk)\b/i.test(l)) ? 'ru' : 'en';
+})();
+const t = k => I18N[LANG][k] ?? I18N.ru[k] ?? k;
+let R = LANG === 'en' ? R_EN : R_RU;
+let EXTRA = LANG === 'en' ? EXTRA_EN : EXTRA_RU;
+
 const S = {
   theme: store.get('theme', 'system'),
   speed: store.get('speed', 'stream'),
@@ -845,6 +1169,13 @@ const Sound = {
     const now = performance.now();
     if (name === 'hover') { if (now - this.last < 45) return; this.last = now; this.tone(2400, 1900, 0.04, 0.016, 'triangle'); }
     if (name === 'click') { this.tone(560, 260, 0.09, 0.07); this.tone(1400, null, 0.025, 0.012, 'triangle'); }
+    // переключение языка: на английский — два тона вверх, на русский — вниз
+    if (name === 'lang-en' || name === 'lang-ru') {
+      const up = name === 'lang-en';
+      this.whoosh(0.18, 0.035, up ? 600 : 2600, up ? 2600 : 600);
+      this.tone(up ? 660 : 990, null, 0.12, 0.05, 'sine');
+      this.tone(up ? 990 : 660, null, 0.16, 0.045, 'sine', 0.09);
+    }
     if (name === 'console') {
       this.whoosh(0.2, 0.05, 500, 3200);
       this.tone(330, 660, 0.12, 0.035);
@@ -888,7 +1219,7 @@ function buildNav() {
   nav.innerHTML = '';
   NAV.forEach(g => {
     const grp = h('div', 'group');
-    const head = h('button', 'group-h', ICON.chev + g.h);
+    const head = h('button', 'group-h', ICON.chev + t(g.h));
     head.onclick = () => grp.classList.toggle('closed');
     const items = h('div', 'items');
     g.ids.forEach(id => {
@@ -917,7 +1248,7 @@ function syncNav() {
   $('#ctxBar').style.width = pct + '%';
   const was = $('#ctx').classList.contains('full');
   $('#ctx').classList.toggle('full', pct === 100);
-  if (pct === 100 && !was && syncNav.ready) toast('Контекст изучен на 100%. Кажется, нам пора познакомиться');
+  if (pct === 100 && !was && syncNav.ready) toast(t('ctxToast'));
   syncNav.ready = true;
 }
 function markSeen(id) { id = ALIAS[id] || id; if (!ALL.includes(id)) return; S.seen.add(id); store.set('seen', [...S.seen]); syncNav(); }
@@ -953,14 +1284,14 @@ function showThread(id) {
   const q = !isHome(id) && [...document.querySelectorAll(`#t-${id} .msg-user`)].pop();
   sc.scrollTop = q ? anchorTop(q) : 0;
   sc.style.scrollBehavior = '';
-  document.title = id === 'home' ? 'Руслан — дизайнер продуктов' : `${R[id].title} · Руслан`;
+  document.title = id === 'home' ? t('docTitle') : `${R[id].title} · ${t('name')}`;
 }
 function threadEl() {
   if (isHome(S.current)) {
     // свободный вопрос с главной — отдельный тред
     if (!threads.free) {
       const el = h('section', 'thread'); el.id = 't-free'; $('#col').append(el); threads.free = el;
-      R.free = { title: 'Новый чат', follow: ['about', 'works', 'contacts'] };
+      R.free = { title: t('newChat'), follow: ['about', 'works', 'contacts'] };
     }
     S.current = 'free';
     document.querySelectorAll('.thread').forEach(t => t.classList.toggle('show', t.id === 't-free'));
@@ -973,21 +1304,22 @@ function threadEl() {
 function route(text) {
   const s = text.toLowerCase().replace(/ё/g, 'е');
   const has = (...w) => w.some(x => s.includes(x));
-  if (has('ignore', 'игнорир', 'system prompt', 'системный промпт', 'забудь все', 'jailbreak')) return 'jailbreak';
-  if (has('зарплат', 'деньг', 'сколько стоишь', 'вилк', 'salary', 'ставк')) return 'money';
-  if (has('мессендж', 'messenger', 'суммариз', 'выжимк', 'deepseek')) return 'messenger';
-  if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone')) return 'ozon';
-  if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци')) return 'lamoda';
-  if (has('сбер', 'sber', 'triplex', 'триплекс', 'банк')) return 'sber';
-  if (has('симетр', 'simetra', 'ритм', 'ritm', 'транспорт', 'город')) return 'simetra';
+  // слова на русском и английском: спросить можно на любом языке
+  if (has('ignore', 'игнорир', 'system prompt', 'системный промпт', 'забудь все', 'jailbreak', 'forget all')) return 'jailbreak';
+  if (has('зарплат', 'деньг', 'сколько стоишь', 'вилк', 'salary', 'ставк', 'money', 'compensation', 'rate')) return 'money';
+  if (has('мессендж', 'messenger', 'суммариз', 'выжимк', 'deepseek', 'summar')) return 'messenger';
+  if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone', 'video')) return 'ozon';
+  if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци', 'calendar', 'promo')) return 'lamoda';
+  if (has('сбер', 'sber', 'triplex', 'триплекс', 'банк', 'bank')) return 'sber';
+  if (has('симетр', 'simetra', 'ритм', 'ritm', 'транспорт', 'город', 'transport', 'traffic', 'city')) return 'simetra';
   if (has('cv', 'резюме', 'resume', 'pdf')) return 'cv';
   if (has('почт', 'email', 'e-mail', 'mail', 'письм')) return 'mail';
   if (has('linkedin', 'линкед')) return 'linkedin';
   if (has('телеграм', 'telegram', 'tg', 'тг')) return 'telegram';
-  if (has('связат', 'контакт', 'написать', 'созвон')) return 'contacts';
-  if (has('кейс', 'работ', 'проект', 'портфол', 'покажи')) return 'works';
-  if (has('кто', 'о себе', 'расскаж', 'опыт', 'about')) return 'about';
-  if (/^(привет|здравств|hi|hello|хай|добр)/.test(s.trim())) return 'hello';
+  if (has('связат', 'контакт', 'написать', 'созвон', 'contact', 'reach', 'hire', 'call')) return 'contacts';
+  if (has('кейс', 'работ', 'проект', 'портфол', 'покажи', 'case', 'work', 'project', 'portfolio', 'show')) return 'works';
+  if (has('кто', 'о себе', 'расскаж', 'опыт', 'about', 'who', 'yourself', 'experience')) return 'about';
+  if (/^(привет|здравств|hi|hello|hey|хай|добр)/.test(s.trim())) return 'hello';
   return 'unknown';
 }
 
@@ -1017,7 +1349,7 @@ async function answer(el, id, def, reuse) {
 
   // размышления
   const th = h('div', 'thinking');
-  const thHead = h('button', 'thinking-h', `<span class="shimmer">Размышляю…</span>${ICON.chev}`);
+  const thHead = h('button', 'thinking-h', `<span class="shimmer">${t('thinking')}</span>${ICON.chev}`);
   const thLabel = thHead.firstChild;
   const thBody = h('div', 'thinking-b');
   th.append(thHead, thBody);
@@ -1032,7 +1364,7 @@ async function answer(el, id, def, reuse) {
   }
   await wait(300);
   const secs = Math.max(0.4, (performance.now() - t0) / 1000).toFixed(1);
-  thHead.innerHTML = `Размышлял ${secs} с${ICON.chev}`;
+  thHead.innerHTML = `${t('thought')(secs)}${ICON.chev}`;
   th.classList.remove('open');
 
   for (const b of def.blocks) {
@@ -1047,14 +1379,14 @@ async function answer(el, id, def, reuse) {
 
   // действия
   const acts = h('div', 'actions');
-  const copy = h('button', 'icon-btn', ICON.copy); copy.title = 'Копировать';
-  copy.onclick = () => { navigator.clipboard?.writeText(body.innerText.replace(/^Размышлял.*\n/, '')).then(() => toast('Скопировано')).catch(() => toast('Не удалось скопировать')); };
-  const regen = h('button', 'icon-btn', ICON.regen); regen.title = 'Перегенерировать';
+  const copy = h('button', 'icon-btn', ICON.copy); copy.title = t('copy');
+  copy.onclick = () => { navigator.clipboard?.writeText(body.innerText.replace(/^(Размышлял|Thought).*\n/, '')).then(() => toast(t('copied'))).catch(() => toast(t('copyFail'))); };
+  const regen = h('button', 'icon-btn', ICON.regen); regen.title = t('regen');
   regen.onclick = () => { if (S.busy) return; answer(el, id, def, wrap); };
-  const up = h('button', 'icon-btn', ICON.up); up.title = 'Хороший ответ';
-  const down = h('button', 'icon-btn', ICON.down); down.title = 'Плохой ответ';
-  up.onclick = () => { up.classList.toggle('on'); down.classList.remove('on'); if (up.classList.contains('on')) toast('Спасибо! Передам Руслану, он будет доволен'); };
-  down.onclick = () => { down.classList.toggle('on'); up.classList.remove('on'); if (down.classList.contains('on')) toast('Принято. Лучший фидбек — в Telegram, Руслан правда читает'); };
+  const up = h('button', 'icon-btn', ICON.up); up.title = t('good');
+  const down = h('button', 'icon-btn', ICON.down); down.title = t('bad');
+  up.onclick = () => { up.classList.toggle('on'); down.classList.remove('on'); if (up.classList.contains('on')) toast(t('goodToast')); };
+  down.onclick = () => { down.classList.toggle('on'); up.classList.remove('on'); if (down.classList.contains('on')) toast(t('badToast')); };
   acts.append(copy, regen, up, down);
   wrap.querySelector('.body').append(acts);
   requestAnimationFrame(() => acts.classList.add('show'));
@@ -1206,13 +1538,13 @@ function renderBlock(b) {
     case 'img': {
       const i = h('img', 'shot'); i.src = b.src; i.alt = b.alt || ''; i.loading = 'lazy'; i.decoding = 'async'; if (b.w) { i.width = b.w; i.height = b.hgt; }
       // клик или Enter — открыть картинку на весь экран
-      i.tabIndex = 0; i.setAttribute('role', 'button'); i.setAttribute('aria-label', 'Увеличить: ' + i.alt);
+      i.tabIndex = 0; i.setAttribute('role', 'button'); i.setAttribute('aria-label', t('zoom') + i.alt);
       const zoom = () => LB.open(i);
       i.onclick = zoom; i.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zoom(); } };
       return i;
     }
     // плейсхолдер картинки, пока нет скриншота
-    case 'ph': return h('div', 'ph', '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span>Здесь будет картинка</span>');
+    case 'ph': return h('div', 'ph', `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span>${t('ph')}</span>`);
     case 'ol': return h('ol', '', b.items.map(i => `<li>${i}</li>`).join(''));
     // разделитель: n линий через 12px
     case 'hr': return h('div', 'seps', '<i></i>'.repeat(b.n || 1));
@@ -1220,8 +1552,8 @@ function renderBlock(b) {
     case 'stats': return h('div', 'stats', b.items.map(([v, suf, l]) => `<div class="stat"><b data-v="${v}" data-s="${suf}">${/^\d+$/.test(v) ? '0' : v}${suf}</b><span>${l}</span></div>`).join(''));
     case 'segs': return h('div', 'segs', `<div class="seg-bar">${b.items.map(([p, , c]) => `<i style="background:${c}" data-w="${Math.max(p, 2)}">${p > 5 ? p + '%' : ''}</i>`).join('')}</div><div class="seg-leg">${b.items.map(([p, l, c]) => `<span style="--c:${c}">${l} — ${p < 2 ? '<1' : p}%</span>`).join('')}</div>`);
     case 'compare': return h('div', 'compare', `<div class="compare-h"><span>${b.title}</span><span class="mono">${b.note}</span></div>
-      <div class="cmp-row"><span>До</span><div class="tr"><i data-w="${b.from}"></i></div><b>${b.from}%</b></div>
-      <div class="cmp-row after"><span>После</span><div class="tr"><i data-w="${b.to}"></i></div><b data-v="${b.to}" data-s="%">0%</b></div>`);
+      <div class="cmp-row"><span>${t('before')}</span><div class="tr"><i data-w="${b.from}"></i></div><b>${b.from}%</b></div>
+      <div class="cmp-row after"><span>${t('after')}</span><div class="tr"><i data-w="${b.to}"></i></div><b data-v="${b.to}" data-s="%">0%</b></div>`);
     case 'split': return h('div', 'split', `<div class="split-n"><b class="a">0%</b><b class="o">0%</b></div>
       <div class="split-bar"><i class="a"></i><i class="o"></i></div>
       <div class="split-l"><span>${b.labels[0]}</span><span>${b.labels[1]}</span></div>`);
@@ -1239,22 +1571,22 @@ function renderBlock(b) {
     }
     case 'gallery': {
       // ссылка на сайт проекта; links — дополнительные ссылки [подпись, адрес]
-      const d = h('div', 'gallery-acts', `${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}${(b.links || []).map(([t, u]) => `<a class="btn ghost" href="${u}" target="_blank" rel="noopener">${t} ${ICON.arrow}</a>`).join('')}`);
+      const d = h('div', 'gallery-acts', `${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>${t('site')} ${ICON.arrow}</a>` : ''}${(b.links || []).map(([t, u]) => `<a class="btn ghost" href="${u}" target="_blank" rel="noopener">${t} ${ICON.arrow}</a>`).join('')}`);
       return d;
     }
-    case 'tool': return h('div', 'tool', `<span class="st"></span>Использую инструмент <code>${b.name}</code>(${b.arg})`);
+    case 'tool': return h('div', 'tool', `<span class="st"></span>${t('tool')} <code>${b.name}</code>(${b.arg})`);
     case 'contact': {
       const tg = b.kind === 'tg';
       const url = tg ? 'https://t.me/' + CONFIG.telegram : CONFIG.linkedin;
-      return h('div', 'card contact', `<div class="ic">${tg ? ICON.tg : ICON.li}</div><div><b>${tg ? 'Telegram' : 'LinkedIn'}</b><small>${tg ? '@' + CONFIG.telegram : 'in/ruslandesign'}</small></div><a class="btn acc" href="${url}" target="_blank" rel="noopener">${tg ? 'Написать' : 'Открыть профиль'} ${ICON.arrow}</a>`);
+      return h('div', 'card contact', `<div class="ic">${tg ? ICON.tg : ICON.li}</div><div><b>${tg ? 'Telegram' : 'LinkedIn'}</b><small>${tg ? '@' + CONFIG.telegram : 'in/ruslandesign'}</small></div><a class="btn acc" href="${url}" target="_blank" rel="noopener">${tg ? t('write') : t('openProfile')} ${ICON.arrow}</a>`);
     }
     case 'email': {
-      const c = h('div', 'card contact', `<div class="ic">${ICON.mail}</div><div><b>Почта</b><small>${CONFIG.email}</small></div><div class="contact-acts"><button class="btn ghost" data-a="copy">Скопировать адрес</button><a class="btn acc" href="mailto:${CONFIG.email}">Открыть в почте ${ICON.arrow}</a></div>`);
-      c.querySelector('[data-a=copy]').onclick = () => navigator.clipboard?.writeText(CONFIG.email).then(() => toast('Адрес скопирован')).catch(() => toast('Не удалось скопировать'));
+      const c = h('div', 'card contact', `<div class="ic">${ICON.mail}</div><div><b>${t('email')}</b><small>${CONFIG.email}</small></div><div class="contact-acts"><button class="btn ghost" data-a="copy">${t('copyAddr')}</button><a class="btn acc" href="mailto:${CONFIG.email}">${t('openMail')} ${ICON.arrow}</a></div>`);
+      c.querySelector('[data-a=copy]').onclick = () => navigator.clipboard?.writeText(CONFIG.email).then(() => toast(t('addrCopied'))).catch(() => toast(t('copyFail')));
       return c;
     }
     case 'cv': return h('div', 'card doc', `<div class="doc-page"><i class="h"></i><i class="a"></i><i></i><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i><i></i><i></i><i style="width:70%"></i><i></i><i style="width:50%"></i></div>
-      <div><b>Руслан — Product Designer</b><small>PDF · Ozon, Lamoda, Сбер, Simetra · 8+ лет</small><a class="btn" href="${CONFIG.cv}" target="_blank" rel="noopener">Открыть CV ${ICON.arrow}</a></div>`);
+      <div><b>${t('cvTitle')}</b><small>${t('cvSub')}</small><a class="btn" href="${CONFIG.cv}" target="_blank" rel="noopener">${t('openCv')} ${ICON.arrow}</a></div>`);
   }
 }
 function activate(node, b) {
@@ -1415,8 +1747,8 @@ const LB = (() => {
 const input = $('#input');
 function setSendState() {
   const s = $('#send');
-  if (S.busy) { s.disabled = false; s.classList.add('stop'); s.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12"><rect width="12" height="12" rx="2" fill="currentColor"/></svg>'; s.setAttribute('aria-label', 'Остановить'); }
-  else { s.classList.remove('stop'); s.disabled = !input.value.trim(); s.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg>'; s.setAttribute('aria-label', 'Отправить'); }
+  if (S.busy) { s.disabled = false; s.classList.add('stop'); s.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12"><rect width="12" height="12" rx="2" fill="currentColor"/></svg>'; s.setAttribute('aria-label', t('stop')); }
+  else { s.classList.remove('stop'); s.disabled = !input.value.trim(); s.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg>'; s.setAttribute('aria-label', t('send')); }
 }
 function submit() {
   if (S.busy) { S.stop = true; return; }
@@ -1430,7 +1762,7 @@ function submit() {
 function runCmd(cmd) {
   input.value = ''; autosize(); closeSlash(); setSendState();
   const a = cmd[2];
-  if (a === '!theme') { const order = ['light', 'dark', 'system']; setTheme(order[(order.indexOf(S.theme) + 1) % 3]); toast('Тема: ' + { light: 'светлая', dark: 'тёмная', system: 'как в системе' }[S.theme]); }
+  if (a === '!theme') { const order = ['light', 'dark', 'system']; setTheme(order[(order.indexOf(S.theme) + 1) % 3]); toast(t('themeToast')[S.theme]); }
   else if (a === '!clear') reset();
   else if (a === 'works') { if (isHome(S.current)) threadEl(); ask(R.works.q, 'works'); }
   else open(a);
@@ -1455,11 +1787,11 @@ function updateSlash() {
   const sl = $('#slash');
   const empty = v === '';
   if (S.busy || (!empty && (!v.startsWith('/') || v.includes(' ')))) return closeSlash();
-  const list = empty ? SLASH : SLASH.filter(c => c[0].startsWith(v.toLowerCase()) || c[1].toLowerCase().includes(v.slice(1).toLowerCase()));
+  const list = empty ? SLASH : SLASH.filter(c => c[0].startsWith(v.toLowerCase()) || t(c[1]).toLowerCase().includes(v.slice(1).toLowerCase()));
   if (!list.length) return closeSlash();
   const wasOpen = sl.classList.contains('open');
-  sl.innerHTML = '<div class="slash-h">Команды</div>';
-  list.forEach((c, i) => { const b = h('button', i === 0 && !empty ? 'on' : '', `<code>${c[0]}</code><span>${c[1]}</span>`); b.onclick = () => runCmd(c); sl.append(b); });
+  sl.innerHTML = `<div class="slash-h">${t('commands')}</div>`;
+  list.forEach((c, i) => { const b = h('button', i === 0 && !empty ? 'on' : '', `<code>${c[0]}</code><span>${t(c[1])}</span>`); b.onclick = () => runCmd(c); sl.append(b); });
   sl.classList.add('open');
   if (!wasOpen) Sound.play('console');
 }
@@ -1477,7 +1809,7 @@ function setChips(ids) {
   const c = h('div', 'chips'); el.append(c);
   ids.forEach(id => { const r = R[id]; if (!r) return; const b = h('button', '', r.q); b.onclick = () => { if (S.busy) return; if (id === 'works') { ask(r.q, 'works'); return; } threads[id] ? open(id) : (S.current === 'free' || isHome(S.current) ? (markSeen(id), ask(r.q, id)) : open(id)); }; c.append(b); });
 }
-$('#attach').onclick = () => toast('Вложения пока не поддерживаются. Но оффер можно прислать в Telegram 😉');
+$('#attach').onclick = () => toast(t('attachToast'));
 document.addEventListener('keydown', e => {
   if (e.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); input.value = '/'; updateSlash(); setSendState(); }
   if (e.key === 'Escape') { LB.close(); closeMenus(); }
@@ -1499,25 +1831,63 @@ function setTheme(v) {
 function setSpeed(v) {
   S.speed = v; store.set('speed', v);
   document.querySelectorAll('#speedSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
-  $('#modelName').textContent = v === 'instant' ? 'Быстро' : 'Размышление';
+  $('#modelName').textContent = v === 'instant' ? t('modeFast') : t('modeThink');
   document.querySelectorAll('.model-opt').forEach(b => b.classList.toggle('on', b.dataset.s === v));
 }
 document.querySelectorAll('#themeSeg button').forEach(b => b.onclick = () => setTheme(b.dataset.v));
 document.querySelectorAll('#speedSeg button').forEach(b => b.onclick = () => setSpeed(b.dataset.v));
 function setSound(on) { Sound.on = on; store.set('sound', on); document.querySelectorAll('#soundSeg button').forEach(b => b.classList.toggle('on', (b.dataset.v === 'on') === on)); }
 document.querySelectorAll('#soundSeg button').forEach(b => b.onclick = () => { setSound(b.dataset.v === 'on'); Sound.play('click'); });
-document.querySelectorAll('.model-opt[data-s]').forEach(b => b.onclick = () => { setSpeed(b.dataset.s); closeMenus(); toast(b.dataset.s === 'instant' ? 'Режим «Быстро»: ответы сразу целиком' : 'Режим «Размышление»: ответы печатаются'); });
+document.querySelectorAll('.model-opt[data-s]').forEach(b => b.onclick = () => { setSpeed(b.dataset.s); closeMenus(); toast(b.dataset.s === 'instant' ? t('fastToast') : t('thinkToast')); });
+// ===== язык =====
+// статичные тексты страницы: data-i18n — содержимое, data-i18n-ph / -title / -aria — атрибуты
+function applyStatic() {
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('[data-i18n]').forEach(el => el.innerHTML = t(el.dataset.i18n));
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => el.placeholder = t(el.dataset.i18nPh));
+  document.querySelectorAll('[data-i18n-title]').forEach(el => el.title = t(el.dataset.i18nTitle));
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
+  document.querySelector('meta[name=description]').content = t('docDesc');
+  document.querySelectorAll('#langSeg button').forEach(b => { b.classList.toggle('on', b.dataset.l === LANG); b.setAttribute('aria-pressed', b.dataset.l === LANG); });
+}
+// записи грузим заранее, чтобы звук начинался сразу по клику
+const langAudio = {};
+LANGS.forEach(l => { const f = CONFIG.langSound[l]; if (f) { const a = new Audio(f); a.preload = 'auto'; langAudio[l] = a; } });
+function playLangSound(l) {
+  if (!Sound.on) return;
+  Object.values(langAudio).forEach(a => { a.pause(); a.currentTime = 0; }); // быстрое переключение туда-обратно — звуки не накладываются
+  const a = langAudio[l];
+  if (a) a.play().catch(() => Sound.play('lang-' + l));
+  else Sound.play('lang-' + l);
+}
+async function setLang(l) {
+  if (l === LANG || !LANGS.includes(l)) return;
+  // если ответ ещё печатается — останавливаем и ждём, пока движок освободится
+  if (S.busy) { S.stop = true; for (let i = 0; i < 100 && S.busy; i++) await new Promise(r => setTimeout(r, 30)); }
+  LANG = l; store.set('lang', l);
+  R = l === 'en' ? R_EN : R_RU; EXTRA = l === 'en' ? EXTRA_EN : EXTRA_RU;
+  playLangSound(l);
+  applyStatic(); buildNav(); setSpeed(S.speed); setSendState(); closeSlash();
+  // ответы были на прежнем языке — убираем их, текущая страница «отвечает» заново уже на новом
+  const cur = S.current === 'free' ? 'home' : S.current;
+  Object.keys(threads).forEach(k => { threads[k].remove(); delete threads[k]; });
+  delete R_RU.free; delete R_EN.free;
+  open(cur);
+  if (isHome(cur)) document.title = t('docTitle');
+}
+document.querySelectorAll('#langSeg button').forEach(b => b.onclick = () => setLang(b.dataset.l));
 function closeMenus() { $('#pmenu').classList.remove('open'); $('#modelMenu').classList.remove('open'); }
 $('#profileBtn').onclick = e => { e.stopPropagation(); $('#modelMenu').classList.remove('open'); $('#pmenu').classList.toggle('open'); };
 $('#modelBtn').onclick = e => { e.stopPropagation(); $('#pmenu').classList.remove('open'); $('#modelMenu').classList.toggle('open'); };
 document.addEventListener('click', e => { if (!e.target.closest('#pmenu, #modelMenu')) closeMenus(); });
 function reset() {
   Object.keys(threads).forEach(k => { threads[k].remove(); delete threads[k]; });
-  S.seen.clear(); store.set('seen', []); syncNav.ready = false; closeMenus(); open('home'); toast('История очищена');
+  S.seen.clear(); store.set('seen', []); syncNav.ready = false; closeMenus(); open('home'); toast(t('cleared'));
 }
 $('#resetBtn').onclick = reset;
 $('#cvLink').href = CONFIG.cv;
-$('#shareBtn').onclick = () => { const u = location.href; navigator.clipboard?.writeText(u).then(() => toast('Ссылка на этот чат скопирована')).catch(() => toast(u)); };
+// в ссылку кладём язык, чтобы получатель открыл сайт на том же языке
+$('#shareBtn').onclick = () => { const u = location.origin + location.pathname + '?lang=' + LANG + location.hash; navigator.clipboard?.writeText(u).then(() => toast(t('shared'))).catch(() => toast(u)); };
 $('#openNav').onclick = () => $('#app').classList.add('nav-open');
 $('#closeNav').onclick = $('#scrim').onclick = () => $('#app').classList.remove('nav-open');
 document.querySelector('.ctx-done a').onclick = e => { e.preventDefault(); open('telegram'); };
@@ -1544,8 +1914,9 @@ if (window.visualViewport) {
 }
 
 // ===== init =====
-setTheme(S.theme); setSpeed(S.speed); setSound(Sound.on);
+applyStatic(); setTheme(S.theme); setSpeed(S.speed); setSound(Sound.on);
 buildNav();
+document.title = t('docTitle');
 // старые адреса кейсов ведут на новые
 const OLD_IDS = { ozonmain: 'ozon', lamoda2: 'lamoda', ozon2: 'meet' };
 const hashId = () => { const id = location.hash.slice(1); return OLD_IDS[id] || id; };
