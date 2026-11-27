@@ -153,9 +153,9 @@ svg { flex-shrink: 0; }
 /* название компании в подписи карточки — основным цветом */
 .pj-meta b { color: var(--text); font-weight: 500; }
 /* «Дубль 2»: карточки без плашки окна, скриншот на всю высоту */
-:is(#t-home3, .pj-v2) .pj-scr { inset: 0; }
-:is(#t-home3, .pj-v2) .pj-shot { border: 0; box-shadow: none; } /* превью — картинка на фоне кейса, без рамки */
-:is(#t-home3, .pj-v2) .pj:hover .pj-shot { transform: none; } /* без сдвига скриншота при наведении */
+:is(#t-home, .pj-v2) .pj-scr { inset: 0; }
+:is(#t-home, .pj-v2) .pj-shot { border: 0; box-shadow: none; } /* превью — картинка на фоне кейса, без рамки */
+:is(#t-home, .pj-v2) .pj:hover .pj-shot { transform: none; } /* без сдвига скриншота при наведении */
 .pj-kpi b { color: var(--text); font-weight: 600; }
 .pj-go { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; padding: 7px 12px; border-radius: 10px; background: var(--soft); font-size: 13px; font-weight: 500; transition: background .2s, color .2s; }
 .pj:hover .pj-go { background: var(--accent); color: var(--on-accent); }
@@ -478,10 +478,62 @@ svg { flex-shrink: 0; }
 
     <div class="scroll" id="scroll">
       <div class="col" id="col">
-        <section class="home thread show" id="t-home">
+        <section class="home home2 thread show" id="t-home">
           <h1>Я — Руслан,<br>дизайнер продуктов</h1>
           <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
-          <div class="sugg" id="sugg"></div>
+          <div class="pj-grid">
+          <button class="pj pj-wide" data-open="messenger" style="--c:#2F6BFF">
+            <div class="pj-txt">
+              <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
+              <h3>Chatzone Messenger</h3>
+              <p>Чаты, треды и календарь для десятков тысяч сотрудников Ozon</p>
+              <p class="pj-case">Кейс о том, как познакомить пользователей с AI-функционалом</p>
+              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-messenger.webp');--size:cover;--pos:left top"></div></div>
+          </button>
+          <button class="pj pj-wide" data-open="ozon2" style="--c:#2F6BFF">
+            <div class="pj-txt">
+              <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
+              <h3>Chatzone Meet</h3>
+              <p>Видеоконференции для десятков тысяч сотрудников Ozon</p>
+              <p class="pj-case">Кейс о том, как подружить пользователей с новым дизайном</p>
+              <div class="pj-kpi"><b>10% → 48%</b> перешли на новый Meet за 2 недели</div>
+              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-meet.webp');--size:cover;--pos:left top"></div></div>
+          </button>
+          <button class="pj pj-wide" data-open="lamoda2" style="--c:#929EAD">
+            <div class="pj-txt">
+              <div class="pj-meta"><b>Lamoda</b> · 2023—2025</div>
+              <h3>Seller Center</h3>
+              <p>Кабинет продавца с нуля: акции, онбординг, логистика.</p>
+              <p class="pj-case">Кейс о том, как увеличить % добавления товаров в акции</p>
+              <div class="pj-kpi"><b>+6%</b> участников акций</div>
+              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-lamoda.webp');--size:cover;--pos:left top"></div></div>
+          </button>
+          <button class="pj " data-open="sber" style="--c:#21A038">
+            <div class="pj-txt">
+              <div class="pj-meta"><b>Сбер</b> · 2021—2023</div>
+              <h3>СберБизнес</h3>
+              <p>ДБО для бизнеса, Android-приложение для инженеров и дизайн-система Triplex</p>
+              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-sber.webp');--size:cover;--pos:left top"></div></div>
+          </button>
+          <button class="pj " data-open="simetra" style="--c:#9B7BFF">
+            <div class="pj-txt">
+              <div class="pj-meta"><b>Simetra</b> · 2018—2020</div>
+              <h3>RITM³</h3>
+              <p>Цифровая платформа для управления транспортной системой города</p>
+              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-ritm.webp');--size:cover;--pos:left top"></div></div>
+          </button>
+            <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          </div>
         </section>
         <!-- Дубль главной для экспериментов: правки здесь не трогают настоящую главную -->
         <section class="home home2 thread" id="t-home2">
@@ -531,62 +583,11 @@ svg { flex-shrink: 0; }
             <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
           </div>
         </section>
-        <section class="home home2 thread" id="t-home3">
+        <!-- Дубль 2: прежний главный экран с подсказками -->
+        <section class="home thread" id="t-home3">
           <h1>Я — Руслан,<br>дизайнер продуктов</h1>
           <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
-          <div class="pj-grid">
-          <button class="pj pj-wide" data-open="messenger" style="--c:#2F6BFF">
-            <div class="pj-txt">
-              <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
-              <h3>Chatzone Messenger</h3>
-              <p>Чаты, треды и календарь для десятков тысяч сотрудников Ozon</p>
-              <p class="pj-case">Кейс о том, как познакомить пользователей с AI-функционалом</p>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-messenger.webp');--size:cover;--pos:left top"></div></div>
-          </button>
-          <button class="pj pj-wide" data-open="ozon" style="--c:#2F6BFF">
-            <div class="pj-txt">
-              <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
-              <h3>Chatzone Meet</h3>
-              <p>Видеоконференции для десятков тысяч сотрудников Ozon</p>
-              <p class="pj-case">Кейс о том, как подружить пользователей с новым дизайном</p>
-              <div class="pj-kpi"><b>10% → 48%</b> перешли на новый Meet за 2 недели</div>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-meet.webp');--size:cover;--pos:left top"></div></div>
-          </button>
-          <button class="pj pj-wide" data-open="lamoda" style="--c:#929EAD">
-            <div class="pj-txt">
-              <div class="pj-meta"><b>Lamoda</b> · 2023—2025</div>
-              <h3>Seller Center</h3>
-              <p>Кабинет продавца с нуля: акции, онбординг, логистика.</p>
-              <p class="pj-case">Кейс о том, как увеличить % добавления товаров в акции</p>
-              <div class="pj-kpi"><b>+6%</b> участников акций</div>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-lamoda.webp');--size:cover;--pos:left top"></div></div>
-          </button>
-          <button class="pj " data-open="sber" style="--c:#21A038">
-            <div class="pj-txt">
-              <div class="pj-meta"><b>Сбер</b> · 2021—2023</div>
-              <h3>СберБизнес</h3>
-              <p>ДБО для бизнеса, Android-приложение для инженеров и дизайн-система Triplex</p>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-sber.webp');--size:cover;--pos:left top"></div></div>
-          </button>
-          <button class="pj " data-open="simetra" style="--c:#9B7BFF">
-            <div class="pj-txt">
-              <div class="pj-meta"><b>Simetra</b> · 2018—2020</div>
-              <h3>RITM³</h3>
-              <p>Цифровая платформа для управления транспортной системой города</p>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-ritm.webp');--size:cover;--pos:left top"></div></div>
-          </button>
-            <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
-          </div>
+          <div class="sugg" id="sugg"></div>
         </section>
       </div>
     </div>
@@ -692,25 +693,25 @@ const R = {
       { t: 'p', h: 'Сейчас я иду в сторону <mark>AI-продуктов</mark>: хочу проектировать интерфейсы, где человек и модель работают вместе. Этот сайт — мой маленький манифест на эту тему.' },
       { t: 'tags', items: ['Product design', 'B2B / B2E / B2G', 'Research', 'Design systems', 'Web + Mobile', '→ AI UX'] },
     ],
-    follow: ['ozon', 'lamoda', 'contacts'],
+    follow: ['ozonmain', 'lamoda2', 'contacts'],
   },
   // Ozon Main: обзор работы в Ozon — карточки кейсов из «Дубля 2» и экраны Watchzone
   ozonmain: {
-    title: 'Ozon Main', q: 'Расскажи про работу в Ozon', group: 'work', meta: '2025—2026',
+    title: 'Ozon', q: 'Расскажи про работу в Ozon', group: 'work', meta: '2025—2026',
     think: ['Открываю Ozon Tech, 2025—2026', 'Собираю кейсы Chatzone'],
     blocks: [
       { t: 'p', h: 'В Ozon я проектировал внутренние системы коммуникаций: мессенджер, видеоконференции и видеонаблюдение складов и ПВЗ. Главные кейсы — Chatzone Messenger и Meet' },
-      { t: 'cards', ids: ['messenger', 'ozon'] },
+      { t: 'cards', ids: ['messenger', 'ozon2'] },
       { t: 'hr', n: 3 },
       { t: 'p', h: 'Экраны Watchzone — системы видеонаблюдения на складах Ozon' },
       { t: 'img', src: 'covers/watchzone-1.webp', w: 2400, hgt: 1956, alt: 'Watchzone: карточка камеры, настройки потока и параметры устройства' },
       { t: 'img', src: 'covers/watchzone-2.webp', w: 2400, hgt: 1794, alt: 'Watchzone: список видеорегистраторов со статусами и заполненностью дисков' },
       { t: 'img', src: 'covers/watchzone-3.webp', w: 2400, hgt: 1572, alt: 'Watchzone: редактирование инцидента с видео и таймлайном' },
     ],
-    follow: ['messenger', 'ozon', 'contacts'],
+    follow: ['messenger', 'ozon2', 'contacts'],
   },
   ozon: {
-    title: 'Ozon', q: 'Расскажи про Ozon', group: 'work', meta: '2025—2026',
+    title: 'Ozon · старый', q: 'Расскажи про Ozon', group: 'work', meta: '2025—2026',
     think: ['Открываю Ozon Tech, 2025—2026', 'Нахожу проблему: 90% сидят в старом интерфейсе', 'Считаю, сколько перешло после редизайна'],
     blocks: [
       { t: 'p', h: 'В Ozon я проектировал внутренние системы коммуникаций: <b>мессенджер</b>, <b>видеоконференции</b> и <b>видеонаблюдение</b> складов и ПВЗ. Главный кейс — Chatzone Meet.' },
@@ -759,10 +760,10 @@ const R = {
       { t: 'p', h: 'И оценить суммаризацию, чтобы помочь улучшить нам результат генерации' },
       { t: 'ph' },
     ],
-    follow: ['lamoda', 'about', 'contacts'],
+    follow: ['lamoda2', 'about', 'contacts'],
   },
   lamoda: {
-    title: 'Lamoda', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
+    title: 'Lamoda · дубль', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
     think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
     blocks: [
       { t: 'p', h: 'Два года я проектировал <b>Seller Center</b> — личный кабинет продавца Lamoda — с нуля: товары, аналитика, заказы, акции.' },
@@ -782,7 +783,7 @@ const R = {
   },
   // Черновик: дубль кейса Ozon — текст и графики со страницы ruslan.design/ozon до блока «Остальные экраны»
   ozon2: {
-    title: 'Ozon · дубль', q: 'Расскажи про Ozon', group: 'work', meta: '2025—2026',
+    title: 'Chatzone Meet', q: 'Расскажи про Chatzone Meet', group: 'work', meta: '2025—2026',
     think: ['Открываю Chatzone Meet, Ozon Tech', 'Смотрю, почему люди сидят в старом интерфейсе', 'Считаю, сколько перешло после обновления'],
     blocks: [
       { t: 'p', h: '<b>Chatzone Meet</b> — внутренняя платформа Ozon для проведения видеоконференций и презентаций' },
@@ -825,7 +826,7 @@ const R = {
   },
   // Черновик: дубль кейса Lamoda — текст и экраны со страницы ruslan.design/lamoda до блока «Остальные экраны»
   lamoda2: {
-    title: 'Lamoda · дубль', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
+    title: 'Lamoda', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
     think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
     blocks: [
       { t: 'p', h: 'В Lamoda я проектировал <b>Личный кабинет продавца</b>, который позволяет добавлять товары на сайт, просматривать аналитику, управлять заказами и участвовать в акциях' },
@@ -902,13 +903,13 @@ const R = {
       { t: 'tags', items: ['Web', 'B2B / B2G', 'Maps'] },
       { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/', all: false },
     ],
-    follow: ['ozon', 'about', 'contacts'],
+    follow: ['ozonmain', 'about', 'contacts'],
   },
   works: {
     title: 'Все работы', q: 'Покажи все работы', hidden: true,
     think: ['Собираю все кейсы в одном месте'],
     blocks: [{ t: 'projects' }],
-    follow: ['ozon', 'lamoda', 'cv'],
+    follow: ['ozonmain', 'lamoda2', 'cv'],
   },
   contacts: {
     title: 'Контакты', q: 'Как с тобой связаться?',
@@ -919,7 +920,7 @@ const R = {
       { t: 'email' },
       { t: 'contact', kind: 'li' },
     ],
-    follow: ['cv', 'about', 'ozon'],
+    follow: ['cv', 'about', 'ozonmain'],
   },
   mail: {
     title: 'Почта', q: 'Хочу написать на почту', group: 'contact',
@@ -971,10 +972,10 @@ const EXTRA = {
 };
 
 const NAV = [
-  { h: 'Работы', ids: ['ozonmain', 'ozon', 'messenger', 'lamoda', 'sber', 'simetra'] },
+  { h: 'Работы', ids: ['ozonmain', 'lamoda2', 'sber', 'simetra'] },
   { h: 'Мои проекты', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
   { h: 'Прочее', ids: ['about', 'cv', 'contacts'] },
-  { h: 'Черновики', ids: ['home2', 'home3', 'lamoda2', 'ozon2'], draft: true },
+  { h: 'Черновики', ids: ['home2', 'home3', 'lamoda', 'ozon'], draft: true },
 ];
 const ALL = NAV.filter(g => !g.draft).flatMap(g => g.ids);
 // главная и её дубль для экспериментов
@@ -984,7 +985,7 @@ const ALIAS = { mail: 'contacts', telegram: 'contacts', linkedin: 'contacts' };
 
 const SLASH = [
   ['/about', 'О себе', 'about'], ['/works', 'Все работы', 'works'],
-  ['/ozon', 'Кейс Ozon', 'ozon'], ['/messenger', 'Кейс Chatzone Messenger', 'messenger'], ['/lamoda', 'Кейс Lamoda', 'lamoda'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
+  ['/ozon', 'Кейс Ozon', 'ozonmain'], ['/messenger', 'Кейс Chatzone Messenger', 'messenger'], ['/lamoda', 'Кейс Lamoda', 'lamoda2'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
   ['/cv', 'Резюме', 'cv'], ['/contact', 'Контакты', 'contacts'], ['/theme', 'Сменить тему', '!theme'], ['/clear', 'Очистить историю', '!clear'],
 ];
 
@@ -1176,8 +1177,8 @@ function route(text) {
   if (has('ignore', 'игнорир', 'system prompt', 'системный промпт', 'забудь все', 'jailbreak')) return 'jailbreak';
   if (has('зарплат', 'деньг', 'сколько стоишь', 'вилк', 'salary', 'ставк')) return 'money';
   if (has('мессендж', 'messenger', 'суммариз', 'выжимк', 'deepseek')) return 'messenger';
-  if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone')) return 'ozon';
-  if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци')) return 'lamoda';
+  if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone')) return 'ozonmain';
+  if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци')) return 'lamoda2';
   if (has('сбер', 'sber', 'triplex', 'триплекс', 'банк')) return 'sber';
   if (has('симетр', 'simetra', 'ритм', 'ritm', 'транспорт', 'город')) return 'simetra';
   if (has('cv', 'резюме', 'resume', 'pdf')) return 'cv';
@@ -1276,6 +1277,8 @@ async function genImage(el) {
   el.style.visibility = 'hidden'; // пока грузится — пустое место нужного размера
   await Promise.race([im.decode().catch(() => {}), new Promise(r => setTimeout(r, 2500))]);
   if (S.stop || !im.naturalWidth) { el.style.visibility = ''; return; }
+  // ветку успели скрыть (перешли на другую страницу) — у картинки нулевой размер, анимацию пропускаем
+  { const r0 = el.getBoundingClientRect(); if (!r0.width || !r0.height) { el.style.visibility = ''; return; } }
   let host = el, wrap = null;
   if (isImg) { wrap = h('span', 'gen-wrap'); wrap.style.margin = getComputedStyle(el).margin; el.style.margin = '0'; el.replaceWith(wrap); wrap.append(el); host = wrap; }
   const cv = h('canvas', 'gen-cv'); host.append(cv);
@@ -1409,16 +1412,16 @@ function renderBlock(b) {
       <div class="cmp-row"><span>До</span><div class="tr"><i data-w="${b.from}"></i></div><b>${b.from}%</b></div>
       <div class="cmp-row after"><span>После</span><div class="tr"><i data-w="${b.to}"></i></div><b data-v="${b.to}" data-s="%">0%</b></div>`);
     case 'case': return caseEl(b.id);
-    // карточки проектов — копия сетки со страницы «Дубль», чтобы карточки жили в одном месте
+    // карточки проектов — копия сетки с главной, чтобы карточки жили в одном месте
     case 'projects': {
-      const g = $('#t-home2 .pj-grid').cloneNode(true);
+      const g = $('#t-home .pj-grid').cloneNode(true); g.classList.add('pj-v2');
       g.querySelectorAll('[data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
       return g;
     }
-    // карточки отдельных кейсов — копии карточек со страницы «Дубль 2»
+    // карточки отдельных кейсов — копии карточек с главной
     case 'cards': {
       const g = h('div', 'pj-grid pj-v2', '');
-      b.ids.forEach(id => { const c = $(`#t-home3 .pj[data-open="${id}"]`); if (c) { const n = c.cloneNode(true); n.onclick = () => open(id); g.append(n); } });
+      b.ids.forEach(id => { const c = $(`#t-home .pj[data-open="${id}"]`); if (c) { const n = c.cloneNode(true); n.onclick = () => open(id); g.append(n); } });
       return g;
     }
     case 'gallery': {
@@ -1714,7 +1717,7 @@ function greet() {
     .forEach(([id, t, d], i) => { const b = h('button', '', `<b>${t}</b><small>${d}</small>`); b.style.animation = `rise .5s ${i * 70}ms ease both`; b.onclick = () => open(id); s.append(b); });
 }
 // дубль главной: карточки проектов открывают кейсы
-document.querySelectorAll('#t-home2 [data-open], #t-home3 [data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
+document.querySelectorAll('#t-home [data-open], #t-home2 [data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
 $('#logo').onclick = () => open('home');
 $('#newChat').onclick = () => open('home');
 
