@@ -530,6 +530,7 @@ const CONFIG = {
   photo: '', // ссылка на фото для аватара; пусто — буква R
   // звук при переключении языка: путь к файлу (например 'audio/lang-en.mp3'); пусто — короткий синтезированный звук
   langSound: { ru: 'audio/lang-ru.m4a', en: 'audio/lang-en.m4a' },
+  langSoundOn: false, // звук при смене языка выключен; true — вернуть (файлы лежат в audio/)
 };
 
 
@@ -1852,9 +1853,9 @@ function applyStatic() {
 }
 // записи грузим заранее, чтобы звук начинался сразу по клику
 const langAudio = {};
-LANGS.forEach(l => { const f = CONFIG.langSound[l]; if (f) { const a = new Audio(f); a.preload = 'auto'; langAudio[l] = a; } });
+if (CONFIG.langSoundOn) LANGS.forEach(l => { const f = CONFIG.langSound[l]; if (f) { const a = new Audio(f); a.preload = 'auto'; langAudio[l] = a; } });
 function playLangSound(l) {
-  if (!Sound.on) return;
+  if (!Sound.on || !CONFIG.langSoundOn) return;
   Object.values(langAudio).forEach(a => { a.pause(); a.currentTime = 0; }); // быстрое переключение туда-обратно — звуки не накладываются
   const a = langAudio[l];
   if (a) a.play().catch(() => Sound.play('lang-' + l));
