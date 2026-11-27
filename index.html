@@ -492,7 +492,7 @@ svg { flex-shrink: 0; }
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-messenger.webp');--size:cover;--pos:left top"></div></div>
           </button>
-          <button class="pj pj-wide" data-open="ozon2" style="--c:#2F6BFF">
+          <button class="pj pj-wide" data-open="meet" style="--c:#2F6BFF">
             <div class="pj-txt">
               <div class="pj-meta"><b>Ozon</b> · 2025—2026</div>
               <h3>Chatzone Meet</h3>
@@ -503,7 +503,7 @@ svg { flex-shrink: 0; }
             </div>
             <div class="pj-shot"><div class="pj-scr" style="background-image:url('covers/card-meet.webp');--size:cover;--pos:left top"></div></div>
           </button>
-          <button class="pj pj-wide" data-open="lamoda2" style="--c:#929EAD">
+          <button class="pj pj-wide" data-open="lamoda" style="--c:#929EAD">
             <div class="pj-txt">
               <div class="pj-meta"><b>Lamoda</b> · 2023—2025</div>
               <h3>Seller Center</h3>
@@ -540,7 +540,7 @@ svg { flex-shrink: 0; }
           <h1>Я — Руслан,<br>дизайнер продуктов</h1>
           <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
           <div class="pj-grid">
-          <button class="pj pj-wide" data-open="ozon" style="--c:#2F6BFF">
+          <button class="pj pj-wide" data-open="ozon-old" style="--c:#2F6BFF">
             <div class="pj-txt">
               <div class="pj-meta">Ozon Tech · 2025—2026</div>
               <h3>Chatzone Meet</h3>
@@ -550,7 +550,7 @@ svg { flex-shrink: 0; }
             </div>
             <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>Chatzone Meet</span></div><div class="pj-scr" style="background-image:url('https://static.tildacdn.com/tild6131-6131-4630-b962-303631633531/Meet.png');--size:135%;--pos:right bottom"></div></div>
           </button>
-          <button class="pj " data-open="lamoda" style="--c:#9B7BFF">
+          <button class="pj " data-open="lamoda-old" style="--c:#9B7BFF">
             <div class="pj-txt">
               <div class="pj-meta">Lamoda · 2023—2025</div>
               <h3>Seller Center</h3>
@@ -693,24 +693,24 @@ const R = {
       { t: 'p', h: 'Сейчас я иду в сторону <mark>AI-продуктов</mark>: хочу проектировать интерфейсы, где человек и модель работают вместе. Этот сайт — мой маленький манифест на эту тему.' },
       { t: 'tags', items: ['Product design', 'B2B / B2E / B2G', 'Research', 'Design systems', 'Web + Mobile', '→ AI UX'] },
     ],
-    follow: ['ozonmain', 'lamoda2', 'contacts'],
+    follow: ['ozon', 'lamoda', 'contacts'],
   },
   // Ozon Main: обзор работы в Ozon — карточки кейсов из «Дубля 2» и экраны Watchzone
-  ozonmain: {
+  ozon: {
     title: 'Ozon', q: 'Расскажи про работу в Ozon', group: 'work', meta: '2025—2026',
     think: ['Открываю Ozon Tech, 2025—2026', 'Собираю кейсы Chatzone'],
     blocks: [
       { t: 'p', h: 'В Ozon я проектировал внутренние системы коммуникаций: мессенджер, видеоконференции и видеонаблюдение складов и ПВЗ. Главные кейсы — Chatzone Messenger и Meet' },
-      { t: 'cards', ids: ['messenger', 'ozon2'] },
+      { t: 'cards', ids: ['messenger', 'meet'] },
       { t: 'hr', n: 3 },
       { t: 'p', h: 'Экраны Watchzone — системы видеонаблюдения на складах Ozon' },
       { t: 'img', src: 'covers/watchzone-1.webp', w: 2400, hgt: 1956, alt: 'Watchzone: карточка камеры, настройки потока и параметры устройства' },
       { t: 'img', src: 'covers/watchzone-2.webp', w: 2400, hgt: 1794, alt: 'Watchzone: список видеорегистраторов со статусами и заполненностью дисков' },
       { t: 'img', src: 'covers/watchzone-3.webp', w: 2400, hgt: 1572, alt: 'Watchzone: редактирование инцидента с видео и таймлайном' },
     ],
-    follow: ['messenger', 'ozon2', 'contacts'],
+    follow: ['messenger', 'meet', 'contacts'],
   },
-  ozon: {
+  'ozon-old': {
     title: 'Ozon · старый', q: 'Расскажи про Ozon', group: 'work', meta: '2025—2026',
     think: ['Открываю Ozon Tech, 2025—2026', 'Нахожу проблему: 90% сидят в старом интерфейсе', 'Считаю, сколько перешло после редизайна'],
     blocks: [
@@ -760,9 +760,9 @@ const R = {
       { t: 'p', h: 'И оценить суммаризацию, чтобы помочь улучшить нам результат генерации' },
       { t: 'ph' },
     ],
-    follow: ['lamoda2', 'about', 'contacts'],
+    follow: ['lamoda', 'about', 'contacts'],
   },
-  lamoda: {
+  'lamoda-old': {
     title: 'Lamoda · дубль', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
     think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
     blocks: [
@@ -782,7 +782,7 @@ const R = {
     follow: ['sber', 'about', 'contacts'],
   },
   // Черновик: дубль кейса Ozon — текст и графики со страницы ruslan.design/ozon до блока «Остальные экраны»
-  ozon2: {
+  meet: {
     title: 'Chatzone Meet', q: 'Расскажи про Chatzone Meet', group: 'work', meta: '2025—2026',
     think: ['Открываю Chatzone Meet, Ozon Tech', 'Смотрю, почему люди сидят в старом интерфейсе', 'Считаю, сколько перешло после обновления'],
     blocks: [
@@ -822,10 +822,10 @@ const R = {
       { t: 'img', src: 'covers/ozon-meet-rest-3.webp', w: 2400, hgt: 1376, alt: 'Chatzone Meet: четыре экрана мобильной версии' },
       { t: 'tags', items: ['Web + Mobile', 'B2E', 'Meetings'] },
     ],
-    follow: ['lamoda2', 'about', 'contacts'],
+    follow: ['lamoda', 'about', 'contacts'],
   },
   // Черновик: дубль кейса Lamoda — текст и экраны со страницы ruslan.design/lamoda до блока «Остальные экраны»
-  lamoda2: {
+  lamoda: {
     title: 'Lamoda', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
     think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
     blocks: [
@@ -903,13 +903,13 @@ const R = {
       { t: 'tags', items: ['Web', 'B2B / B2G', 'Maps'] },
       { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/', all: false },
     ],
-    follow: ['ozonmain', 'about', 'contacts'],
+    follow: ['ozon', 'about', 'contacts'],
   },
   works: {
     title: 'Все работы', q: 'Покажи все работы', hidden: true,
     think: ['Собираю все кейсы в одном месте'],
     blocks: [{ t: 'projects' }],
-    follow: ['ozonmain', 'lamoda2', 'cv'],
+    follow: ['ozon', 'lamoda', 'cv'],
   },
   contacts: {
     title: 'Контакты', q: 'Как с тобой связаться?',
@@ -920,7 +920,7 @@ const R = {
       { t: 'email' },
       { t: 'contact', kind: 'li' },
     ],
-    follow: ['cv', 'about', 'ozonmain'],
+    follow: ['cv', 'about', 'ozon'],
   },
   mail: {
     title: 'Почта', q: 'Хочу написать на почту', group: 'contact',
@@ -972,10 +972,10 @@ const EXTRA = {
 };
 
 const NAV = [
-  { h: 'Работы', ids: ['ozonmain', 'lamoda2', 'sber', 'simetra'] },
+  { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
   { h: 'Мои проекты', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
   { h: 'Прочее', ids: ['about', 'cv', 'contacts'] },
-  { h: 'Черновики', ids: ['home2', 'home3', 'lamoda', 'ozon'], draft: true },
+  { h: 'Черновики', ids: ['home2', 'home3', 'lamoda-old', 'ozon-old'], draft: true },
 ];
 const ALL = NAV.filter(g => !g.draft).flatMap(g => g.ids);
 // главная и её дубль для экспериментов
@@ -985,7 +985,7 @@ const ALIAS = { mail: 'contacts', telegram: 'contacts', linkedin: 'contacts' };
 
 const SLASH = [
   ['/about', 'О себе', 'about'], ['/works', 'Все работы', 'works'],
-  ['/ozon', 'Кейс Ozon', 'ozonmain'], ['/messenger', 'Кейс Chatzone Messenger', 'messenger'], ['/lamoda', 'Кейс Lamoda', 'lamoda2'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
+  ['/ozon', 'Кейс Ozon', 'ozon'], ['/messenger', 'Кейс Chatzone Messenger', 'messenger'], ['/lamoda', 'Кейс Lamoda', 'lamoda'], ['/sber', 'Кейс Сбер', 'sber'], ['/simetra', 'Кейс Simetra', 'simetra'],
   ['/cv', 'Резюме', 'cv'], ['/contact', 'Контакты', 'contacts'], ['/theme', 'Сменить тему', '!theme'], ['/clear', 'Очистить историю', '!clear'],
 ];
 
@@ -998,7 +998,7 @@ const store = {
 const S = {
   theme: store.get('theme', 'system'),
   speed: store.get('speed', 'stream'),
-  seen: new Set(store.get('seen', [])),
+  seen: new Set(store.get('seen', []).map(id => ({ ozonmain: 'ozon', lamoda2: 'lamoda', ozon2: 'meet' })[id] || id)),
   current: 'home',
   busy: false,
   stop: false,
@@ -1179,8 +1179,8 @@ function route(text) {
   if (has('ignore', 'игнорир', 'system prompt', 'системный промпт', 'забудь все', 'jailbreak')) return 'jailbreak';
   if (has('зарплат', 'деньг', 'сколько стоишь', 'вилк', 'salary', 'ставк')) return 'money';
   if (has('мессендж', 'messenger', 'суммариз', 'выжимк', 'deepseek')) return 'messenger';
-  if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone')) return 'ozonmain';
-  if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци')) return 'lamoda2';
+  if (has('озон', 'ozon', 'chatzone', 'meet', 'видеоконф', 'watchzone')) return 'ozon';
+  if (has('ламод', 'lamoda', 'seller', 'селлер', 'календар', 'акци')) return 'lamoda';
   if (has('сбер', 'sber', 'triplex', 'триплекс', 'банк')) return 'sber';
   if (has('симетр', 'simetra', 'ритм', 'ritm', 'транспорт', 'город')) return 'simetra';
   if (has('cv', 'резюме', 'resume', 'pdf')) return 'cv';
@@ -1790,8 +1790,11 @@ if (window.visualViewport) {
 // ===== init =====
 setTheme(S.theme); setSpeed(S.speed); setSound(Sound.on);
 buildNav(); greet();
-window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (id !== S.current) open(id || 'home'); });
-const startId = location.hash.slice(1);
+// старые адреса кейсов ведут на новые
+const OLD_IDS = { ozonmain: 'ozon', lamoda2: 'lamoda', ozon2: 'meet' };
+const hashId = () => { const id = location.hash.slice(1); return OLD_IDS[id] || id; };
+window.addEventListener('hashchange', () => { const id = hashId(); if (id !== S.current) open(id || 'home'); });
+const startId = hashId();
 if (startId && R[startId]) open(startId);
 </script>
 </body>
