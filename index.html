@@ -133,11 +133,6 @@ svg { flex-shrink: 0; }
 .home { min-height: calc(100% - 40px); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; }
 .home h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; letter-spacing: -.035em; font-weight: 600; margin: 0 0 12px; max-width: 640px; }
 .home p { text-wrap: balance; color: var(--muted); max-width: 500px; margin: 0 0 32px; font-size: 16px; }
-.sugg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 620px; }
-.sugg button { text-align: left; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--elev); transition: .18s; display: flex; flex-direction: column; gap: 2px; }
-.sugg button:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--faint); }
-.sugg b { font-weight: 500; font-size: 14px; }
-.sugg small { color: var(--muted); font-size: 12px; }
 
 /* дубль главной: витрина проектов */
 .home2 { justify-content: flex-start; padding-top: 56px; }
@@ -166,9 +161,6 @@ svg { flex-shrink: 0; }
 .pj:hover .pj-go svg { transform: translateX(3px); }
 .pj-shot { position: relative; margin: 24px -24px 0 0; flex: 1; min-height: 170px; border: 1px solid var(--line); border-right: 0; border-bottom: 0; border-radius: 12px 0 0 0; overflow: hidden; background: var(--side); box-shadow: 0 -6px 30px rgba(0,0,0,.12); transition: transform .4s cubic-bezier(.2,.8,.2,1); }
 .pj:hover .pj-shot { transform: translate(-6px, -6px); }
-.pj-bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--soft); font: 11px var(--mono); color: var(--faint); white-space: nowrap; }
-.pj-bar i { width: 8px; height: 8px; border-radius: 50%; background: #FF5F57; }
-.pj-bar i:nth-child(2) { background: #FEBC2E; } .pj-bar i:nth-child(3) { background: #28C840; margin-right: 6px; }
 .pj-scr { position: absolute; inset: 28px 0 0; background-repeat: no-repeat; background-size: var(--size, 140%); background-position: var(--pos, left top); }
 .pj-wide { grid-column: span 2; min-height: 320px; padding-bottom: 24px; }
 .pj-wide .pj-txt { width: 40%; }
@@ -258,19 +250,6 @@ svg { flex-shrink: 0; }
 .tag { font: 12px var(--mono); padding: 4px 9px; border-radius: 7px; background: var(--soft); color: var(--muted); }
 .tag.hi { background: var(--accent); color: var(--on-accent); }
 
-.case { display: grid; grid-template-columns: 1fr; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--elev); margin: 0 0 18px; cursor: pointer; transition: .2s; text-align: left; width: 100%; }
-.case:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.case-img { aspect-ratio: 16/8.5; background: var(--soft) center/cover no-repeat; position: relative; }
-.case-img::after { content: 'Открыть все экраны'; position: absolute; right: 12px; bottom: 12px; font: 500 12px var(--mono); background: var(--elev); color: var(--text); padding: 6px 10px; border: 1px solid color-mix(in srgb, var(--text) 18%, transparent); box-shadow: 0 2px 8px rgba(0,0,0,.12); border-radius: 8px; opacity: 0; transform: translateY(4px); transition: .2s; }
-.case:hover .case-img::after { opacity: 1; transform: none; }
-.case-b { padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
-.case-b b { font-size: 16px; font-weight: 600; display: block; }
-.case-b small { color: var(--muted); font-size: 13px; }
-.case-b .yr { font: 12px var(--mono); color: var(--faint); white-space: nowrap; }
-.cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.cases-grid .case { margin: 0; }
-.cases-grid .case-img { aspect-ratio: 16/10; }
-.cases-grid .case-b { align-items: flex-start; }
 
 .segs { margin: 0 0 18px; }
 .seg-bar { display: flex; height: 40px; border-radius: 10px; overflow: hidden; gap: 3px; }
@@ -332,27 +311,6 @@ svg { flex-shrink: 0; }
 
 
 
-/* lamoda calendar */
-.cal { border: 1px solid var(--line); border-radius: 16px; background: var(--elev); padding: 14px; margin: 0 0 18px; }
-.cal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 10px; flex-wrap: wrap; }
-.cal-top b { font-size: 14px; }
-.cal .seg { margin: 0; width: 200px; }
-.cal-dow, .cal-week { display: grid; grid-template-columns: repeat(7, 1fr); }
-.cal-dow span { font: 10px var(--mono); color: var(--faint); text-transform: uppercase; padding: 0 4px 6px; }
-.cal-week { border-top: 1px solid var(--line); grid-auto-rows: min-content; padding-bottom: 6px; min-height: 58px; }
-.cal-week .d { font: 11px var(--mono); color: var(--muted); padding: 4px; grid-row: 1; }
-.cal-week .d.off { color: var(--faint); opacity: .5; }
-.promo { font-size: 11px; line-height: 1; padding: 5px 6px; margin: 2px 2px 0; border-radius: 5px; white-space: nowrap; overflow: hidden; text-overflow: clip; color: #fff; transition: background .4s, color .4s, opacity .4s; }
-.cal.v2 .promo { text-overflow: ellipsis; }
-.cal.v2 .promo.yes { background: var(--accent) !important; color: var(--on-accent); }
-.cal.v2 .promo.no { background: var(--soft) !important; color: var(--text); }
-.cal.v2 .promo.done { background: transparent !important; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); }
-.cal.v2 .promo.skip { display: none; }
-.cal.v2 .promo i { display: none; }
-.cal-leg { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; font-size: 11px; color: var(--muted); }
-.cal-leg span::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 2px; background: var(--c); margin-right: 5px; box-shadow: inset 0 0 0 1px var(--line); }
-.cal.v2 .leg1, .cal:not(.v2) .leg2 { display: none; }
-.cal-note { font-size: 12px; color: var(--muted); margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
 
 /* composer */
 .composer-wrap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; padding: 0 24px; pointer-events: none; }
@@ -380,17 +338,6 @@ svg { flex-shrink: 0; }
 .slash code { font-family: var(--mono); font-weight: 500; color: var(--accent-text); min-width: 90px; }
 .slash span { color: var(--muted); }
 
-/* artifact panel */
-.artifact { width: 0; overflow: hidden; border-left: 0 solid var(--line); background: var(--side); transition: width .35s cubic-bezier(.2,.8,.2,1); display: flex; flex-direction: column; min-height: 0; }
-.app.art-open .artifact { width: min(46vw, 640px); border-left-width: 1px; }
-.art-h { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 18px; border-bottom: 1px solid var(--line); min-width: 360px; }
-.art-h .t { font-weight: 600; font-size: 14px; }
-.art-h .s { font: 11px var(--mono); color: var(--faint); }
-.art-h .r { margin-left: auto; display: flex; gap: 4px; }
-.art-b { flex: 1; overflow-y: auto; padding: 18px; min-width: 360px; }
-.art-b figure { margin: 0 0 16px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--elev); animation: rise .5s ease both; }
-.art-b img { display: block; width: 100%; height: auto; cursor: zoom-in; }
-.art-b figcaption { padding: 8px 12px; font: 11px var(--mono); color: var(--faint); }
 
 .lightbox { position: fixed; inset: 0; z-index: 100; display: none; overflow: hidden; touch-action: none; cursor: zoom-out; }
 .lightbox.open { display: block; }
@@ -405,10 +352,6 @@ svg { flex-shrink: 0; }
 
 .scrim { display: none; }
 
-@media (max-width: 1100px) {
-  .artifact { position: fixed; inset: 0 0 0 auto; z-index: 50; }
-  .app.art-open .artifact { width: min(100vw, 560px); box-shadow: var(--shadow); }
-}
 @media (max-width: 820px) {
   .app { grid-template-columns: 1fr; }
   .side { position: fixed; inset: 0 auto 0 0; width: 290px; transform: translateX(calc(-100% - 2px)); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
@@ -419,15 +362,12 @@ svg { flex-shrink: 0; }
   .burger { background: var(--bg); border: 1px solid var(--line); }
   .composer-wrap { padding: 0 12px; }
   .composer { padding-bottom: max(10px, env(safe-area-inset-bottom)); }
-  .sugg, .cases-grid { grid-template-columns: 1fr; }
   .pill-btn span { display: none; }
   .model-menu { width: auto; left: 0; }
   .doc { grid-template-columns: 90px 1fr; }
   .contact { flex-wrap: wrap; }
   .contact .btn { margin-left: 0; width: 100%; justify-content: center; }
   .contact-acts { margin-left: 0; width: 100%; flex-direction: column; }
-  .app.art-open .artifact { width: 100vw; }
-  .art-h, .art-b { min-width: 0; }
   .follow { margin-left: 0; }
   .disclaimer { display: none; }
 }
@@ -547,59 +487,6 @@ svg { flex-shrink: 0; }
           </div>
         </section>
         <!-- Дубль главной для экспериментов: правки здесь не трогают настоящую главную -->
-        <section class="home home2 thread" id="t-home2">
-          <h1>Я — Руслан,<br>дизайнер продуктов</h1>
-          <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
-          <div class="pj-grid">
-          <button class="pj pj-wide" data-open="ozon-old" style="--c:#2F6BFF">
-            <div class="pj-txt">
-              <div class="pj-meta">Ozon Tech · 2025—2026</div>
-              <h3>Chatzone Meet</h3>
-              <p>Видеоконференции, мессенджер и видеонаблюдение для десятков тысяч сотрудников.</p>
-              <div class="pj-kpi"><b>10% → 48%</b> перешли на новый Meet за 2 недели</div>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>Chatzone Meet</span></div><div class="pj-scr" style="background-image:url('https://static.tildacdn.com/tild6131-6131-4630-b962-303631633531/Meet.png');--size:135%;--pos:right bottom"></div></div>
-          </button>
-          <button class="pj " data-open="lamoda-old" style="--c:#9B7BFF">
-            <div class="pj-txt">
-              <div class="pj-meta">Lamoda · 2023—2025</div>
-              <h3>Seller Center</h3>
-              <p>Кабинет продавца с нуля: акции, онбординг, логистика.</p>
-              <div class="pj-kpi"><b>+6%</b> участников акций</div>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>Календарь акций</span></div><div class="pj-scr" style="background-image:url('https://static.tildacdn.com/tild3833-6161-4435-b739-346635613732/_1.png');--size:190%;--pos:40% 45%"></div></div>
-          </button>
-          <button class="pj " data-open="sber" style="--c:#21A038">
-            <div class="pj-txt">
-              <div class="pj-meta">Сбер · 2021—2023</div>
-              <h3>СберБизнес</h3>
-              <p>ДБО для бизнеса, Android-приложение для инженеров и дизайн-система Triplex.</p>
-              <div class="pj-kpi"><b>Web · Android</b> · Triplex</div>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>СберБизнес</span></div><div class="pj-scr" style="background-image:url('https://static.tildacdn.com/tild6131-3865-4466-a231-656632353838/Group_1_1.png');--size:150%;--pos:left top"></div></div>
-          </button>
-          <button class="pj pj-wide" data-open="simetra" style="--c:#F5A524">
-            <div class="pj-txt">
-              <div class="pj-meta">Simetra · 2018—2020</div>
-              <h3>RITM³</h3>
-              <p>Цифровая платформа для управления транспортной системой города.</p>
-              <div class="pj-kpi"><b>10 городов</b> и 3 университета</div>
-              <span class="pj-go">Открыть кейс <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </div>
-            <div class="pj-shot"><div class="pj-bar"><i></i><i></i><i></i><span>RITM³ · Карта</span></div><div class="pj-scr" style="background-image:url('covers/simetra-cover.webp');--size:140%;--pos:left top"></div></div>
-          </button>
-            <a class="pj-own" href="https://podborka.co/" target="_blank" rel="noopener"><span class="pj-meta">Мой проект</span><b>Podborka.co</b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
-          </div>
-        </section>
-        <!-- Дубль 2: прежний главный экран с подсказками -->
-        <section class="home thread" id="t-home3">
-          <h1>Я — Руслан,<br>дизайнер продуктов</h1>
-          <p>Работал в Ozon, Lamoda и Сбер, а сейчас проектирую AI&nbsp;продукты</p>
-          <div class="sugg" id="sugg"></div>
-        </section>
       </div>
     </div>
 
@@ -624,16 +511,6 @@ svg { flex-shrink: 0; }
     </div>
   </main>
 
-  <aside class="artifact" id="artifact">
-    <div class="art-h">
-      <div><div class="t" id="artTitle">Артефакт</div><div class="s" id="artSub"></div></div>
-      <div class="r">
-        <a class="icon-btn" id="artLink" target="_blank" rel="noopener" title="Полный кейс на сайте"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg></a>
-        <button class="icon-btn" id="artClose" title="Закрыть"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-      </div>
-    </div>
-    <div class="art-b" id="artBody"></div>
-  </aside>
 </div>
 <div class="lightbox" id="lightbox"><img alt=""></div>
 <div class="toast" id="toast"></div>
@@ -648,52 +525,9 @@ const CONFIG = {
   photo: '', // ссылка на фото для аватара; пусто — буква R
 };
 
-const T = 'https://static.tildacdn.com/';
-const img = p => T + p;
-
-const GALLERY = {
-  ozon: { title: 'Chatzone Meet', sub: 'Ozon Tech · 2025—2026', link: 'https://ruslan.design/ozon', imgs: [
-    ['tild6131-6131-4630-b962-303631633531/Meet.png', 'Новый интерфейс встречи'],
-    ['tild6562-3366-4134-b461-613262303936/Meet_Old.png', 'Было: старый интерфейс'],
-    ['tild3634-3036-4634-b531-373563356436/MainPageMeet.png', 'Главная Meet'],
-    ['tild3138-3466-4439-b432-356434633738/Sidebar.png', 'Миниатюры справа, 1 или 2 ряда'],
-    ['tild3063-3765-4938-a338-323239616362/Meeting.png', 'Встреча'],
-    ['tild3465-6265-4631-a366-353163336339/ModalSettings.png', 'Настройки'],
-    ['tild3963-3036-4535-b161-623936353736/MeetMobile1.png', 'Mobile'],
-    ['tild6233-6464-4634-b435-366230303062/MeetMobile4.png', 'Mobile'],
-    ['tild6639-3531-4265-a666-656433626335/Chatzone_UI.png', 'Chatzone Messenger'],
-    ['tild3865-6339-4930-b332-383666326331/Main_screen.png', 'Watchzone'],
-    ['tild3063-3539-4930-b339-626561313735/Main_screen2.png', 'Watchzone'],
-    ['tild3164-3462-4432-a466-303238363934/Admin_panel.png', 'Админ-панель'],
-  ]},
-  lamoda: { title: 'Seller Center', sub: 'Lamoda · 2023—2025', link: 'https://ruslan.design/lamoda', imgs: [
-    ['tild3833-6161-4435-b739-346635613732/_1.png', 'Календарь акций'],
-    ['tild6166-6263-4533-a239-343861373635/v-Menus.png', 'Меню'],
-    ['tild3038-6562-4836-b631-303136313064/tooltip.png', 'Тултип акции'],
-    ['tild3564-3336-4631-b965-613433643331/Registration.png', 'Регистрация'],
-    ['tild3562-3835-4538-b037-646434313937/Onboarding.png', 'Онбординг'],
-    ['tild3030-3663-4636-b362-393937656539/Status_history.png', 'История статусов'],
-    ['tild6264-3136-4463-b661-336239316239/Modal_window.png', 'Модальное окно'],
-    ['tild3761-6432-4565-b037-306161356637/__KAM.png', 'КАМ'],
-    ['tild6339-3739-4066-b964-633437316364/_.png', 'Экран кабинета'],
-  ]},
-};
-
-const COVERS = {
-  ozon: img('tild3366-3861-4066-b736-643665396662/Ozon.png'),
-  lamoda: img('tild6464-3436-4262-a230-336332353561/Lamoda.png'),
-};
-
-const caseCard = id => ({ t: 'case', id });
-const CASES = {
-  ozon: ['Chatzone Meet', 'Ozon — видеоконференции, мессенджер, видеонаблюдение', '2025—2026'],
-  lamoda: ['Seller Center', 'Lamoda — кабинет продавца с нуля', '2023—2025'],
-};
 
 // ===== Ответы модели =====
 const R = {
-  home2: { title: 'Дубль' },
-  home3: { title: 'Дубль 2' },
   about: {
     title: 'Обо мне', q: 'Расскажи о себе', group: 'about',
     think: ['Читаю запрос: «расскажи о себе»', 'Достаю 8 лет опыта из долговременной памяти', 'Вырезаю скучные части'],
@@ -722,33 +556,6 @@ const R = {
     ],
     follow: ['messenger', 'meet', 'contacts'],
   },
-  'ozon-old': {
-    title: 'Ozon · старый', q: 'Расскажи про Ozon', group: 'work', meta: '2025—2026',
-    think: ['Открываю Ozon Tech, 2025—2026', 'Нахожу проблему: 90% сидят в старом интерфейсе', 'Считаю, сколько перешло после редизайна'],
-    blocks: [
-      { t: 'p', h: 'В Ozon я проектировал внутренние системы коммуникаций: <b>мессенджер</b>, <b>видеоконференции</b> и <b>видеонаблюдение</b> складов и ПВЗ. Главный кейс — Chatzone Meet.' },
-      caseCard('ozon'),
-      { t: 'h', h: 'Проблема' },
-      { t: 'p', h: 'В компании жили две версии одного продукта. Новую мы считали красивее и удобнее, но <b>90% людей</b> упрямо оставались в старой. А поддерживать обе дорого.' },
-      { t: 'h', h: 'Исследование' },
-      { t: 'p', h: 'Поговорили с активными пользователями из разных сегментов аудитории:' },
-      { t: 'segs', items: [[30, 'Продвинутые (разработчики)', 'var(--violet)'], [32, 'Средние (остальной IT)', 'var(--orange)'], [37, 'Обычные пользователи', 'var(--accent)'], [1, 'Топ-менеджмент', 'var(--faint)']] },
-      { t: 'p', h: 'Мешали три вещи: верхняя панель на 46px, неудобные миниатюры снизу и разрозненная индикация записи и суммаризации встреч.' },
-      { t: 'h', h: 'Решение' },
-      { t: 'ol', items: [
-        'Убрали верхнюю панель — большинство её даже не замечало',
-        'Перенесли миниатюры вправо, с выбором 1 или 2 рядов',
-        'Объединили индикацию записи и AI-конспектирования',
-        'Растянули картинку спикера на весь экран без чёрных полос',
-        'Спрятали невостребованное в дополнительные настройки',
-      ]},
-      { t: 'h', h: 'Результат' },
-      { t: 'compare', title: 'Пользователи нового интерфейса', note: 'за 2 недели', from: 10, to: 48 },
-      { t: 'p', h: 'Оставшийся негатив касался уже техники — зависаний и звука, а не интерфейса. Ещё в Ozon я делал <b>Chatzone Messenger</b> на базе Mattermost и <b>Watchzone</b> — систему видеонаблюдения за складами и ПВЗ. Всё это — в артефакте.' },
-      { t: 'gallery', id: 'ozon' },
-    ],
-    follow: ['messenger', 'about', 'contacts'],
-  },
   messenger: {
     title: 'Chatzone Messenger', q: 'Расскажи про Chatzone Messenger', group: 'work', meta: '2025—2026',
     think: ['Открываю Chatzone Messenger', 'Считаю сообщения в архивных тредах', 'Подключаю DeepSeek'],
@@ -775,26 +582,6 @@ const R = {
     ],
     follow: ['lamoda', 'about', 'contacts'],
   },
-  'lamoda-old': {
-    title: 'Lamoda · дубль', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
-    think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
-    blocks: [
-      { t: 'p', h: 'Два года я проектировал <b>Seller Center</b> — личный кабинет продавца Lamoda — с нуля: товары, аналитика, заказы, акции.' },
-      caseCard('lamoda'),
-      { t: 'h', h: 'Проблема' },
-      { t: 'p', h: 'Все акции выглядели как один длинный список. Селлерам было трудно отличить одну от другой, и на добавление товаров уходило больше времени.' },
-      { t: 'h', h: 'Исследование' },
-      { t: 'p', h: 'Изучили, как это решают три ведущих маркетплейса, и позвали на интервью селлеров, которые работают и с ними. Нашлось два паттерна: недельный горизонтальный календарь и <b>вертикальный на месяц</b>. Победил второй — акции планируют помесячно.' },
-      { t: 'h', h: 'Решение — потыкайте' },
-      { t: 'cal' },
-      { t: 'h', h: 'Результат' },
-      { t: 'stats', items: [['6', '%', 'рост числа участников акций и продаж в акционный период'], ['10→5', '', 'часов до старта: селлеры стали добавлять товары быстрее']] },
-      { t: 'tags', items: ['Web', 'B2B', 'E-com'] },
-      { t: 'gallery', id: 'lamoda', site: 'https://seller.lamoda.ru/' },
-    ],
-    follow: ['sber', 'about', 'contacts'],
-  },
-  // Черновик: дубль кейса Ozon — текст и графики со страницы ruslan.design/ozon до блока «Остальные экраны»
   meet: {
     title: 'Chatzone Meet', q: 'Расскажи про Chatzone Meet', group: 'work', meta: '2025—2026',
     think: ['Открываю Chatzone Meet, Ozon Tech', 'Смотрю, почему люди сидят в старом интерфейсе', 'Считаю, сколько перешло после обновления'],
@@ -837,7 +624,6 @@ const R = {
     ],
     follow: ['lamoda', 'about', 'contacts'],
   },
-  // Черновик: дубль кейса Lamoda — текст и экраны со страницы ruslan.design/lamoda до блока «Остальные экраны»
   lamoda: {
     title: 'Lamoda', q: 'Расскажи про Lamoda', group: 'work', meta: '2023—2025',
     think: ['Открываю Seller Center, 2023—2025', 'Смотрю, как селлеры планируют акции', 'Сравниваю v1 и v2 календаря'],
@@ -880,7 +666,7 @@ const R = {
       { t: 'img', src: 'covers/lamoda-rest-5.webp', w: 2400, hgt: 1518, alt: 'Создание склада в два шага и список складов' },
       { t: 'img', src: 'covers/lamoda-rest-6.webp', w: 2400, hgt: 1482, alt: 'Дизайн-система Lamoda Seller' },
       { t: 'tags', items: ['Web', 'B2B', 'E-com'] },
-      { t: 'gallery', id: 'lamoda', site: 'https://seller.lamoda.ru/', all: false },
+      { t: 'gallery', id: 'lamoda', site: 'https://seller.lamoda.ru/' },
     ],
     follow: ['sber', 'about', 'contacts'],
   },
@@ -896,7 +682,7 @@ const R = {
       { t: 'img', src: 'covers/sber-5.webp', w: 2400, hgt: 1734, alt: 'СберБизнес: оплата заказа и рублёвый платёж контрагенту' },
       { t: 'img', src: 'covers/sber-triplex.webp', w: 1264, hgt: 300, alt: 'Triplex — дизайн-система СберБизнеса' },
       { t: 'tags', items: ['Web + Mobile', 'B2E / B2B', 'Banking'] },
-      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться без сертификатов Минцифры', all: false, links: [['Дизайн-система', 'https://triplex-design.ru']] },
+      { t: 'gallery', id: 'sber', site: 'https://sbi.sberbank.ru/ic/ufs/login.html', siteTip: 'Может не открыться без сертификатов Минцифры', links: [['Дизайн-система', 'https://triplex-design.ru']] },
     ],
     follow: ['simetra', 'about', 'contacts'],
   },
@@ -914,7 +700,7 @@ const R = {
       { t: 'img', src: 'covers/simetra-v3-6.webp', w: 2400, hgt: 1493, alt: 'RITM³: дашборд города Челябинска' },
       { t: 'p', h: 'RITM³ занял свою нишу на рынке и в данный момент установлен в 10 крупных городах России (включая Москву и Санкт-Петербург), а также по нему ведётся обучение в вузах (включая ВШЭ, МАДИ и СПбПУ).' },
       { t: 'tags', items: ['Web', 'B2B / B2G', 'Maps'] },
-      { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/', all: false },
+      { t: 'gallery', id: 'simetra', site: 'https://ritm3.ru/' },
     ],
     follow: ['ozon', 'about', 'contacts'],
   },
@@ -988,11 +774,10 @@ const NAV = [
   { h: 'Работы', ids: ['ozon', 'lamoda', 'sber', 'simetra'] },
   { h: 'Мои проекты', ids: [], links: [['Podborka.co', 'https://podborka.co/']] },
   { h: 'Прочее', ids: ['about', 'cv', 'contacts'] },
-  { h: 'Черновики', ids: ['home2', 'home3', 'lamoda-old', 'ozon-old'], draft: true },
 ];
-const ALL = NAV.filter(g => !g.draft).flatMap(g => g.ids);
+const ALL = NAV.flatMap(g => g.ids);
 // главная и её дубль для экспериментов
-const isHome = id => id === 'home' || id === 'home2' || id === 'home3';
+const isHome = id => id === 'home';
 // отдельные контакты засчитываются во вкладку «Контакты»
 const ALIAS = { mail: 'contacts', telegram: 'contacts', linkedin: 'contacts' };
 
@@ -1071,7 +856,7 @@ const Sound = {
 ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => Sound.init(), { capture: true }));
 document.addEventListener('pointerover', e => {
   if (e.pointerType !== 'mouse') return;
-  const el = e.target.closest('button:not(:disabled), a, .case');
+  const el = e.target.closest('button:not(:disabled), a');
   if (!el || el.contains(e.relatedTarget)) return;
   Sound.play('hover');
 });
@@ -1156,7 +941,6 @@ function fillPending() {
   if (!S.busy && el && R[id] && R[id].q && !el.children.length) ask(R[id].q, id);
 }
 function showThread(id) {
-  if (id !== S.artFrom) $('#app').classList.remove('art-open');
   S.current = id;
   document.querySelectorAll('.thread').forEach(t => t.classList.toggle('show', t.id === 't-' + id));
   const hash = id === 'home' ? '' : '#' + id;
@@ -1256,7 +1040,7 @@ async function answer(el, id, def, reuse) {
     if (!node) continue;
     body.append(node);
     if (b.t === 'p') await typeOut(node);
-    else if ((b.t === 'img' || b.t === 'case') && S.speed !== 'instant' && !S.stop) { const gi = genImage(b.t === 'img' ? node : node.querySelector('.case-img')); await Promise.race([gi, wait(160)]); activate(node, b); }
+    else if (b.t === 'img' && S.speed !== 'instant' && !S.stop) { const gi = genImage(node); await Promise.race([gi, wait(160)]); activate(node, b); }
     else { await wait(160); activate(node, b); }
     scrollDown();
   }
@@ -1441,7 +1225,6 @@ function renderBlock(b) {
     case 'split': return h('div', 'split', `<div class="split-n"><b class="a">0%</b><b class="o">0%</b></div>
       <div class="split-bar"><i class="a"></i><i class="o"></i></div>
       <div class="split-l"><span>${b.labels[0]}</span><span>${b.labels[1]}</span></div>`);
-    case 'case': return caseEl(b.id);
     // карточки проектов — копия сетки с главной, чтобы карточки жили в одном месте
     case 'projects': {
       const g = $('#t-home .pj-grid').cloneNode(true); g.classList.add('pj-v2');
@@ -1455,10 +1238,8 @@ function renderBlock(b) {
       return g;
     }
     case 'gallery': {
-      // all: false — без кнопки «Открыть все экраны», только ссылка на сайт проекта; links — дополнительные ссылки [подпись, адрес]
-      const d = h('div', 'gallery-acts', `${b.all === false ? '' : `<button class="btn acc">Открыть все экраны · ${GALLERY[b.id].imgs.length}</button>`}${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}${(b.links || []).map(([t, u]) => `<a class="btn ghost" href="${u}" target="_blank" rel="noopener">${t} ${ICON.arrow}</a>`).join('')}`);
-      const all = d.querySelector('button');
-      if (all) all.onclick = () => openArtifact(b.id);
+      // ссылка на сайт проекта; links — дополнительные ссылки [подпись, адрес]
+      const d = h('div', 'gallery-acts', `${b.site ? `<a class="btn ghost" href="${b.site}" target="_blank" rel="noopener"${b.siteTip ? ` data-tip="${b.siteTip}"` : ''}>Сайт проекта ${ICON.arrow}</a>` : ''}${(b.links || []).map(([t, u]) => `<a class="btn ghost" href="${u}" target="_blank" rel="noopener">${t} ${ICON.arrow}</a>`).join('')}`);
       return d;
     }
     case 'tool': return h('div', 'tool', `<span class="st"></span>Использую инструмент <code>${b.name}</code>(${b.arg})`);
@@ -1474,14 +1255,7 @@ function renderBlock(b) {
     }
     case 'cv': return h('div', 'card doc', `<div class="doc-page"><i class="h"></i><i class="a"></i><i></i><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i><i></i><i></i><i style="width:70%"></i><i></i><i style="width:50%"></i></div>
       <div><b>Руслан — Product Designer</b><small>PDF · Ozon, Lamoda, Сбер, Simetra · 8+ лет</small><a class="btn" href="${CONFIG.cv}" target="_blank" rel="noopener">Открыть CV ${ICON.arrow}</a></div>`);
-    case 'cal': return calendar();
   }
-}
-function caseEl(id) {
-  const [t, d, y] = CASES[id];
-  const c = h('button', 'case', `<div class="case-img" style="background-image:url('${COVERS[id]}')"></div><div class="case-b"><div><b>${t}</b><small>${d}</small></div><span class="yr">${y}</span></div>`);
-  c.onclick = () => openArtifact(id);
-  return c;
 }
 function activate(node, b) {
   if (b.t === 'split') runSplit(node, b);
@@ -1529,66 +1303,6 @@ function countUp(el) {
   requestAnimationFrame(step);
 }
 
-// Lamoda: интерактивный календарь v1 / v2
-function calendar() {
-  const promos = [
-    { n: 'Осенний гардероб: скидки до 50% на верхнюю одежду', s: 1, e: 9, c: '#E0702F', i: '◆', st: 'done' },
-    { n: 'Неделя обуви', s: 4, e: 12, c: '#3A7BD5', i: '▲', st: 'skip' },
-    { n: 'Beauty-неделя', s: 13, e: 19, c: '#D14F9A', i: '♥', st: 'yes' },
-    { n: 'Детская одежда и аксессуары для школы', s: 15, e: 23, c: '#2EA36B', i: '●', st: 'no' },
-    { n: 'Спорт-марафон', s: 17, e: 21, c: '#8A5CF6', i: '★', st: 'no' },
-    { n: 'Чёрная пятница', s: 24, e: 30, c: '#111', i: '■', st: 'yes' },
-    { n: 'Предновогодний старт', s: 27, e: 30, c: '#C9A227', i: '✦', st: 'no' },
-  ];
-  const wrap = h('div', 'cal');
-  let html = `<div class="cal-top"><b>Ноябрь · календарь акций</b><div class="seg two"><button data-v="1" class="on">Версия 1</button><button data-v="2">Версия 2</button></div></div>`;
-  html += `<div class="cal-dow">${['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'].map(d => `<span>${d}</span>`).join('')}</div>`;
-  for (let w = 0; w < 5; w++) {
-    html += '<div class="cal-week">';
-    for (let d = 0; d < 7; d++) { const day = w * 7 + d + 1; html += `<span class="d${day > 30 ? ' off' : ''}" style="grid-column:${d + 1}">${day > 30 ? day - 30 : day}</span>`; }
-    promos.forEach(p => {
-      const ws = w * 7 + 1, we = w * 7 + 7;
-      if (p.e < ws || p.s > we) return;
-      const a = Math.max(p.s, ws) - ws + 1, b = Math.min(p.e, we) - ws + 2;
-      html += `<div class="promo ${p.st}" style="grid-column:${a}/${b};background:${p.c}"><i>${p.i} </i>${p.n}</div>`;
-    });
-    html += '</div>';
-  }
-  html += `<div class="cal-leg leg1">${promos.map(p => `<span style="--c:${p.c}">${p.i} ${p.n.split(':')[0]}</span>`).join('')}</div>
-    <div class="cal-leg leg2"><span style="--c:var(--accent)">Участвую</span><span style="--c:var(--soft)">Не участвую</span><span style="--c:transparent">Завершено</span></div>
-    <div class="cal-note" id="calNote"></div>`;
-  wrap.innerHTML = html;
-  const notes = {
-    1: '<b>v1:</b> цвет на каждую тематику, иконки и легенда снизу, которую почти никто не находил. Длинные названия обрезаются, а 3+ акции за две недели сливаются.',
-    2: '<b>v2:</b> всего три цвета, и они показывают не тематику, а <b>статус</b>: участвую / не участвую / завершено. Без иконок, легенды и фильтров. Завершённые акции без участия скрыты.',
-  };
-  const note = wrap.querySelector('#calNote');
-  note.removeAttribute('id');
-  const set = v => { wrap.classList.toggle('v2', v === '2'); wrap.querySelectorAll('.seg button').forEach(b => b.classList.toggle('on', b.dataset.v === v)); note.innerHTML = notes[v]; };
-  wrap.querySelectorAll('.seg button').forEach(b => b.onclick = () => set(b.dataset.v));
-  set('1');
-  return wrap;
-}
-
-// ===== artifact =====
-function openArtifact(id) {
-  const g = GALLERY[id];
-  $('#artTitle').textContent = g.title;
-  $('#artSub').textContent = g.sub + ' · ' + g.imgs.length + ' экранов';
-  $('#artLink').href = g.link;
-  const body = $('#artBody');
-  body.innerHTML = '';
-  g.imgs.forEach(([p, cap], i) => {
-    const f = h('figure', '', `<img loading="lazy" src="${img(p)}" alt="${cap || g.title}">${cap ? `<figcaption>${String(i + 1).padStart(2, '0')} · ${cap}</figcaption>` : ''}`);
-    f.style.animationDelay = Math.min(i, 6) * 60 + 'ms';
-    body.append(f);
-  });
-  body.scrollTop = 0;
-  $('#app').classList.add('art-open');
-  S.artFrom = S.current; // панель с экранами живёт только на той странице, где её открыли
-}
-$('#artClose').onclick = () => $('#app').classList.remove('art-open');
-$('#artBody').onclick = e => { if (e.target.tagName === 'IMG') LB.open(e.target); };
 
 // ===== просмотр картинки: плавно вылетает из своего места и возвращается обратно,
 // увеличивается щипком (тачпад, телефон) или двойным кликом — масштабируется только картинка, не страница
@@ -1766,17 +1480,12 @@ function setChips(ids) {
 $('#attach').onclick = () => toast('Вложения пока не поддерживаются. Но оффер можно прислать в Telegram 😉');
 document.addEventListener('keydown', e => {
   if (e.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); input.value = '/'; updateSlash(); setSendState(); }
-  if (e.key === 'Escape') { $('#app').classList.remove('art-open'); LB.close(); closeMenus(); }
+  if (e.key === 'Escape') { LB.close(); closeMenus(); }
 });
 
 // ===== home =====
-function greet() {
-  const s = $('#sugg');
-  [['about', 'Обо мне', 'Коротко о 8 годах в дизайне'], ['works', 'Посмотреть все кейсы', 'Продукты, исследования и цифры']]
-    .forEach(([id, t, d], i) => { const b = h('button', '', `<b>${t}</b><small>${d}</small>`); b.style.animation = `rise .5s ${i * 70}ms ease both`; b.onclick = () => open(id); s.append(b); });
-}
-// дубль главной: карточки проектов открывают кейсы
-document.querySelectorAll('#t-home [data-open], #t-home2 [data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
+// карточки проектов на главной открывают кейсы
+document.querySelectorAll('#t-home [data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
 $('#logo').onclick = () => open('home');
 $('#newChat').onclick = () => open('home');
 
@@ -1836,7 +1545,7 @@ if (window.visualViewport) {
 
 // ===== init =====
 setTheme(S.theme); setSpeed(S.speed); setSound(Sound.on);
-buildNav(); greet();
+buildNav();
 // старые адреса кейсов ведут на новые
 const OLD_IDS = { ozonmain: 'ozon', lamoda2: 'lamoda', ozon2: 'meet' };
 const hashId = () => { const id = location.hash.slice(1); return OLD_IDS[id] || id; };
