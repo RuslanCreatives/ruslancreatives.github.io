@@ -1152,7 +1152,9 @@ function showThread(id) {
   setChips(isHome(id) || S.busy ? [] : (R[id] && R[id].follow) || []);
   const sc = $('#scroll');
   sc.style.scrollBehavior = 'auto';
-  sc.scrollTop = isHome(id) ? 0 : sc.scrollHeight;
+  // открываем ветку в начале последнего ответа, а не в самом низу
+  const q = !isHome(id) && [...document.querySelectorAll(`#t-${id} .msg-user`)].pop();
+  sc.scrollTop = q ? anchorTop(q) : 0;
   sc.style.scrollBehavior = '';
   document.title = id === 'home' ? 'Руслан — дизайнер продуктов' : `${R[id].title} · Руслан`;
 }
@@ -1213,6 +1215,7 @@ async function answer(el, id, def, reuse) {
   const body = h('div', 'body');
   wrap.append(body);
   if (!reuse) el.append(wrap);
+  anchor = wrap.previousElementSibling; scrollTarget = -1;
   scrollDown();
 
   // размышления
@@ -1384,7 +1387,18 @@ const scEl = $('#scroll');
 ['wheel', 'touchmove', 'keydown'].forEach(ev => scEl.addEventListener(ev, () => requestAnimationFrame(() => { stick = scEl.scrollHeight - scEl.scrollTop - scEl.clientHeight < 80; }), { passive: true }));
 // контент не прячется под плавающим инпутом: отступ снизу = высота инпута
 new ResizeObserver(() => { $('#col').style.paddingBottom = $('.composer-wrap').offsetHeight + 24 + 'px'; }).observe($('.composer-wrap'));
-function scrollDown() { if (stick) scEl.scrollTop = scEl.scrollHeight; }
+// страница не едет за печатающимся ответом: прокручиваем только до вопроса — он встаёт под верхнюю панель,
+// дальше ответ растёт вниз, а экран стоит на месте
+let anchor = null;
+function anchorTop(el) { const sc = $('#scroll'); return Math.max(0, sc.scrollTop + el.getBoundingClientRect().top - sc.getBoundingClientRect().top - 72); }
+let scrollTarget = -1;
+function scrollDown() {
+  if (!stick) return;
+  const t = Math.min(scEl.scrollHeight - scEl.clientHeight, anchor && anchor.isConnected ? anchorTop(anchor) : scEl.scrollHeight);
+  // цель не изменилась — не перезапускаем плавную прокрутку на каждом слове, иначе она стоит на месте
+  if (Math.abs(t - scrollTarget) < 2) return;
+  scrollTarget = t; scEl.scrollTop = t;
+}
 
 // ===== блоки =====
 function renderBlock(b) {
